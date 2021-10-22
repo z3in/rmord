@@ -6,6 +6,10 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+function destroyCookie(name) {
+  document.cookie = `${name}= ; expires = Thu, 01 Jan 1970 00:00:00 GMT`
+}
+
 /*==============================
    PRELOADER
 ==============================*/
@@ -18,7 +22,7 @@ function getCookie(name) {
               nav_user.innerHTML = ` <li><a href="account.php">My Account</a></li>
                                     <li><a href="addcart.php">Cart</a></li>
                                     <li><a href="#">Checkout</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li><a href="logout.php">Logout</a></li>
                                     `
               return
             }
