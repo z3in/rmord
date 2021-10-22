@@ -29,30 +29,7 @@
             </div>
         </div>
 
-        <section class="header-top-section">
-          <div class="container">
-              <div class="row">
-                  <div  class="col-md-6">
-                      <div class="header-top-content">
-                          <ul class="nav nav-pills navbar-left">
-                              <li><a href="#"><i class="pe-7s-call"></i><span>0999-999-9999</span></a></li>
-                              <li><a href="#"><i class="pe-7s-mail"></i><span> resto@gmail.com</span></a></li>
-                          </ul>
-                      </div>
-                  </div>
-                  <div  class="col-md-6">
-                      <div class="header-top-menu">
-                          <ul class="nav nav-pills navbar-right">
-                              <li><a href="account.php">My Account</a></li>
-                              <li class ="active"><a hrefc="addcart.php">Cart</a></li>
-                              <li><a href="#">Checkout</a></li>
-                              <li><a href="loginpage.php"><i class="pe-7s-lock"></i>Login/Register</a></li>
-                          </ul>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
+        <?php include('./header_strip.php')?>
 
 <!--Header section-->
 <header class="header-section">
@@ -136,96 +113,7 @@
                       Total Price
                     </div>
                   </div>
-                  <!-- Product #1 -->
-                  <div class="item">
-                    <div class="buttons">
-                      <input type="checkbox" name="checkbox" id="checkbox_add">
-                    </div>
-            
-                    <div class="image">
-                      <img src="menu/cart/porktocino.png" alt="Pork tocino" />
-                    </div>
-            
-                    <div class="description">
-                      <span>Pork Tocino</span>
-                    </div>
-
-                    <div class="price">
-                      <span>&#8369 99.00</span>
-                    </div>
-            
-                    <div class="quantity">
-                      <button class="plus-btn" type="button" name="button">
-                        <img src="plus.svg" alt="" />
-                      </button>
-                      <input type="text" name="name" value="1">
-                      <button class="minus-btn" type="button" name="button">
-                        <img src="minus.svg" alt="" />
-                      </button>
-                    </div>
-                    <div class="total-price">&#8369 99.00 </div>
-                  </div>
-            
-                  <!-- Product #2 -->
-                  <div class="item">
-                    <div class="buttons">
-                      <input type="checkbox" name="checkbox" id="checkbox_add">
-                    </div>
-            
-                    <div class="image">
-                      <img src="menu/cart/porktapa.png" alt="PorkTapa"/>
-                    </div>
-            
-                    <div class="description">
-                      <span>PorkTapa</span>
-                    </div>
-                    
-                    <div class="price">
-                      <span> &#8369 99.00</span>
-                    </div>
-            
-                    <div class="quantity">
-                      <button class="plus-btn" type="button" name="button">
-                        <img src="plus.svg" alt="" />
-                      </button>
-                      <input type="text" name="name" value="1">
-                      <button class="minus-btn" type="button" name="button">
-                        <img src="minus.svg" alt="" />
-                      </button>
-                    </div>
-                    <div class="total-price">&#8369 89.00</div>
-                  </div>
-            
-                  <!-- Product #3 -->
-                  <div class="item">
-                    <div class="buttons">
-                      <input type="checkbox" name="checkbox" id="checkbox_add">
-                    </div>
-            
-                    <div class="image">
-                      <img src="menu/cart/Beeftapa.png" alt="Beef Tapa" />
-                    </div>
-            
-                    <div class="description">
-                      <span>BeefTapa</span>
-                    </div>
-
-                    
-                    <div class="price">
-                      <span> &#8369 99.00</span>
-                    </div>
-            
-                    <div class="quantity">
-                      <button class="plus-btn" type="button" name="button">
-                        <img src="plus.svg" alt="" />
-                      </button>
-                      <input type="text" name="name" value="1">
-                      <button class="minus-btn" type="button" name="button">
-                        <img src="minus.svg" alt="" />
-                      </button>
-                    </div>
-                    <div class="total-price">&#8369 125.00</div>
-                  </div>
+                  <div id="cart_container"></div>
                   <div class="remove_checkout"> 
                     <button><a href="#" class= "removebutton removebutton-primary">Remove</a></button>
                     <button><a href="#" class= "checkoutbutton checkoutbutton-primary">Checkout</a></button>
@@ -368,7 +256,8 @@
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script>
-
+        <script src="js/class/cart.class.js"></script>
+        <script src="js/cart_list.js"></script>
         
     </body>
 </html>

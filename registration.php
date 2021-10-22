@@ -163,7 +163,8 @@
 			.then(data => data.json())
 			.then(data => {
 				if(data.response){
-					
+					alert('Registration Submitted and will be Validated by our administrators')
+					window.location.href ="index.php"
 				}
 			})
 			event.preventDefault();

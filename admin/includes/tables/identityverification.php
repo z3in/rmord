@@ -37,14 +37,28 @@
   <div class="card-footer">
     Footer
   </div>
-  <script>
+  <script type="text/javascript">
 
-    fetch('includes/app/identity_verification.php?request=list')
+    const approvePerson = (id,email) =>{
+      $('#preloader').show()
+        fetch(`includes/app/identity_verification.php?request=approve&id=${id}&email=${email}`)
+        .then(data => data.json())
+        .then(data => {
+            if(data.response == 1){
+              alert('user has been approved')
+              fetchList()
+              $('#preloader').hide()
+            }
+        })
+    }
+
+    const fetchList = () =>{
+      fetch('includes/app/identity_verification.php?request=list&status=0')
     .then(data => data.json())
     .then(data => {
       if(data.response == 1){
           const container = document.querySelector("#table_verification");
-          console.log('test')
+          container.innerHTML = "";
           const requestcontent = data.result.map(item =>{
               return `<tr>
                           <td>${item.name}</td>
@@ -52,8 +66,8 @@
                           <td>${item.email}</td>
                           <td><a href="/rmord/app/upload/${item.photo_path}" target="_blank">VIEW</a></td>
                           <td>${item.date_created}</td>
-                          <td>${item.status ? "active" : "pending"}</td>
-                          <td><button class="btn btn-sm btn-success"><i class="fas fa-check"></i> approve </button> <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i> disapprove </button></td>
+                          <td>${!parseInt(item.validated) ? "pending" : "active" }</td>
+                          <td>${!parseInt(item.validated) ? `<button class="btn btn-sm btn-success" id="${item.ID}" onclick="approvePerson(this.id,'${item.email}')" ><i class="fas fa-check"></i> approve </button> <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i> disapprove </button>` : ''}</td>
                       </tr>`
           })
 
@@ -62,7 +76,13 @@
           })
       }
     })
+    }
+
+
+    fetchList()
 
    </script>
+
+
 </div>
 

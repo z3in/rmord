@@ -39,11 +39,11 @@
  		<form>
  			<span>
  				<i class="fa fa-user"></i>
- 				<input type="text" placeholder="Username" name="user1">
+ 				<input type="text" placeholder="Username" name="username">
  			</span><br>
  			<span>
  				<i class="fa fa-lock"></i>
- 				<input type="password" placeholder="Password" name="user1">
+ 				<input type="password" placeholder="Password" name="pw">
  			</span><br>
  				<button type="submit"> <a href="index.html"></a> Sign in</button>
 				
@@ -53,6 +53,25 @@
 		 <br>
  	</div>
  </div>
+ <script type="text/javascript">
+		var form = document.querySelector("form");
+			form.addEventListener("submit", function(event) {
+			var data = new FormData(form);
+			
+			fetch('app/client/auth.secure.php',{method:"POST",body:data})
+			.then(data => data.json())
+			.then(data => {
+				if(data.response){
+					document.cookie=`username=${data.user.username};`
+					document.cookie=`fullname=${data.user.name};`
+					document.cookie=`user_id=${data.user.ID};`
+					return window.location.href ="index.php"
+				}
+				return alert(data.message)
+			})
+			event.preventDefault();
+			}, false);
+</script>
 
 </body>
 </html>

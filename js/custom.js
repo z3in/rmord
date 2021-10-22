@@ -1,9 +1,29 @@
+
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 /*==============================
    PRELOADER
 ==============================*/
 (function($){
     $(window).load(function() {
 	    $('#preloader').hide();
+        let nav_user = document.querySelector("#custom_nav_user");
+        if(nav_user){
+            if(getCookie('fullname')){
+              nav_user.innerHTML = ` <li><a href="account.php">My Account</a></li>
+                                    <li><a href="addcart.php">Cart</a></li>
+                                    <li><a href="#">Checkout</a></li>
+                                    <li><a href="#">Logout</a></li>
+                                    `
+              return
+            }
+            nav_user.innerHTML = `<li><a href="loginpage.php"><i class="pe-7s-lock"></i>Login/Register</a></li>`
+        }
     });
 })(jQuery);
 /*==============================
@@ -313,3 +333,5 @@ $('#feedback').carousel({
     );
     wow.init();
 })(jQuery);
+
+

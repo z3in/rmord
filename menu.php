@@ -31,30 +31,7 @@
         </div>
 
 
-        <section class="header-top-section">
-            <div class="container">
-                <div class="row">
-                    <div  class="col-md-6">
-                        <div class="header-top-content">
-                            <ul class="nav nav-pills navbar-left">
-                                <li><a href="#"><i class="pe-7s-call"></i><span>0999-999-9999</span></a></li>
-                                <li><a href="#"><i class="pe-7s-mail"></i><span> resto@gmail.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div  class="col-md-6">
-                        <div class="header-top-menu">
-                            <ul class="nav nav-pills navbar-right">
-                                <li><a href="myaccount.html">My Account</a></li>
-                                <li><a href="addcart.html">Cart</a></li>
-                                <li><a href="#">Checkout</a></li>
-                                <li><a href="loginpage.html"><i class="pe-7s-lock"></i>Login/Register</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <?php include('./header_strip.php')?>
 <!--Header to ah-->
 <header class="header-section">
             <nav class="navbar navbar-default">
@@ -130,7 +107,7 @@
         </section>
 
         <!--New Recipe-->
-        <section class="new-section">
+        <!-- <section class="new-section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -159,7 +136,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
 
 <!--Dish We Offer-->
@@ -172,7 +149,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-12">
                         <div class="filter-menu">
                             <ul class="button-group sort-button-group">
@@ -183,147 +160,14 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div class="row featured isotope">
+                </div> -->
+                <div class="row featured isotope" id="menu_container">
 
-                    <!--Sisig-->
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="menu/Value Meals/VMSisig.png" class="img-responsive" width="255" height="322" alt="">
-                            <div class="sell-meta">
-                                <a href="#" class="new-item">Add to Order</a>
-                            </div>
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Sisig</h3>
-                                    <span>&#8369 75.00</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Beef tapa-->
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-1 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="menu/All day Breakfast/ADBBeef-Tapa.png" class="img-responsive" width="255" height="322" alt="">
-                            <div class="sell-meta">
-                                <a href="#" class="new-item">Add to Order</a>
-                                <a href="#" class="sell-item">Buy</a>
-                            </div>
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Beef Tapa</h3>
-                                    <span>&#8369 115.00</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Pork Chop / Value Meal-->
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="menu/Value Meals/VMFriedPorkChop.png" class="img-responsive" width="255" height="322" alt="">
-                            <div class="sell-meta">
-                                <a href="#" class="new-item">Add to Order</a>
-                            </div>
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Pork Chop</h3>
-                                    <span>&#8369 75.00</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Pork Barbeque/ Sizzling-->
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-3 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="menu/SizzlingPlate/SPPorkBARBEQUE.png" class="img-responsive" width="255" height="322" alt="">
-                            <div class="sell-meta">
-                                <a href="#" class="new-item">Add to Order</a>
-                                <a href="#" class="sell-item">Buy</a>
-                            </div>
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Pork Barbeque</h3>
-                                    <span>&#8369 120.00</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--Pork Tocino-->
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-1 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="menu/All day Breakfast/ADBPorkTocino.png" class="img-responsive" width="255" height="322" alt="">
-                            <div class="sell-meta">
-                                <a href="#" class="new-item">Add to Order</a>
-                            </div>
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Pork Tocino</h3>
-                                    <span>&#8369 99.00</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--TBone Steak-->
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-3 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="menu/SizzlingPlate/SPTBoneSteak.png" class="img-responsive" width="255" height="322" alt="">
-                            <div class="sell-meta">
-                                <a href="#" class="sell-item">Buy</a>
-                            </div>
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>T-Bone Steak</h3>
-                                    <span>&#8369 235.00</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
 
-<!--Drinks we Offer-->
+<!--Drinks we Offer
 <section class="featured-section">
     <div class="container">
         <div class="row">
@@ -389,9 +233,10 @@
         </div>
     </div>
 </section>
+-->
 
 <!--Best Seller n-->
-<section class="best-seller-section">
+<!-- <section class="best-seller-section">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -403,7 +248,7 @@
 
         <div class="row">
             <!--Dish-->
-            <div class="col-md-3 col-sm-6 wow fadeInDown animated" data-wow-delay="0.4s">
+            <!-- <div class="col-md-3 col-sm-6 wow fadeInDown animated" data-wow-delay="0.4s">
                 <div class="product-item">
                     <img src="menu/BSeller/BSTBone.png" class="img-responsive" width="255" height="322" alt="">
                     <div class="product-hover">
@@ -421,7 +266,7 @@
                 </div>
             </div>
             <!--drinks-->
-            <div class="col-md-3 col-sm-6 wow fadeInDown animated" data-wow-delay="0.6s">
+            <!-- <div class="col-md-3 col-sm-6 wow fadeInDown animated" data-wow-delay="0.6s">
                 <div class="product-item">
                     <img src="menu/Drinksz/PeachB.png" class="img-responsive" width="255" height="322" alt="">
                     <div class="product-hover">
@@ -440,7 +285,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
     <!--Get Intouch Section-->
         <section id="contactus" class="contact-section">
@@ -540,5 +385,7 @@
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script>
+        <script src="js/class/menu.class.js"></script>
+        <script src="js/menu.js"></script>
     </body>
 </html>
