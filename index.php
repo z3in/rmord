@@ -66,7 +66,7 @@ include 'includes/connect.php'
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                         <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="addcart.php"><span> Cart &#8369-&nbsp;</span> <span class="shoping-cart">0</span></a></li>
+                        <li><a href="addcart.php"><span> Cart </span> <span class="shoping-cart">0</span></a></li>
                     </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->

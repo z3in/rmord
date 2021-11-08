@@ -11,14 +11,17 @@
         <link rel="icon" href="images/favicon.png">
 
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/stylecart.css">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
-        <!--[if lt IE 9]>
-            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-            <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
-        <![endif]-->
-    </head>
+        <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+        <style>
+            .shopping-cart{
+                margin:0;
+                padding:2.5em;
+            }
+        </style>
+      </head>
 
     <!--Body-->
     <body>
@@ -32,10 +35,9 @@
             </div>
         </div>
 
-
         <?php include('./header_strip.php')?>
-<!--Header again-->
 
+<!--Header section-->
 <header class="header-section">
             <nav class="navbar navbar-default">
                 <div class="container">
@@ -60,7 +62,7 @@
                             <li><a href="menu.php">Menu</a></li>
                             <li><a href="reservation.php">Book a Reservation</a></li>
                             <li><a href="aboutus.php">About Us</a></li>
-                            <li ><a href="gallery.php">Gallery</a></li>
+                            <li><a href="gallery.php">Gallery</a></li>
                             <li><a href="#contactus">Contact Us</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
@@ -71,139 +73,50 @@
                 </div><!-- /.container -->
             </nav>
         </header>
-
+            
+        <!--Search Section to -->  
         <section class="search-section">
-            <div class="container">
-                <div class="row subscribe-from">
-                    <div class="col-md-12">
-                        <form class="form-inline col-md-12 wow fadeInDown animated">
-                            <div class="form-group">
-                                <input type="email" class="form-control subscribe" id="email" placeholder="Search...">
-                                <button class="suscribe-btn" ><i class="pe-7s-search"></i></button>
-                            </div>
-                        </form><!-- end /. form -->
-                    </div>
-                </div><!-- end of/. row -->
-            </div><!-- end of /.container -->
-        </section><!-- end of /.news letter section -->
-
-        <!--Nagiislide-->  
-
-<!--Gallery-->
-<section class="featured-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="titie-section wow fadeInDown animated ">
-                    <h1>Gallery</h1>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="filter-menu">
-                    <ul class="button-group sort-button-group">
-                        <li class="button active" data-category="all">All<span>4</span></li>
-                        <li class="button" data-category="cat-1">Customer<span>1</span></li>
-                        <li class="button" data-category="cat-2">Restaurant<span>1</span></li>
-                        <li class="button" data-category="cat-3">Employees<span>1</span></li>
-                        <li class="button" data-category="cat-4">Events<span>1</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="row featured isotope">
-    
-            <!--Beef tapa-->
-            <div class="col-md-3 col-sm-6 col-xs-12 cat-1 featured-items isotope-item">
-                <div class="product-item">
-                    <img src="menu/GalleryForEvent_Employee_ETC/GCustomer.png" class="img-responsive" width="255" height="322" alt="">
-                </div>
-            </div>
-
-            <!--Restaurnat-->
-            <div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
-                <div class="product-item">
-                    <img src="menu/GalleryForEvent_Employee_ETC/GPlace.png" class="img-responsive" width="255" height="322" alt="">
-                </div>
-            </div>
-
-            <!--Employees-->
-            <div class="col-md-3 col-sm-6 col-xs-12 cat-3 featured-items isotope-item">
-                <div class="product-item">
-                    <img src="menu/GalleryForEvent_Employee_ETC/GEmployee.png" class="img-responsive" width="255" height="322" alt="">
-                </div>
-            </div>
-            <!--Evnets-->
-            <div class="col-md-3 col-sm-6 col-xs-12 cat-4 featured-items isotope-item">
-                <div class="product-item">
-                    <img src="menu/GalleryForEvent_Employee_ETC/GEvent.png" class="img-responsive" width="255" height="322" alt="">
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!--Customer feedback and Suggestions-->
-<section class="review-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="titie-section wow fadeInDown animated ">
-                            <h1>Customer Feedback and Suggestion</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div id="feedback" class="carousel slide feedback" data-ride="feedback">
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            <div class="item active">
-                                <img src="images/m1.png" width="320" height="439" alt="">
-                                <div class="carousel-caption">
-								<p>Are ay comment ng customer abay sadya la naman</p>
-                                    <h3>- Odessa -</h3>
-                                    <span>Brgy. Dalig</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <img src="images/m2.png" width="320" height="439" alt="">
-                                <div class="carousel-caption">
-                                    <p>Aguy pagkakainam</p>
-									<h3>- Uweng -</h3>
-                                    <span>Calaca</span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <img src="images/m3.png" width="320" height="439" alt="">
-                                <div class="carousel-caption">
-                                    <p>Abay sya nga</p>
-									<h3>- Erot -</h3>
-                                    <span>Gapas</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators review-controlar">
-                            <li data-target="#feedback" data-slide-to="0" class="active">
-                                <img src="images/m1.png" width="320" height="439" alt="">
-                            </li>
-                            <li data-target="#feedback" data-slide-to="1">
-                                <img src="images/m2.png" width="320" height="439" alt="">
-                            </li>
-                            <li data-target="#feedback" data-slide-to="2">
-                                <img src="images/m3.png" width="320" height="439" alt="">
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
+          <div class="container">
+              <div class="row subscribe-from">
+                  <div class="col-md-12">
+                      <form class="form-inline col-md-12 wow fadeInDown animated">
+                          <div class="form-group">
+                              <input type="email" class="form-control subscribe" id="email" placeholder="Search...">
+                              <button class="suscribe-btn" ><i class="pe-7s-search"></i></button>
+                          </div>
+                      </form><!-- end /. form -->
+                  </div>
+              </div><!-- end of/. row -->
+          </div><!-- end of /.container -->
+      </section><!-- end of /.news letter section -->
 
 
-        <!--Get in Touch-->
-        <section id="contactus" class="contact-section">
+        <!--Cart Section-->
+        <div class="cart">
+        
+                <div class="shopping-cart">
+                
+                    
+                  <!-- Title -->
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th scope="col">Date</th>
+                              <th scope="col">Order Number </th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Status</th>
+                              <th scope="col">Total Amount</th>
+                          </tr>
+                      </thead>
+                      <tbody id="cart_container">
+
+                      </tbody>
+                  </table>
+                  
+                </div>
+              </div>
+ <!--Get in Touch-->
+ <section id="contactus" class="contact-section">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
@@ -215,7 +128,7 @@
                 <div class="row">
                     <div class="col-md-6 wow fadeInLeft animated">
                         <div class="left-content">
-                            <h1><span>D</span>avids <span>G</span>rill</h1>
+                            <h1><span>D</span>avids<span> G</span>rill</h1>
                             <h3>We'd love To Meet You In Person Or Via The Web!</h3>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel nulla sapien. Class aptent tacitiaptent taciti sociosqu ad lit himenaeos. Suspendisse massa urna, luctus ut vestibulum necs et, vulputate quis urna. Donec at commodo erat.</p>
                             <div class="contact-info">
@@ -269,6 +182,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <input type="submit" class="contact-submit" value="Send" />
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -278,8 +192,8 @@
             </div>
         </section>
 
-        <!--Footer-->
-        <footer class="footer">
+    <!--Footer-->
+    <footer class="footer">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -292,6 +206,7 @@
                 </div>
             </div>
         </footer>
+        
 
         <!-- JQUERY -->
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
@@ -300,5 +215,14 @@
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script>
+        <script src="js/class/cart.class.js"></script>
+        <script src="js/order_history.js"></script>
+        <script>
+            if(!getCookie('user_id')){
+                window.location.href="loginpage.php"
+            }
+            
+        </script>
+                    
     </body>
 </html>

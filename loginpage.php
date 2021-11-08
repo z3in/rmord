@@ -65,6 +65,7 @@
 					document.cookie=`username=${data.user.username};`
 					document.cookie=`fullname=${data.user.name};`
 					document.cookie=`user_id=${data.user.ID};`
+					document.cookie=`validated=${data.user.validated};`
 					return window.location.href ="index.php"
 				}
 				return alert(data.message)

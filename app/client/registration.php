@@ -2,15 +2,29 @@
 
 require_once('../../includes/connect.php');
 
-$filename = generateFilename();
+date_default_timezone_set('Asia/Manila');
+$time =  date('Y-m-d H:i:s');
 
-$sql = "INSERT INTO registration (`name`,username,`address`,gender,contact,email,`password`,photo_path)VALUES(:names,:username,:regaddress,:gender,:cnum,:email,:psw,:photo)";
+$filename = generateFilename();
+$sqlVerify = "SELECT * FROM registration where username=?";
+$check = $db->prepare($sqlVerify);
+$check->bindParam(1,$_POST['username']);
+$check->execute();
+if($check->rowCount() > 0){
+    return print_r(json_encode(array("response" => 0, "message" => "Username already exist", "timestamp" => $time)));
+}
+ 
+$sql = "INSERT INTO registration (`fname`,lname,mname,username,`street_add`,city_add,zip_add,gender,contact,email,`password`,photo_path)VALUES(:fname,:lname,:mname,:username,:street_add,:city_add,:zip_add,:gender,:cnum,:email,:psw,:photo)";
 $result = $db->prepare($sql);
 
 $data = [
-    "names" => $_POST['names'],
+    "fname" => $_POST['firstname'],
+    "lname" => $_POST['lastname'],
+    "mname" => $_POST['middlename'],
     "username" => $_POST['username'],
-    "regaddress" => $_POST['regaddress'],
+    "street_add" => $_POST['regstreet'],
+    "city_add" => $_POST['regcity'],
+    "zip_add" => $_POST['regzip'],
     "cnum" => $_POST['cnum'],
     "gender" => $_POST['gender'],
     "email" => $_POST['email'],
@@ -18,13 +32,12 @@ $data = [
     "photo" => $filename . ".jpg"
 ];
 
-date_default_timezone_set('Asia/Manila');
-$time =  date('Y-m-d H:i:s');
-
 
 $fullpath = "../upload/" . $filename .".jpg";
 
-if(!move_uploaded_file($_FILES["regid"]["tmp_name"],$fullpath)){
+$img =  base64_decode($_POST['image']);
+
+if(!file_put_contents($fullpath, $img)){
     return print_r(json_encode(array("response" => 0, "message" => "unable to upload file", "timestamp" => $time)));
 }
 $stmt = $result->execute($data);

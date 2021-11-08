@@ -1,8 +1,8 @@
 class Menu {
+    tab_count = 0;
 
     createRow(container,data = {}){
-
-               container.innerHTML +=       `<div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
+               container.innerHTML +=       `<div class="col-md-3 col-sm-6 col-xs-12 ${data.CategoryName.replace(/\s+/g, '-').toLowerCase()} featured-items isotope-item">
                                                 <div class="product-item">
                                                     <img src="${data.photo}" class="img-responsive" width="255" height="322" alt="">
                                                     <div class="sell-meta">
@@ -17,11 +17,23 @@ class Menu {
                                                     <div class="product-title">
                                                         
                                                             <h3>${data.ProductName}</h3>
-                                                            <span>${parseFloat(data.ProductPrice).toFixed(2)}</span>
+                                                            <span>${parseFloat(data.SRP).toFixed(2)}</span>
                                                  
                                                     </div>
                                                 </div>
                                             </div>`
 
+    }
+
+    createMenuTabs(container,data= {}){
+        if(this.tab_count < 1){
+            container.innerHTML =`<li class="button active" data-category="all">All<span>${data.count}</span></li>`
+        }
+
+        for(const prop in data.bundle){
+            container.innerHTML += `<li class="button" data-category="${prop.replace(/\s+/g, '-').toLowerCase()}">${prop}<span>${data.bundle[prop]}</span></li>`
+        }
+            
+                                
     }
 }

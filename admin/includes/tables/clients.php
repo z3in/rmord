@@ -11,62 +11,21 @@
     <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Series</th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Username</th>
                     <th>Address</th>
                     <th>Contact No</th>
                     <th>Email</th>
-                    <th>Password</th>
-                    <th>RepeatPassword</th>
                     <th>ID Picture</th>
-                    <th>Billing</th>
-                    <th>Button</th>
+                    <th>Status</th>
+                    <th>Date Created</th>
                   </tr>
                   </thead>
-                  <tbody>
-                    <?php
-                    $datatable = "SELECT * FROM client";
-                    $result = $db->prepare($datatable);
-                    $result->execute();
-                    for($i=0; $row = $result->fetch(); $i++){
-                    ?>
-                                <tr>
-                                  <td><?php echo $row['Series'];?></td>
-                                  <td><?php echo $row['Name'];?></td>
-                                  <td><?php echo $row['Username'];?></td>
-                                  <td><?php echo $row['Address'];?></td>
-                                  <td><?php echo $row['ContactNo'];?></td>
-                                  <td><?php echo $row['Email'];?></td>
-                                  <td><?php echo $row['Password'];?></td>
-                                  <td><?php echo $row['Repeatpassword'];?></td>
-                                  <td><?php echo $row['IDPicture'];?></td>
-                                  <td><?php echo $row['Billing'];?></td>
-                                  <td>
-                                    
-                                  <a class="btn btn-success id" href='edit_client.php?id=<?php echo $row['ID'];?>'>Edit</a>
-                                  <a href="functions/delclients.php?id=<?php echo $row['ID'];?>" class="btn btn-danger">Delete</a>
-                                  </td>
-                                </tr>
-
-                    <?php
-                    }
-
-                    ?>
+                  <tbody id="table_clients">
+                                
                   </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Series</th>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Address</th>
-                    <th>Contact No</th>
-                    <th>Billing</th>
-                    <th>ID Picture</th>
-                    <th>Button</th>
-                  </tr>
-                  </tfoot>
+                  
                 </table>
   </div>
   <!-- /.card-body -->
@@ -76,3 +35,35 @@
   <!-- /.card-footer-->
 </div>
 <!-- /.card -->
+<script>
+    const fetchList = () =>{
+      fetch('includes/app/clients.php?request=account_list')
+    .then(data => data.json())
+    .then(data => {
+      if(data.response == 1){
+          const container = document.querySelector("#table_clients");
+          container.innerHTML = "";
+          const requestcontent = data.list.map(item =>{
+              return `<tr>
+                          <td>${item.ID}</td>
+                          <td>${item.lname}, ${item.fname} ${item.mname}</td>
+                          <td>${item.username}</td>
+                          <td>${item.street_add} ,${item.city_add} ${item.zip_add}</td>
+                          <td>${item.contact}</td>
+                          <td>${item.email}</td>
+                          <td><a href="/rmord/app/upload/${item.photo_path}" target="_blank">VIEW</a></td>
+                          <td>${!parseInt(item.validated) ? "waiting for validation" : "validated" }</td>
+                          <td>${item.date_created}</td>
+                           </tr>`
+          })
+
+          requestcontent.forEach(el=>{
+              container.innerHTML += el
+          })
+      }
+    })
+    }
+
+
+    fetchList()
+</script>

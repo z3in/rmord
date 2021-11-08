@@ -62,7 +62,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                         <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="addcart.php"><span> Cart &#8369-&nbsp;</span> <span class="shoping-cart">0</span></a></li>
+                        <li><a href="addcart.php"><span> Cart </span> <span class="shoping-cart">0</span></a></li>
                     </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
@@ -149,19 +149,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="filter-menu">
-                            <ul class="button-group sort-button-group">
-                                <li class="button active" data-category="all">All<span>6</span></li>
-                                <li class="button" data-category="cat-1">All Day Breakfast<span>2</span></li>
-                                <li class="button" data-category="cat-2">Value Meal<span>2</span></li>
-                                <li class="button" data-category="cat-3">Sizzling Plate<span>2</span></li>
+                            <ul class="button-group sort-button-group" id="menu_tabs">
+                                
                             </ul>
                         </div>
                     </div>
-                </div> -->
-                <div class="row featured isotope" id="menu_container">
+                </div>
+                <div class="row" id="menu_container">
 
                 </div>
             </div>
@@ -379,13 +376,13 @@
         </footer>
         
         <!-- JQUERY -->
-        <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="js/vendor/jquery-1.11.2.min.js"></script><script src="js/class/menu.class.js"></script>
+        <script src="js/menu.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/isotope.pkgd.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script>
-        <script src="js/class/menu.class.js"></script>
-        <script src="js/menu.js"></script>
+
     </body>
 </html>

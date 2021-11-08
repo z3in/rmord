@@ -32,31 +32,7 @@ include'includes/connect.php';
             </div>
         </div>
 
-<!---Top HEader Section-->
-        <section class="header-top-section">
-            <div class="container">
-                <div class="row">
-                    <div  class="col-md-6">
-                        <div class="header-top-content">
-                            <ul class="nav nav-pills navbar-left">
-                                <li><a href="#"><i class="pe-7s-call"></i><span>0999-999-9999</span></a></li>
-                                <li><a href="#"><i class="pe-7s-mail"></i><span> resto@gmail.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div  class="col-md-6">
-                        <div class="header-top-menu">
-                            <ul class="nav nav-pills navbar-right">
-                                <li><a href="account.php">My Account</a></li>
-                                <li><a href="addcart.php">Cart</a></li>
-                                <li><a href="#">Checkout</a></li>
-                                <li><a href="loginpage.php"><i class="pe-7s-lock"></i>Login/Register</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <?php include('./header_strip.php')?>
 
 <!--Header-->
 <header class="header-section">
@@ -90,7 +66,7 @@ include'includes/connect.php';
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                         <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="addcart.php"><span> Cart &#8369-&nbsp;</span> <span class="shoping-cart">0</span></a></li>
+                        <li><a href="addcart.php"><span> Cart </span> <span class="shoping-cart">0</span></a></li>
                     </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
@@ -159,13 +135,13 @@ include'includes/connect.php';
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <p>Name</p>
-                                        <input type="text" id="name" name="name" class="form-control" id="name" placeholder="Name">
+                                        <input type="text" id="name" name="name" class="form-control" id="name" placeholder="Name" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group">
                                     <p>Contact number</p>
-                                        <input ttype="tel" name="contactno" class="form-control" id="contactno" placeholder="0999-000-0000" pattern="[0-9-9-7]{4}-[-5-2-4]{3}-[2-6-9-8]{2}" required>
+                                        <input ttype="tel" name="cnum" class="form-control" id="cnum" placeholder="0999-000-0000" required autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -173,13 +149,13 @@ include'includes/connect.php';
                                 <div class="col-md-6">
                                     <div class="input-group">
                                     <p>Date</p>
-                                        <input type="date" class="form-control" id="rdate" require>
+                                        <input type="date" class="form-control" id="rdate" require autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <p>Time</p>
-                                        <input type="time" class="form-control" id="rtime" require>
+                                        <input type="time" class="form-control" id="rtime" require autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -214,7 +190,7 @@ include'includes/connect.php';
                                         <p>Type of Reservation</p>
                                         <select name= "selectreservation" id="#"  class="form-control" required>
                                         <option value="Table Reservation">Table Reservation</option>
-                                        <option value="Table and Food Reservation">Table and Food Reservation</option>
+                                        <!-- <option value="Table and Food Reservation">Table and Food Reservation</option> -->
                                     </select>
 
                                     </div>
@@ -223,7 +199,7 @@ include'includes/connect.php';
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="input-group">
-                                        <textarea name="" id="" class="form-control" cols="30" rows="5" placeholder="Please state your other concerns regarding to your reservation.."></textarea>
+                                        <textarea  autocomplete="off" name="" id="" class="form-control" cols="30" rows="5" placeholder="Please state your other concerns regarding to your reservation.."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -341,5 +317,71 @@ include'includes/connect.php';
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script>
+
+        <script>
+			var form = document.querySelector("form");
+			form.addEventListener("submit", function(event) {
+			var data = new FormData(form);
+			
+			fetch('app/client/reservation.php',{method:"POST",body:data})
+			.then(data => data.json())
+			.then(data => {
+				if(data.response){
+					alert('Registration Submitted and will be Validated by our administrators')
+					window.location.href ="index.php"
+				}
+				if(!data.response){
+					if(data.hasOwnProperty("message")){
+						alert(data.message);
+					}
+				}
+			})
+			event.preventDefault();
+			}, false);
+
+		
+			const isNumericInput = (event) => {
+				const key = event.keyCode;
+				return ((key >= 48 && key <= 57) || // Allow number line
+					(key >= 96 && key <= 105) // Allow number pad
+				);
+			};
+
+			const isModifierKey = (event) => {
+				const key = event.keyCode;
+				return (event.shiftKey === true || key === 35 || key === 36) || // Allow Shift, Home, End
+					(key === 8 || key === 9 || key === 13 || key === 46) || // Allow Backspace, Tab, Enter, Delete
+					(key > 36 && key < 41) || // Allow left, up, right, down
+					(
+						// Allow Ctrl/Command + A,C,V,X,Z
+						(event.ctrlKey === true || event.metaKey === true) &&
+						(key === 65 || key === 67 || key === 86 || key === 88 || key === 90)
+					)
+			};
+
+			const enforceFormat = (event) => {
+				// Input must be of a valid number format or a modifier key, and not longer than ten digits
+				if(!isNumericInput(event) && !isModifierKey(event)){
+					event.preventDefault();
+				}
+			};
+
+			const formatToPhone = (event) => {
+				if(isModifierKey(event)) {return;}
+
+				const input = event.target.value.replace(/\D/g,'').substring(0,11); // First ten digits of input only
+				const areaCode = input.substring(0,4);
+				const middle = input.substring(4,7);
+				const last = input.substring(7,11);
+
+				if(input.length > 6){event.target.value = `${areaCode} ${middle}-${last}`;}
+				else if(input.length > 3){event.target.value = `${areaCode} ${middle}`;}
+				else if(input.length > 0){event.target.value = `${areaCode}`;}
+			};
+
+			const inputElement = document.getElementById('cnum');
+			inputElement.addEventListener('keydown',enforceFormat);
+			inputElement.addEventListener('keyup',formatToPhone);
+		</script>
     </body>
 </html>

@@ -91,37 +91,34 @@
               <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Cashiering module</p>
+                  <p>Cashiering</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="orderlist.php" class="nav-link">
+                  <i class="fa fa-cutlery nav-icon" aria-hidden="true"></i>
+                  <p>Order</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="" class="nav-link">
-                  <i class="fa fa-cutlery nav-icon" aria-hidden="true"></i>
-                  <p>Order Module</p>
+                  <i class="fa fa-ticket nav-icon" aria-hidden="true"></i>
+                  <p>Reservation</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="fa fa-ban nav-icon" aria-hidden="true"></i>
-                  <p>Cancelation Module</p>
+                  <p>Cancelation</p>
                 </a>
               </li>
               <!--Delivery Module -->
                 <li class="nav-item">
                   <a href="" class="nav-link">
                     <i class="far fa fa-motorcycle nav-icon" aria-hidden="true"> </i>
-                    <p>Delivery Module</p>
-                    <i class="right fas fa-angle-left"></i>
+                    <p>Delivery</p>
                   </a>
-                  <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                    <i class="fa fa-globe nav-icon" aria-hidden="true"></i>
-                    <p>Map</p>
-                    </a>
-                      </li>
-                    </ul>
                 </li>
                 </li>
               </ul>
@@ -211,6 +208,12 @@
                 <a href="gallery.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gallery Maintennace</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="tables.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tables</p>
                 </a>
               </li>
               </ul>

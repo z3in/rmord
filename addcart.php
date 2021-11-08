@@ -61,7 +61,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                         <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="addcart.php"><span> Cart &#8369-&nbsp;</span> <span class="shoping-cart">0</span></a></li>
+                        <li><a href="addcart.php"><span> Cart </span> <span class="shoping-cart">0</span></a></li>
                     </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
@@ -87,7 +87,10 @@
 
         <!--Cart Section-->
         <div class="cart">
+        
                 <div class="shopping-cart">
+                
+                    
                   <!-- Title -->
                   <div class="title">
                     Cart
@@ -115,47 +118,16 @@
                   </div>
                   <div id="cart_container"></div>
                   <div class="remove_checkout"> 
-                    <button><a href="#" class= "removebutton removebutton-primary">Remove</a></button>
-                    <button><a href="#" class= "checkoutbutton checkoutbutton-primary">Checkout</a></button>
+                      <div>
+                          <h2>Order Price : &#8369 <span id="total_order_price">0.00</span></h2>
+                      </div>
+                    <div style="text-align:right">
+                        <button><a href="#" class= "removebutton removebutton-primary">Remove</a></button>
+                        <button><a href="checkout.php" class= "checkoutbutton checkoutbutton-primary">Checkout</a></button>
+                    </div>
                   </div>
                 </div>
               </div>
-                <script type="text/javascript">
-                  $('.minus-btn').on('click', function(e) {
-                    e.preventDefault();
-                    var $this = $(this);
-                    var $input = $this.closest('div').find('input');
-                    var value = parseInt($input.val());
-            
-                    if (value > 1) {
-                      value = value - 1;
-                    } else {
-                      value = 0;
-                    }
-            
-                    $input.val(value);
-            
-                  });
-            
-                  $('.plus-btn').on('click', function(e) {
-                    e.preventDefault();
-                    var $this = $(this);
-                    var $input = $this.closest('div').find('input');
-                    var value = parseInt($input.val());
-            
-                    if (value < 100) {
-                      value = value + 1;
-                    } else {
-                      value =100;
-                    }
-            
-                    $input.val(value);
-                  });
-            
-                  $('.like-btn').on('click', function() {
-                    $(this).toggleClass('is-active');
-                  });
-                </script>
  <!--Get in Touch-->
  <section id="contactus" class="contact-section">
             <div class="container">
@@ -258,6 +230,12 @@
         <script src="js/custom.js"></script>
         <script src="js/class/cart.class.js"></script>
         <script src="js/cart_list.js"></script>
-        
+        <script>
+            if(!getCookie('user_id')){
+                window.location.href="loginpage.php"
+            }
+            
+        </script>
+                    
     </body>
 </html>

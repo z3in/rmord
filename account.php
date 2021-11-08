@@ -15,6 +15,14 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
         <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+        <style>
+            .nameacc .account_info{
+                margin:0 auto;
+                width:50%;
+            }    
+            .nameacc{ padding:50px;height:auto;}
+            .account_wrapper{background-color: #fff;padding:10px 25px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;}
+        </style>
     </head>
 
     <!--Body-->
@@ -29,30 +37,7 @@
             </div>
         </div>
 
-        <section class="header-top-section">
-            <div class="container">
-                <div class="row">
-                    <div  class="col-md-6">
-                        <div class="header-top-content">
-                            <ul class="nav nav-pills navbar-left">
-                                <li><a href="#"><i class="pe-7s-call"></i><span>0999-999-9999</span></a></li>
-                                <li><a href="#"><i class="pe-7s-mail"></i><span> resto@gmail.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div  class="col-md-6">
-                        <div class="header-top-menu">
-                            <ul class="nav nav-pills navbar-right">
-                                <li><a href="account.php">My Account</a></li>
-                                <li><a href="addcart.php">Cart</a></li>
-                                <li><a href="#">Checkout</a></li>
-                                <li><a href="loginpage.php"><i class="pe-7s-lock"></i>Login/Register</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <?php include('./header_strip.php')?>
 
         <!--Header again-->
         <header class="header-section">
@@ -81,21 +66,14 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                             <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                            <li><a href="addcart.php"><span> Cart &#8369-&nbsp;</span> <span class="shoping-cart">0</span></a></li>
+                            <li><a href="addcart.php"><span> Cart </span> <span class="shoping-cart">0</span></a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
             </nav>
         </header>
 
-        <section class="nameacc">
-            <div class="accicon">
-                <a href=""><img src="https://img.icons8.com/color/100/000000/test-account.png"/> Username <img src="https://img.icons8.com/ios-filled/50/000000/settings.png"/></a>
-            </div>
-        </section>
-
-<!--My Account Section-->
-<section class="acc-section">
+    <!-- <section class="acc-section">
     <div class="container">
         <div class="row">
             <div class="orders">
@@ -133,12 +111,32 @@
                         <span>DELIVERED</span>
                             <span>dsuigewidhasidhewiyfjsvusddgfduieugu</span>
                       </div>
-            </div>
+            </div> 
         </div>
-    </div>
+    </div>-->
  
 
-</section>
+    </section>
+        
+        <section class="nameacc">
+         <div class="account_info">
+            <div class="orders">
+                <a href="order_history.php">View all orders></a>
+            </div>
+            <div class="account_wrapper">
+                <h3>My Account</h3>
+                <p><label class="col-sm-5">Full name : </label><span id="displayfullname"></span></p>
+                <p><label class="col-sm-5">Username : </label><span id="displayusername"></span></p>
+                <p><label class="col-sm-5">Address : </label><span id="displayaddress"></span></p>
+                <p><label class="col-sm-5">Contact Number :  </label><span id="displaycontact"></span></p>
+                <p><label class="col-sm-5">Email : </label><span id="displayemail"></span></p>
+                <p><label class="col-sm-5">Date Joined : </label><span id="displayjoined"></span></p>
+            </div>
+         </div>
+        </section>
+
+<!--My Account Section-->
+
 
 
 
@@ -162,5 +160,21 @@
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script>
+        <script>
+            $(document).ready(() =>{
+                fetch(`app/client/auth.secure.php?request=myaccount&user_id=${getCookie('user_id')}`)
+                .then(data => data.json())
+                .then(data => {
+                    if(data.response){
+                        $("#displayfullname").text(`${data.list.fname} ${data.list.mname} ${data.list.lname}`)
+                        $("#displayusername").text(data.list.username)
+                        $("#displayaddress").text(`${data.list.street_add} ,${data.list.city_add} ${data.list.zip_add}`)
+                        $("#displaycontact").text(data.list.contact)
+                        $("#displayemail").text(data.list.email)
+                        $("#displayjoined").text(data.list.date_created)
+                    }
+                })
+            })
+        </script>
     </body>
 </html>

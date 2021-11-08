@@ -1,19 +1,17 @@
 <!-- Default box -->
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Identity Verification</h3>
+    <h3 class="card-title">List of New Orders</h3>
   </div>
   <div class="card-body">
     <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Fullname</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>ID</th>
-                    <th>Date Submitted</th>
+                    <th>Date</th>
+                    <th>Order ID</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
                     <th>Status</th>
-                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody id="table_verification">
@@ -35,39 +33,22 @@
                 </table>
   </div>
   <div class="card-footer">
-    Footer
   </div>
   <script type="text/javascript">
-
-    const approvePerson = (id,email) =>{
-      $('#preloader').show()
-        fetch(`includes/app/identity_verification.php?request=approve&id=${id}&email=${email}`)
-        .then(data => data.json())
-        .then(data => {
-            if(data.response == 1){
-              alert('user has been approved')
-              fetchList()
-              $('#preloader').hide()
-            }
-        })
-    }
-
     const fetchList = () =>{
-      fetch('includes/app/identity_verification.php?request=list&status=0')
+      fetch('includes/app/transactions.php?request=view_order')
     .then(data => data.json())
     .then(data => {
       if(data.response == 1){
           const container = document.querySelector("#table_verification");
           container.innerHTML = "";
-          const requestcontent = data.result.map(item =>{
+          const requestcontent = data.list.map(item =>{
               return `<tr>
-                          <td>${item.lname}, ${item.fname} ${item.mname}</td>
-                          <td>${item.contact}</td>
-                          <td>${item.email}</td>
-                          <td><a href="/rmord/app/upload/${item.photo_path}" target="_blank">VIEW</a></td>
                           <td>${item.date_created}</td>
-                          <td>${!parseInt(item.validated) ? "pending" : "active" }</td>
-                          <td>${!parseInt(item.validated) ? `<button class="btn btn-sm btn-success" id="${item.ID}" onclick="approvePerson(this.id,'${item.email}')" ><i class="fas fa-check"></i> approve </button> <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i> disapprove </button>` : ''}</td>
+                          <td>${item.payment_ref.replace("pay_","")}</td>
+                          <td>${item.quantity}</td>
+                          <td>${item.totalamount}</td>
+                          <td>${item.status}</td>
                       </tr>`
           })
 

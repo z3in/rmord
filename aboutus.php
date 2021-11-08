@@ -34,30 +34,7 @@
         </div>
 
 
-        <section class="header-top-section">
-            <div class="container">
-                <div class="row">
-                    <div  class="col-md-6">
-                        <div class="header-top-content">
-                            <ul class="nav nav-pills navbar-left">
-                                <li><a href="#"><i class="pe-7s-call"></i><span>0999-999-9999</span></a></li>
-                                <li><a href="#"><i class="pe-7s-mail"></i><span> resto@gmail.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div  class="col-md-6">
-                        <div class="header-top-menu">
-                            <ul class="nav nav-pills navbar-right">
-                                <li><a href="account.php">My Account</a></li>
-                                <li><a href="addcart.php">Cart</a></li>
-                                <li><a href="#">Checkout</a></li>
-                                <li><a href="loginpage.php"><i class="pe-7s-lock"></i>Login/Register</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <?php include('./header_strip.php')?>
 <!--Header again-->
 <header class="header-section">
             <nav class="navbar navbar-default">
@@ -88,7 +65,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right cart-menu">
                         <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="addcart.php"><span> Cart &#8369-&nbsp;</span> <span class="shoping-cart">0</span></a></li>
+                        <li><a href="addcart.php"><span> Cart </span> <span class="shoping-cart">0</span></a></li>
                     </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
@@ -483,5 +460,6 @@
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script>
+        
     </body>
 </html>

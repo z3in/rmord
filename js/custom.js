@@ -10,26 +10,13 @@ function destroyCookie(name) {
   document.cookie = `${name}= ; expires = Thu, 01 Jan 1970 00:00:00 GMT`
 }
 
-/*==============================
-   PRELOADER
-==============================*/
-(function($){
-    $(window).load(function() {
-	    $('#preloader').hide();
-        let nav_user = document.querySelector("#custom_nav_user");
-        if(nav_user){
-            if(getCookie('fullname')){
-              nav_user.innerHTML = ` <li><a href="account.php">My Account</a></li>
-                                    <li><a href="addcart.php">Cart</a></li>
-                                    <li><a href="#">Checkout</a></li>
-                                    <li><a href="logout.php">Logout</a></li>
-                                    `
-              return
-            }
-            nav_user.innerHTML = `<li><a href="loginpage.php"><i class="pe-7s-lock"></i>Login/Register</a></li>`
-        }
-    });
-})(jQuery);
+function showPreloader(){
+  $("#preloader").show()
+}
+
+function hidePreloader(){
+  $("#preloader").hide()
+}
 /*==============================
    SEARCH BUTTON SECRIPT
 ==============================*/
@@ -55,11 +42,34 @@ $(".search-btn").click(function(event){
 
 })(jQuery);
 
+const getCartContent = () =>{
+  fetch(`app/client/cart.php?request=list&user_id=${getCookie('user_id')}`)
+        .then(data=>data.json())
+        .then(data=>{
+          if(data.response){
+            let shoping = document.querySelectorAll(".shoping-cart");
+            var quantity = !data.hasOwnProperty("list")? 0 : data.list.length;
+            [].forEach.call(shoping, function(div) {
+              div.innerHTML = quantity;
+            });
+          }
+        })
+}
 /*==============================
     ISOTOPW WORK
 ==============================*/
 //(function($){
 $(window).load(function(){
+
+  
+
+  fetch(`app/client/auth.secure.php?request=check_validated&username=${getCookie('username')}`)
+    .then(data=>data.json())
+    .then(data=>{
+      if(data.response){
+      document.cookie=`validated=${data.list.validated};`
+      }
+    })
     var selectedCategory;
     var $grid = $('.featured').isotope({
         itemSelector: '.col-md-3',
@@ -71,7 +81,23 @@ $(window).load(function(){
                 return $( itemElem ).hasClass( selectedCategory ) ? 0 : 1;
             }
         }
-  });
+    });
+    $('#preloader').hide();
+    let nav_user = document.querySelector("#custom_nav_user");
+    if(nav_user){
+        if(getCookie('fullname')){
+          nav_user.innerHTML = ` <li><a href="account.php">My Account</a></li>
+                                <li><a href="addcart.php">Cart <span class="shoping-cart"></span></a></li>
+                                <li><a href="checkout.php">Checkout</a></li>
+                                <li><a href="logout.php">Logout</a></li>
+                                `
+          getCartContent()
+                                
+        }
+        if(!getCookie('fullname')){
+        nav_user.innerHTML = `<li><a href="loginpage.php"><i class="pe-7s-lock"></i>Login/Register</a></li>`
+        }
+    }
   var $items = $('.featured').find('.featured-items');
 
   $('.sort-button-group').on( 'click', '.button', function() {
@@ -105,6 +131,7 @@ $(window).load(function(){
   });
 
 });
+
 
 (function($){
     $('.featured').isotope({
