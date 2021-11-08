@@ -83,11 +83,12 @@ function getProduct($db){
 function updateToCart($db,$res){
     $time =  date('Y-m-d H:i:s');
     $res['quantity']++;
-    $sql = "UPDATE cart SET `quantity` = :quantity WHERE `user_id` = :user AND product_id = :prod";
+    $sql = "UPDATE cart SET `quantity` = :quantity WHERE `user_id` = :user AND product_id = :prod AND `status` = :stat";
     $data = [
         "quantity" => $res['quantity'],
         "user" => $res['user_id'],
-        "prod" => $res['product_id']
+        "prod" => $res['product_id'],
+        "stat" => "pending"
     ];
     $result = $db->prepare($sql);
     if($result->execute($data)){
