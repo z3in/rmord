@@ -78,7 +78,7 @@ $(document).ready(()=>{
 
 
     $('.removebutton').click((event)=>{
-        removeItem();
+        removeItems();
         event.preventDefault()
     })
 

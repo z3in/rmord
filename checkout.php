@@ -140,6 +140,9 @@
                     </div>
                 
                 </div>
+                <div style="display:flex;justify-content:center;flex-direction:column;align-items:center">
+                    <small>GCASH is the only payment of method allowed</small>
+                </div>
                 <div style="width:50%;margin:10px auto">
                     <button style="width:100%;padding:1em;display:block;" id="btnPayment">Make Payment and Place Order</button>
                 </div>
@@ -241,7 +244,7 @@
     </div>
 
         <!-- JQUERY -->
-        <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="js/vendor/jquery-1.11.2.min.js"></>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/isotope.pkgd.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
