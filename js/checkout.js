@@ -22,8 +22,40 @@ const getList = () =>{
             
         })
 }
+function distanceTwoPoints(p3, p4){
+    return (new google.maps.geometry.spherical.computeDistanceBetween(p3, p4) / 1000); //dividing by 1000 to get Kilometers
+}
 
+    
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    var business_add = new google.maps.LatLng(13.949745,120.7048262)
+    var current_loc = new google.maps.LatLng(marker.position.lat(),marker.position.lng())
+    directionsService
+      .route({
+        origin:business_add,
+        destination: current_loc,
+        travelMode: google.maps.TravelMode.DRIVING,
+      })
+      .then((response) => {
+        directionsRenderer.setDirections(response);
+        directionsRenderer.setDirections(response); // Add route to the map
+        var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+        if (!directionsData) {
+          window.alert('Directions request failed');
+          return;
+        }
+        else {
+          document.querySelector("#delivery_details").innerHTML = " Driving distance is " + directionsData.distance.text + "(" + directionsData.duration.text + ")"
+          document.querySelector("#delivery_fee").innerHTML = "N/A" // replace with fetch for delivery prices
+        }
+      })
+      .catch((e) => window.alert("Directions request failed due to " + status));
+
+  }
+
+ 
 function initMap() {
+    
     navigator.geolocation.getCurrentPosition(function(position) {
         let coords = { lat: position.coords.latitude, lng: position.coords.longitude }
         map = new google.maps.Map(document.getElementById("map"), {
@@ -35,12 +67,29 @@ function initMap() {
             map,
             draggable:true,
             title: "Delivery Address!",
-        });
+        });        
+        
+        google.maps.event.addListener(map, 'click', function(event) {
+            marker.setPosition(event.latLng); 
+         });
+    
+        
     })
 }
+
+const onChangeHandler = function () {
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+};
+
+$("#btnDeliveryAdd").click(onChangeHandler)
+
 const setMap = (coords) =>{
     $("#ifrMaps").attr("src",`"https://maps.google.com/maps/embed/v1/place?key=AIzaSyDKEGwhMZ_UXrD0mlU3RCkCrE03CgVtAFA&q=${coords.lat},${coords.long}`)
 }
+
 $(document).ready(()=>{
     getList()
     

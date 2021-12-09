@@ -130,7 +130,12 @@
                 <div id="map"></div>
 
                 <div style="margin-top:1em"><button style="width:50%;padding:1em;display:block;margin:0 auto" id="btnLocation"><a href="#">use current location</a></button></div>
+                <div style="margin-top:1em"><button style="width:50%;padding:1em;display:block;margin:0 auto" id="btnDeliveryAdd"><a href="#">set location as delivery address</a></button></div>
                 <!--Title head of the cart-->
+                <div style="border-top:1px solid teal;margin-top:1em"><h2 style="margin:10px auto;width:50%">Delivery fee</h2></div>
+                <div style="display: flex;width: 50%;margin: 0 auto;justify-content: space-between;">
+                    <p id="delivery_details"></p><p id="delivery_fee"></p>
+                </div>
                 <div style="border-top:1px solid teal;margin-top:1em"><h2 style="margin:10px auto;width:50%">Product</h2></div>
                 <ul id="cart_container"></ul>
                 
@@ -244,7 +249,7 @@
     </div>
 
         <!-- JQUERY -->
-        <script src="js/vendor/jquery-1.11.2.min.js"></>
+        <script src="js/vendor/jquery-1.11.2.min.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/isotope.pkgd.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
@@ -255,7 +260,7 @@
         <script src="js/checkout.js"></script>
         <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
         <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKEGwhMZ_UXrD0mlU3RCkCrE03CgVtAFA&callback=initMap"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKEGwhMZ_UXrD0mlU3RCkCrE03CgVtAFA&libraries=geometry&callback=initMap"
         async
         ></script>
     </body>

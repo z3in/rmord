@@ -211,6 +211,18 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="address.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Address Reference</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="delivery.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Delivery fee</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="tables.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tables</p>
