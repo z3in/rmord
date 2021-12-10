@@ -27,10 +27,11 @@ function distanceTwoPoints(p3, p4){
 }
 
     
-function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     var business_add = new google.maps.LatLng(13.949745,120.7048262)
     var current_loc = new google.maps.LatLng(marker.position.lat(),marker.position.lng())
-    directionsService
+    
+    var distance = await directionsService
       .route({
         origin:business_add,
         destination: current_loc,
@@ -47,10 +48,11 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         else {
           document.querySelector("#delivery_details").innerHTML = " Driving distance is " + directionsData.distance.text + "(" + directionsData.duration.text + ")"
           document.querySelector("#delivery_fee").innerHTML = "N/A" // replace with fetch for delivery prices
+          return directionsData.distance.text;
         }
       })
       .catch((e) => window.alert("Directions request failed due to " + status));
-
+      return await distance;
   }
 
  
@@ -68,20 +70,64 @@ function initMap() {
             draggable:true,
             title: "Delivery Address!",
         });        
-        
+        const geocoder = new google.maps.Geocoder();
+        const infowindow = new google.maps.InfoWindow();
         google.maps.event.addListener(map, 'click', function(event) {
             marker.setPosition(event.latLng); 
+            geocodeLatLng(geocoder, map, infowindow, event.latLng);
          });
     
         
     })
 }
 
-const onChangeHandler = function () {
+function geocodeLatLng(geocoder, map, infowindow,latLng) {
+    
+    const input = latLng
+    // const latlngStr = input.split(",", 2);
+    // const latlng = {
+    // lat: parseFloat(latlngStr[0]),
+    // lng: parseFloat(latlngStr[1]),
+    // };
+    const latlng = latLng
+
+    geocoder
+    .geocode({ location: latlng })
+    .then((response) => {
+    if (response.results[0]) {
+        // map.setZoom(11);
+        // infowindow.setContent(response.results[0].formatted_address);
+        // infowindow.open(map, marker);
+        console.log(response)
+        document.querySelector("#address_complete").innerHTML = response.results[0].formatted_address;
+    } else {
+        window.alert("No results found");
+    }
+    })
+    .catch((e) => window.alert("Geocoder failed due to: " + e));
+}
+
+const onChangeHandler = async function () {
     const directionsService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer();
+
+    
+
+    
+
     directionsRenderer.setMap(map);
-    calculateAndDisplayRoute(directionsService, directionsRenderer);
+    var distance = calculateAndDisplayRoute(directionsService, directionsRenderer);
+    var raw_distance = await distance
+    var km = raw_distance.toString().replace("km","");
+    fetch('app/client/delivery.php?request=list')
+    .then(data => data.json())
+    .then(data => {
+        if(data.hasOwnProperty("list")){
+            let closest = data.list.reverse().find(e => e.KM <= km)
+            document.querySelector("#delivery_fee").innerHTML = `Php ` + parseFloat(closest.PRICE).toFixed(2);
+        }
+       
+    })
 };
 
 $("#btnDeliveryAdd").click(onChangeHandler)
@@ -130,6 +176,7 @@ $(document).ready(()=>{
                             coord_lat : marker.position.lat(),
                             coord_long : marker.position.lng(),
                             total_amount : parseFloat($("#total_order_price").text()),
+                            payment_type : $('input[name="payment_type"]:checked').val(),
                             quantity : quantity,
                             user_id : getCookie('user_id')
                         }
@@ -138,7 +185,7 @@ $(document).ready(()=>{
                         .then(data => {
                             if(data.response){
                                 alert (data.message)
-                                return window.location.href="addtocart.php"
+                                return window.location.href="addcart.php"
                             }
                         })
                     })
@@ -214,6 +261,29 @@ $(document).ready(()=>{
 
     document.querySelector("#btnPayment").addEventListener("click",async function(event){
         
+        if(!confirm("Place order ?")){
+
+        }
+        if($('input[name="payment_type"]:checked').val() === "cash"){
+            data = {
+                payment_ref : generateUUID(),
+                status : "cash on delivery",
+                coord_lat : marker.position.lat(),
+                coord_long : marker.position.lng(),
+                total_amount : parseFloat($("#total_order_price").text()),
+                payment_type : $('input[name="payment_type"]:checked').val(),
+                quantity : quantity,
+                user_id : getCookie('user_id')
+            }
+            var option = createRequestOption("POST",data)
+            requestURL(`app/client/transactions.php?request=place_order`,option)
+            .then(data => {
+                if(data.response){
+                    alert (data.message)
+                    return window.location.href="addcart.php"
+                }
+            })
+        }else{
         let raw =  {
             "data": {
                 "attributes" : {
@@ -236,4 +306,22 @@ $(document).ready(()=>{
         document.cookie = `source=${new URL(pm.data.attributes.redirect.checkout_url).searchParams.get('id')}; expires=Fri, 31 Dec 9999 23:59:59 GMT`
         window.location.href = pm.data.attributes.redirect.checkout_url;
         
+        }
+        
     })
+
+    function generateUUID() { // Public Domain/MIT
+        var d = new Date().getTime();//Timestamp
+        var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+        return 'xxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16;//random number between 0 and 16
+            if(d > 0){//Use timestamp until depleted
+                r = (d + r)%16 | 0;
+                d = Math.floor(d/16);
+            } else {//Use microseconds since page-load if supported
+                r = (d2 + r)%16 | 0;
+                d2 = Math.floor(d2/16);
+            }
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+      }

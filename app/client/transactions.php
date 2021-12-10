@@ -50,7 +50,7 @@ function viewOrders($db){
 
 
 function placeOrder($db,$data){
-    $sql = "INSERT INTO order_transactions(totalamount,`status`,quantity,coord_lat,coord_long,payment_ref,`user_id`)VALUES(:total,:stat,:quantity,:lat,:long,:payment,:user)";
+    $sql = "INSERT INTO order_transactions(totalamount,`status`,quantity,coord_lat,coord_long,payment_ref,`user_id`,payment_method)VALUES(:total,:stat,:quantity,:lat,:long,:payment,:user,:pay_type)";
     $result = $db->prepare($sql);
     $params = [
         "total" => $data['total_amount'],
@@ -59,7 +59,8 @@ function placeOrder($db,$data){
         "lat" => $data['coord_lat'],
         "long" => $data['coord_long'],
         "payment" => $data['payment_ref'],
-        "user" => $data['user_id']
+        "user" => $data['user_id'],
+        "pay_type" => $data['payment_type']
     ];
     if($result->execute($params)){
         return $db->lastInsertId();

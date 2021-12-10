@@ -125,11 +125,12 @@
                 <div class="title">
                 Order Summary
                 </div>
-                <div style="border-bottom:1px solid teal;"><h2 style="margin:10px auto;width:50%;">Address</h2></div>
+                <div style="border-bottom:1px solid teal;"><div style="margin:10px auto;width:50%;display:flex;flex-direction:row;justify-content:space-between;align-items:center"><h2>Address</h2><span id="address_complete" style="width:45%"></span></div></div>
+                
                 <!-- <div><iframe width="100%;" height="300" id="ifrMaps" src=""></iframe></div>  -->
                 <div id="map"></div>
 
-                <div style="margin-top:1em"><button style="width:50%;padding:1em;display:block;margin:0 auto" id="btnLocation"><a href="#">use current location</a></button></div>
+                <div style="margin-top:1em"><button style="width:50%;padding:1em;display:block;margin:0 auto" id="btnLocation"><a href="#">reset location</a></button></div>
                 <div style="margin-top:1em"><button style="width:50%;padding:1em;display:block;margin:0 auto" id="btnDeliveryAdd"><a href="#">set location as delivery address</a></button></div>
                 <!--Title head of the cart-->
                 <div style="border-top:1px solid teal;margin-top:1em"><h2 style="margin:10px auto;width:50%">Delivery fee</h2></div>
@@ -143,14 +144,27 @@
                     <div style="width:100%;background-color:#b5ebed;text-align:center;">
                         <h2>Order Price : &#8369 <span id="total_order_price">0.00</span></h2>
                     </div>
-                
                 </div>
-                <div style="display:flex;justify-content:center;flex-direction:column;align-items:center">
-                    <small>GCASH is the only payment of method allowed</small>
+                <div style="display:flex;flex-direction:column;">
+                    <!-- <small>GCASH is the only payment of method allowed</small> -->
+                    <div style="border-top:1px solid teal"><h2 style="margin:10px auto;width:50%">Select Payment Method</h2></div>
+                    <div style="width:50%;margin:0 auto;">
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_type" value="cash" checked>
+                    <label class="form-check-label" for="cash">
+                        CASH ON DELIVERY
+                    </label>
+                    </div>
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_type" value="gcash">
+                    <label class="form-check-label" for="gcash">
+                        GCASH
+                    </label>
+                    </div>
+                    </div>
                 </div>
                 <div style="width:50%;margin:10px auto">
                     <button style="width:100%;padding:1em;display:block;" id="btnPayment">Make Payment and Place Order</button>
-                </div>
             </div>
             </div>
  <!--Get in Touch-->
