@@ -7,9 +7,9 @@ $CategoryID = $_POST['CategoryID'];
 $SubCategoryID = $_POST['SubCategoryID'];
 $ProductPrice = $_POST['ProductPrice'];
 $SRP = $_POST['SRP'];
-$filepath = "../app/upload/" . $_FILES["Photo"]["name"];
+$filepath = "app/upload/" . $_FILES["Photo"]["name"];
 
-if(move_uploaded_file($_FILES['Photo']['tmp_name'], '../'.$filepath)){
+if(move_uploaded_file($_FILES['Photo']['tmp_name'], '../../'.$filepath)){
 
           echo 'Files has uploaded';
 };

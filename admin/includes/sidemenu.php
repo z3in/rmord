@@ -122,7 +122,7 @@
                 </li>
               <!--Delivery Module -->
               <li class="nav-item">
-                  <a href="orderlist.php?stat=delivery" class="nav-link">
+                  <a href="orderlist.php?stat=completed" class="nav-link">
                     <i class="far fa fa-check nav-icon" aria-hidden="true"> </i>
                     <p>Completed Order</p>
                   </a>
