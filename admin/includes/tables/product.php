@@ -35,7 +35,7 @@
                                  
                                   <td><?php echo $row['ProductPrice'];?></td>
                                   <td><?php echo $row['SRP'];?></td>
-                                  <td><img src ="<?php echo $row['photo'];?>" height="50px" width="50px"/></td>
+                                  <td><img src ="<?php echo '../' . $row['photo'];?>" height="50px" width="50px"/></td>
                                   <td>
                                     <a class="btn btn-success id" href='edit_product.php?id=<?php echo $row['ID'];?>'>Edit</a>
                                     <a href="functions/delproduct.php?id=<?php echo $row['ID'];?>" class="btn btn-danger">Delete</a>

@@ -48,7 +48,9 @@ async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         else {
           document.querySelector("#delivery_details").innerHTML = " Driving distance is " + directionsData.distance.text + "(" + directionsData.duration.text + ")"
           document.querySelector("#delivery_fee").innerHTML = "N/A" // replace with fetch for delivery prices
+          
           return directionsData.distance.text;
+          
         }
       })
       .catch((e) => window.alert("Directions request failed due to " + status));
@@ -98,7 +100,6 @@ function geocodeLatLng(geocoder, map, infowindow,latLng) {
         // map.setZoom(11);
         // infowindow.setContent(response.results[0].formatted_address);
         // infowindow.open(map, marker);
-        console.log(response)
         document.querySelector("#address_complete").innerHTML = response.results[0].formatted_address;
     } else {
         window.alert("No results found");
@@ -125,6 +126,9 @@ const onChangeHandler = async function () {
         if(data.hasOwnProperty("list")){
             let closest = data.list.reverse().find(e => e.KM <= km)
             document.querySelector("#delivery_fee").innerHTML = `Php ` + parseFloat(closest.PRICE).toFixed(2);
+            var total_order = document.querySelector('#total_order_price')
+            var price = parseInt(total_order.innerText) + parseInt(closest.PRICE);
+            total_order.innerHTML = parseFloat(price).toFixed(2)
         }
        
     })

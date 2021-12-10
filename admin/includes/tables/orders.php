@@ -12,6 +12,8 @@
                     <th>Quantity</th>
                     <th>Amount</th>
                     <th>Status</th>
+                    <th>Payment method</th>
+                    <th>change status to</th>
                   </tr>
                   </thead>
                   <tbody id="table_verification">
@@ -42,7 +44,9 @@
       if(data.response == 1){
           const container = document.querySelector("#table_verification");
           container.innerHTML = "";
-          const requestcontent = data.list.map(item =>{
+          let params = (new URL(document.location)).searchParams;
+          let filter = params.get('stat');
+          const requestcontent = data.list.filter(item => item.status === filter).map(item =>{
               return `<tr>
                           <td>${item.date_created}</td>
                           <td>${item.payment_ref.replace("pay_","")}</td>
@@ -50,12 +54,18 @@
                           <td>${item.totalamount}</td>
                           <td>${item.status}</td>
                           <td>${item.payment_method}</td>
+                          <td>${item.status === "pending" ? '<button class="btn btn-info">for delivery</button>' : item.status === "for delivery" ? '<button class="btn btn-success">complete order</button>' : null}</td>
                       </tr>`
           })
 
           requestcontent.forEach(el=>{
               container.innerHTML += el
           })
+
+          if(requestcontent.length < 1){
+            container.innerHTML +=`<tr>
+                          <td colspan="7" style="text-align:center">No Orders Found</td>`
+          }
       }
     })
     }
