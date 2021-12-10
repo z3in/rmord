@@ -37,6 +37,17 @@
   <div class="card-footer">
   </div>
   <script type="text/javascript">
+
+    const status_change = (id,stat) =>{
+      fetch(`includes/app/transactions.php?request=update_order&id=${id}&stats=${stat}`)
+    .then(data => data.json())
+    .then(data => {
+      if(data.response == 1){
+        alert(data.message);
+        fetchList()
+      }
+      })
+    }
     const fetchList = () =>{
       fetch('includes/app/transactions.php?request=view_order')
     .then(data => data.json())
@@ -54,7 +65,7 @@
                           <td>${item.totalamount}</td>
                           <td>${item.status}</td>
                           <td>${item.payment_method}</td>
-                          <td>${item.status === "pending" ? '<button class="btn btn-info">for delivery</button>' : item.status === "for delivery" ? '<button class="btn btn-success">complete order</button>' : null}</td>
+                          <td>${item.status === "pending" ? `<button class="btn btn-info" onclick="status_change(${item.ID},'delivery')">for delivery</button> &nbsp;<button class="btn btn-danger" onclick="status_change(${item.ID},'cancelled')">cancel</button>` : item.status === "delivery" ? `<button class="btn btn-success"  onclick="status_change(${item.ID},'completed')">complete order</button> &nbsp;<button class="btn btn-danger"  onclick="status_change(${item.ID},'cancelled')">cancel</button>` : null}</td>
                       </tr>`
           })
 

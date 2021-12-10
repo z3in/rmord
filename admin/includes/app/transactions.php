@@ -10,6 +10,19 @@ $time =  date('Y-m-d H:i:s');
 switch($req){
     case 'check_reservation' : 
         return;
+
+
+    case 'update_order' : 
+        $sql = "UPDATE order_transactions SET `status` =  :stats WHERE ID = :id";
+        $result = $db->prepare($sql);
+        $data['id'] = $_GET['id'];
+        $data['stats'] = $_GET['stats'];
+        $result->execute($data);
+        if($result){
+                return print_r(json_encode(array("response" => 1, "message" => "Status has been changed!", "timestamp" => $time)));
+        }
+        return print_r(json_encode(array("response" => 0, "message" => "something went wrong. unable place order!", "timestamp" => $time)));
+
     case 'view_order': 
         $result = viewAllOrders($db);
         $response = Array();
