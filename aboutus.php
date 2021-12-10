@@ -384,9 +384,9 @@
                             </div>
                             <div class="social-media">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="https://web.facebook.com/DavidsGrillbyBe4/menu/"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/davids_grill"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/davidsgrill_2021/"><i class="fa fa-instagram"></i></a></li>
                                 </ul>
                             </div>
                         </div>

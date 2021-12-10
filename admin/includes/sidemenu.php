@@ -95,7 +95,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="orderlist.php" class="nav-link">
+                <a href="orderlist.php?stat=pending" class="nav-link">
                   <i class="fa fa-cutlery nav-icon" aria-hidden="true"></i>
                   <p>Order</p>
                 </a>
@@ -108,16 +108,23 @@
               </li>
 
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="orderlist.php?stat=cancelled" class="nav-link">
                   <i class="fa fa-ban nav-icon" aria-hidden="true"></i>
                   <p>Cancelation</p>
                 </a>
               </li>
               <!--Delivery Module -->
                 <li class="nav-item">
-                  <a href="" class="nav-link">
+                  <a href="orderlist.php?stat=delivery" class="nav-link">
                     <i class="far fa fa-motorcycle nav-icon" aria-hidden="true"> </i>
                     <p>Delivery</p>
+                  </a>
+                </li>
+              <!--Delivery Module -->
+              <li class="nav-item">
+                  <a href="orderlist.php?stat=delivery" class="nav-link">
+                    <i class="far fa fa-check nav-icon" aria-hidden="true"> </i>
+                    <p>Completed Order</p>
                   </a>
                 </li>
                 </li>

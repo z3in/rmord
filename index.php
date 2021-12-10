@@ -137,25 +137,22 @@ include 'includes/connect.php'
         <section class="service-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s">
+                    <div class="col-md-4 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s">
                         <div class="service-item">
                             <i><img src="https://img.icons8.com/plumpy/64/000000/thanksgiving-turkey.png"/></i>
                             <h3>Chicken</h3>
-                            <p>Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu.</p>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.2s">
+                    <div class="col-md-4 col-sm-6 wow fadeInRight animated" data-wow-delay="0.2s">
                         <div class="service-item">
                             <i><img src="https://img.icons8.com/ios-filled/64/000000/steak-rare.png"/></i>
                             <h3>Pork</h3>
-                            <p>Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu.</p>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.3s">
+                    <div class="col-md-4 col-sm-6 wow fadeInRight animated" data-wow-delay="0.3s">
                         <div class="service-item">
                             <i><img src="https://img.icons8.com/glyph-neue/64/000000/prawn.png"/></i>
                             <h3>Seafoods</h3>
-                            <p>Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu.</p>
                         </div>
                     </div>
                 </div>
@@ -476,14 +473,14 @@ include 'includes/connect.php'
                             <p>providing you good service and food is our desire and job we would love to talk to you </p>
                             <div class="contact-info">
                                 <p><b>Main Office:</b> 396 Brgy. Santol</p>
-                                <p><b>Phone:</b> 1.555.555.5555</p>
-                                <p><b>Email:</b> resto@gmail.com</p>
+                                <p><b>Phone:</b> 09975242698</p>
+                                <p><b>Email:</b> davidsgrillrestosy2021@gmail.com</p>
                             </div>
                             <div class="social-media">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="https://web.facebook.com/DavidsGrillbyBe4/menu/"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/davids_grill"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/davidsgrill_2021/"><i class="fa fa-instagram"></i></a></li>
                                 </ul>
                             </div>
                         </div>

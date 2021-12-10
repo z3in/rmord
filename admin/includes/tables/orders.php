@@ -49,6 +49,7 @@
                           <td>${item.quantity}</td>
                           <td>${item.totalamount}</td>
                           <td>${item.status}</td>
+                          <td>${item.payment_method}</td>
                       </tr>`
           })
 
