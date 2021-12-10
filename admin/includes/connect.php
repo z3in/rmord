@@ -4,7 +4,7 @@
     $db_user		= 'root';
     $db_pass		= '';
     $db_database	= 'oroars';
-$production = true;
+$production = false;
 /* End config */
 
 if($production){

@@ -172,7 +172,7 @@ $(document).ready(()=>{
                     .then(data =>{
                         data = {
                             payment_ref : data.data.id,
-                            status : data.data.attributes.status,
+                            status : "pending",
                             coord_lat : marker.position.lat(),
                             coord_long : marker.position.lng(),
                             total_amount : parseFloat($("#total_order_price").text()),
@@ -267,7 +267,7 @@ $(document).ready(()=>{
         if($('input[name="payment_type"]:checked').val() === "cash"){
             data = {
                 payment_ref : generateUUID(),
-                status : "cash on delivery",
+                status : "pending",
                 coord_lat : marker.position.lat(),
                 coord_long : marker.position.lng(),
                 total_amount : parseFloat($("#total_order_price").text()),
