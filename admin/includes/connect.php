@@ -1,8 +1,8 @@
 <?php
 /* Database config */
-    $db_host		= '127.0.0.1';
-    $db_user		= 'remote';
-    $db_pass		= 'TUBoYWJhaGFiYW5nUEA1NXcwcmQxdDAh';
+    $db_host		= 'localhost';
+    $db_user		= 'root';
+    $db_pass		= '';
     $db_database	= 'oroars';
 $production = true;
 /* End config */
