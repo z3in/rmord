@@ -129,7 +129,7 @@ include'includes/connect.php';
                         </div>
                     </div>
                     <div class="col-md-6 wow fadeInRight animated">
-                        <form method='POST' action='admin/reservation.php' class="contact-form">
+                        <form name="reservation" class="contact-form">
                             <div class="row">
                             <h2 class="heading heading-yellow"> Reservation Online </h2> 
                                 <div class="col-md-6">
@@ -207,7 +207,7 @@ include'includes/connect.php';
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="input-group">
-                                        <input type="submit" class="contact-submit" value="Submit" />
+                                        <input type="submit" id="btn_res_submit" class="contact-submit" value="Submit" />
                                         <input type="submit" class="contact-submit" value="Cancel" />
                                     </div>
                                 </div>
@@ -319,15 +319,16 @@ include'includes/connect.php';
         <script src="js/custom.js"></script>
 
         <script>
-			var form = document.querySelector("form");
-			form.addEventListener("submit", function(event) {
+			var form = document.querySelector("form[name='reservation']");
+			form.addEventListener("submit",function (event) {
+            event.preventDefault();
 			var data = new FormData(form);
 			
 			fetch('app/client/reservation.php',{method:"POST",body:data})
 			.then(data => data.json())
 			.then(data => {
 				if(data.response){
-					alert('Registration Submitted and will be Validated by our administrators')
+					alert('Reservation Submitted')
 					window.location.href ="index.php"
 				}
 				if(!data.response){
@@ -336,7 +337,7 @@ include'includes/connect.php';
 					}
 				}
 			})
-			event.preventDefault();
+			
 			}, false);
 
 		

@@ -10,10 +10,10 @@
     <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Series</th>
+                    <!-- <th>Series</th> -->
                     <th>Product Name</th>
                     <th>Category</th>
-                    <th>Sub-Category</th>
+                    <!-- <th>Sub-Category</th> -->
                     <th>Product Price</th>
                     <th>SRP</th>
                     <th>Photo</th>
@@ -29,10 +29,10 @@
                     ?>
                                 <tr>
 
-                                  <td><?php echo $row['series'];?></td>
+                                  <!-- <td></td> -->
                                   <td><?php echo $row['ProductName'];?></td>
                                   <td><?php echo $row['CategoryName'];?></td>
-                                  <td><?php echo $row['SubCategoryName'];?></td>
+                                 
                                   <td><?php echo $row['ProductPrice'];?></td>
                                   <td><?php echo $row['SRP'];?></td>
                                   <td><img src ="<?php echo $row['photo'];?>" height="50px" width="50px"/></td>
