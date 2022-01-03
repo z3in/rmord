@@ -5,7 +5,7 @@
           <input type="text" class="form-control" name='ProductName' placeholder="ProductName">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Category ID</label>
+          <label for="exampleInputPassword1">Category</label>
           <select class="form-control" name='CategoryID' id="CategoryID" required>
             <option value=""></option>
 
@@ -25,11 +25,11 @@
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Product Price</label>
-          <input type="text" class="form-control" id="" name='ProductPrice' placeholder="ProductPrice">
+          <input type="text" class="form-control" id="" onkeyup="document.querySelector('#input_srp').value = parseFloat(parseInt(this.value) * 1.2).toFixed(2)" name='ProductPrice' placeholder="ProductPrice">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">SRP</label>
-          <input type="text" class="form-control" id="" name='SRP' placeholder="SRP">
+          <input type="text" class="form-control" id="input_srp" name='SRP' placeholder="SRP" disabled=true style="background:#c2c2c2">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Photo</label>
