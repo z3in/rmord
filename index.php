@@ -16,6 +16,7 @@ include 'includes/connect.php'
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
             <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
@@ -73,21 +74,7 @@ include 'includes/connect.php'
             </nav>
         </header>
 
-<!--Search Section to -->
-        <section class="search-section">
-            <div class="container">
-                <div class="row subscribe-from">
-                    <div class="col-md-12">
-                        <form class="form-inline col-md-12 wow fadeInDown animated">
-                            <div class="form-group">
-                                <input type="email" class="form-control subscribe" id="email" placeholder="Search...">
-                                <button class="suscribe-btn" ><i class="pe-7s-search"></i></button>
-                            </div>
-                        </form><!-- end /. form -->
-                    </div>
-                </div><!-- end of/. row -->
-            </div><!-- end of /.container -->
-        </section><!-- end of /.news letter section -->
+        <?php include('./search_option.php') ?>
 
         <!---Yung nagsaslide sa una-->
         <section class="slider-section">
@@ -137,25 +124,22 @@ include 'includes/connect.php'
         <section class="service-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s">
+                    <div class="col-md-4 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s">
                         <div class="service-item">
                             <i><img src="https://img.icons8.com/plumpy/64/000000/thanksgiving-turkey.png"/></i>
                             <h3>Chicken</h3>
-                            <p>Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu.</p>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.2s">
+                    <div class="col-md-4 col-sm-6 wow fadeInRight animated" data-wow-delay="0.2s">
                         <div class="service-item">
                             <i><img src="https://img.icons8.com/ios-filled/64/000000/steak-rare.png"/></i>
                             <h3>Pork</h3>
-                            <p>Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu.</p>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.3s">
+                    <div class="col-md-4 col-sm-6 wow fadeInRight animated" data-wow-delay="0.3s">
                         <div class="service-item">
                             <i><img src="https://img.icons8.com/glyph-neue/64/000000/prawn.png"/></i>
                             <h3>Seafoods</h3>
-                            <p>Lorem ipsum dolor sit amet, vix erat audiam ei. Cum doctus civibus efficiantur in. Nec id tempor imperdiet deterruisset, doctus volumus explicari qui ex, appareat similique an usu.</p>
                         </div>
                     </div>
                 </div>
@@ -163,137 +147,26 @@ include 'includes/connect.php'
         </section>
 
 <!--New Recipe-->
-        <section class="new-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="titie-section wow fadeInDown animated ">
-                            <h1>NEW Recipe</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                  <?php
-                    $datatable = "SELECT * FROM product";
-                    $result = $db->prepare($datatable);
-                    $result->execute();
-                    for($i=0; $row = $result->fetch(); $i++){
-                  ?>
-                    <div class="col-md-3 col-sm-6 wow fadeInLeft animated" data-wow-delay="0.4s">
-                        <div class="product-item">
-                            <img src="admin/<?php echo $row['photo'];?>" class="img-responsive" width="255" height="322" alt="">
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3><?php echo $row['ProductName'];?></h3>
-                                    <span>&#8369 <?php echo $row['SRP'];?></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                  <?php }?>
-                </div>
-            </div>
-        </section>
-
-<!--Featured dish-->
         <section class="featured-section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="titie-section wow fadeInDown animated ">
-                            <h1>FEATURED Dishes</h1>
+                            <h1>Dishes we offer</h1>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-
                     <div class="col-md-12">
                         <div class="filter-menu">
-                            <ul class="button-group sort-button-group">
-                                <li class="button active" data-category="all">All<span>3</span></li>
-                                <li class="button" data-category="cat-1">All Day Breakfast<span>1</span></li>
-                                <li class="button" data-category="cat-2">Value Meal<span>1</span></li>
-                                <li class="button" data-category="cat-3">Sizzling Plate<span>1</span></li>
+                            <ul class="button-group sort-button-group" id="menu_tabs">
+                                
                             </ul>
                         </div>
                     </div>
                 </div>
+                <div class="row" id="menu_container">
 
-
-                <div class="row featured isotope">
-                  <?php
-                    $datatable = "SELECT * FROM product";
-                    $result = $db->prepare($datatable);
-                    $result->execute();
-                    for($i=0; $row = $result->fetch(); $i++){
-                  ?>
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-2 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="admin/<?php echo $row['photo'];?>" class="img-responsive" width="255" height="322" alt="">
-                            <div class="sell-meta">
-                            </div>
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                  <h3><?php echo $row['ProductName'];?></h3>
-                                  <span>&#8369 <?php echo $row['SRP'];?></span>
-                                </a>
-                            </div>
-                            </div>
-                        </div>
-                      <?php }?>
-                    </div>
-     
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-1 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="menu/All day Breakfast/ADBPorkTocino.png" class="img-responsive" width="255" height="322" alt="">
-                            <div class="sell-meta">
-                            </div>
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>Pork Tocino</h3>
-                                    <span>&#8369 99.00</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12 cat-3 featured-items isotope-item">
-                        <div class="product-item">
-                            <img src="menu/SizzlingPlate/SPTBoneSteak.png" class="img-responsive" width="255" height="322" alt="">
-                            <div class="sell-meta">
-                            </div>
-                            <div class="product-hover">
-                                <div class="product-meta">
-                                    <br>
-                                    <a href="#"><i class="pe-7s-cart"></i>Add to Cart</a>
-                                </div>
-                            </div>
-                            <div class="product-title">
-                                <a href="#">
-                                    <h3>T-Bone Steak</h3>
-                                    <span>&#8369 235.00</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -476,14 +349,14 @@ include 'includes/connect.php'
                             <p>providing you good service and food is our desire and job we would love to talk to you </p>
                             <div class="contact-info">
                                 <p><b>Main Office:</b> 396 Brgy. Santol</p>
-                                <p><b>Phone:</b> 1.555.555.5555</p>
-                                <p><b>Email:</b> resto@gmail.com</p>
+                                <p><b>Phone:</b> 09975242698</p>
+                                <p><b>Email:</b> davidsgrillrestosy2021@gmail.com</p>
                             </div>
                             <div class="social-media">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="https://web.facebook.com/DavidsGrillbyBe4/menu/"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/davids_grill"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/davidsgrill_2021/"><i class="fa fa-instagram"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -551,6 +424,9 @@ include 'includes/connect.php'
 
         <!-- JQUERY -->
         <script type="text/javascript" src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+        <script src="js/class/menu.class.js"></script>
+        <script src="js/menu.js"></script>
         <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/isotope.pkgd.min.js"></script>
         <script type="text/javascript" src="js/owl.carousel.min.js"></script>

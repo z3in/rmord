@@ -12,8 +12,9 @@
 
         <link rel="stylesheet" href="css/style.css">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
             <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
@@ -69,21 +70,8 @@
             </nav>
         </header>       
 
-<!--Search Section-->
-        <section class="search-section">
-            <div class="container">
-                <div class="row subscribe-from">
-                    <div class="col-md-12">
-                        <form class="form-inline col-md-12 wow fadeInDown animated">
-                            <div class="form-group">
-                                <input type="email" class="form-control subscribe" id="email" placeholder="Search...">
-                                <button class="suscribe-btn" ><i class="pe-7s-search"></i></button>
-                            </div>
-                        </form><!-- end /. form -->
-                    </div>
-                </div><!-- end of/. row -->
-            </div><!-- end of /.container -->
-        </section><!-- end of /.news letter section -->
+        <?php include('./search_option.php') ?>
+
 
         <!---Yung nagsaslide sa una-->
         <section class="slider-section">
@@ -302,14 +290,14 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel nulla sapien. Class aptent tacitiaptent taciti sociosqu ad lit himenaeos. Suspendisse massa urna, luctus ut vestibulum necs et, vulputate quis urna. Donec at commodo erat.</p>
                             <div class="contact-info">
                                 <p><b>Main Office:</b> 396 Brgy. Santol</p>
-                                <p><b>Phone:</b> 1.555.555.5555</p>
-                                <p><b>Email:</b> resto@gmail.com</p>
+                                <p><b>Phone:</b> 09975242698</p>
+                                <p><b>Email:</b> davidsgrillrestosy2021@gmail.com</p>
                             </div>
                             <div class="social-media">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="https://web.facebook.com/DavidsGrillbyBe4/menu/"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/davids_grill"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/davidsgrill_2021/"><i class="fa fa-instagram"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -376,7 +364,9 @@
         </footer>
         
         <!-- JQUERY -->
-        <script src="js/vendor/jquery-1.11.2.min.js"></script><script src="js/class/menu.class.js"></script>
+        <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+        <script src="js/class/menu.class.js"></script>
         <script src="js/menu.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/isotope.pkgd.min.js"></script>

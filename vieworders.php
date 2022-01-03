@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en"></html>
 
     <!--Header towsss-->
     <head>
@@ -11,16 +11,24 @@
         <link rel="icon" href="images/favicon.png">
 
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/stylecheckout.css">
+        <link rel="stylesheet" href="css/accstyle.css">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
         <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+        <style>
+            .nameacc .account_info{
+                margin:0 auto;
+                width:50%;
+            }    
+            .nameacc{ padding:50px;height:auto;}
+            .account_wrapper{background-color: #fff;padding:10px 25px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;}
+        </style>
+        <script src="https://kit.fontawesome.com/7262583124.js" crossorigin="anonymous"></script>
     </head>
 
     <!--Body-->
     <body>
        
-
         <!-- PRELOADER -->
         <div id="preloader">
             <div class="preloader-area">
@@ -30,32 +38,9 @@
             </div>
         </div>
 
-        <section class="header-top-section">
-            <div class="container">
-                <div class="row">
-                    <div  class="col-md-6">
-                        <div class="header-top-content">
-                            <ul class="nav nav-pills navbar-left">
-                                <li><a href="#"><i class="pe-7s-call"></i><span>0999-999-9999</span></a></li>
-                                <li><a href="#"><i class="pe-7s-mail"></i><span> resto@gmail.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div  class="col-md-6">
-                        <div class="header-top-menu">
-                            <ul class="nav nav-pills navbar-right">
-                                <li><a href="account.php">My Account</a></li>
-                                <li><a href="addcart.php">Cart</a></li>
-                                <li><a href="#">Checkout</a></li>
-                                <li><a href="loginpage.php"><i class="pe-7s-lock"></i>Login/Register</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <?php include('./header_strip.php')?>
 
-<!--Header again-->
+        <!--Header again-->
         <header class="header-section">
             <nav class="navbar navbar-default">
                 <div class="container">
@@ -80,104 +65,79 @@
                             <li><a href="gallery.php">Gallery</a></li>
                             <li><a href="#">Contact Us</a></li>
                         </ul>
+                        <ul class="nav navbar-nav navbar-right cart-menu">
+                            <li><a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                            <li><a href="addcart.php"><span> Cart </span> <span class="shoping-cart">0</span></a></li>
+                        </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container -->
             </nav>
         </header>
 
-           <!--Checkout Section-->
-        <div class="checkout">
-            <div class="shopping-checkout">
-              <!-- Title -->
-              <div class="title">
-                Checkout
-              </div>
-              <!--Title head of the checkout-->
-              <div class= "titleheadcheckout">
-                <div class="producttitlehead">
-                  Product
-                </div>
-                <div class="productdesctitlehead">
-                  Description
-                </div>
-                <div class="quantitytitlehead">
-                  Quantity
-                </div>
-                <div class = "totalpricetitlehead">
-                   Total Price
-                </div>
-                <div class = "statustitlehead">
-                  Status
-                </div>
-              </div>
-              <!-- Product #1 -->
-              <div class="item">
-                <div class="buttons">
-                  <input type="checkbox" name="checkbox" id="checkbox_add">
-                </div>
-                <div class="image">
-                  <img src="menu/cart/porktocino.png" alt="Pork tocino" />
-                </div>
-        
-                <div class="description">
-                  <span>Pork Tocino</span>
-                  <span>Price: &#8369 99.00</span>
-                </div>
-        
-                <div class="quantity">
-                  <input type="text" name="name" value="1">
-                </div>
-                <div class="total-price">&#8369 99.00 </div>
-
-               
-              </div>
-
-             
-        
-              <!-- Product #2 -->
-              <div class="item">
-                <div class="buttons">
-                  <input type="checkbox" name="checkbox" id="checkbox_add">
-                </div>
-                <div class="image">
-                  <img src="menu/cart/porktapa.png" alt="PorkTapa"/>
-                </div>
-        
-                <div class="description">
-                  <span>PorkTapa</span>
-                  <span>Price: &#8369 89.00</span>
-                </div>
-        
-                <div class="quantity">
-                  <input type="text" name="name" value="1">
-                </div>
-                <div class="total-price">&#8369 89.00</div>
-              </div>
-        
-              <!-- Product #3 -->
-              <div class="item">
-                <div class="buttons">
-                  <input type="checkbox" name="checkbox" id="checkbox_add">
-                </div>
-                <div class="image">
-                  <img src="menu/cart/Beeftapa.png" alt="Beef Tapa" />
-                </div>
-        
-                <div class="description">
-                  <span>BeefTapa</span>
-                  <span>Price: &#8369 125.00</span>
-                </div>
-        
-                <div class="quantity">
-                  <input type="text" name="name" value="1">
-                </div>
-                <div class="total-price">&#8369 125.00</div>
-              </div>
-              <div class="remove_checkout"> 
-                <button><a href="#" class= "removebutton removebutton-primary">Cancel</a></button>
-              </div>
+    <!-- <section class="acc-section">
+    <div class="container">
+        <div class="row">
+            <div class="orders">
+                <a href="#">View all orders></a>
             </div>
-                     <!--Footer-->
+            <div class="col-sm-3 col-sm-6 " >
+                <div class="service-item">
+                    <i><img src="https://img.icons8.com/ios-glyphs/64/000000/wallet.png"/></i>
+                    <h3>To Pay</h3>
+                </div>
+            </div>
+            <div class="col-sm-3 col-sm-6 " >
+                <div class="service-item">
+                    <i><img src="https://img.icons8.com/material-outlined/64/000000/cardboard-box.png"/></i>
+                    <h3>To Ship</h3>
+                     </div>
+            </div>
+            <div class="col-sm-3 col-sm-6 " >
+                <div class="service-item">
+                    <i><img src="https://img.icons8.com/material-outlined/64/000000/truck.png"/></i>
+                    <h3>To Recieve</h3>
+                    </div>
+            </div>
+            <div class="col-sm-3 col-sm-6 " >
+                <div class="service-item">
+                    <i><img src="https://img.icons8.com/material-outlined/64/000000/purchase-order.png"/></i>
+                    <h3>To Review</h3>
+                     </div></div>
+            </div>
+
+
+            <div class="status">
+                    <div class="image-status">
+                      <img src="menu/cart/porktocino.png" />
+                        <span>DELIVERED</span>
+                            <span>dsuigewidhasidhewiyfjsvusddgfduieugu</span>
+                      </div>
+            </div> 
+        </div>
+    </div>-->
+ 
+
+    </section>
+        
+        <section class="nameacc">
+         <div class="account_info" style="justify-content: flex-start">
+            <div class="orders" style="justify-content:flex-start">
+                <a href="order_history.php">< Back</a>
+            </div>
+            <div class="account_wrapper">
+                <h3>Order Summary</h3>
+                <div id="order_summary"></div>
+            </div>
+         </div>
+        </section>
+
+<!--My Account Section-->
+
+
+
+
+
+ <!--Footer-->
         <footer class="footer">
             <div class="container">
                 <div class="row">
@@ -196,5 +156,27 @@
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script>
+        <script>
+            $(document).ready(() =>{
+              fetch(`app/client/transactions.php?request=view_all_order&user_id=${getCookie('user_id')}`)
+              .then(data => data.json())
+              .then(data =>{
+                 if(data.hasOwnProperty("list")){
+                  const urlParams = new URLSearchParams(window.location.search);
+                  const myParam = urlParams.get('id');
+                  var fil_data = data.list.filter(x => x.ID === myParam );
+                   if(fil_data.length > 0){
+                     const { ID, totalamount, status , payment_ref,payment_method,date_created } = fil_data[0]
+
+                     $("#order_summary").html(`<h2 style="text-align:center"> Order Number : ${ payment_ref.replace("pay_","")} </h2><p style="font-size:62px;text-align:center">${ status === "delivery" ? '<i class="fas fa-truck"></i>' : status === "pending" ? '<i class="fas fa-utensils"></i>' : '<i class="fas fa-flag-checkered"></i>' }</p>
+                     <p style="text-align:center;font-size:32px;"><span>${status === "delivery" ? 'For Delivery' : status === "pending" ? 'Processing Order' : 'Order Completed'}</span></p>
+                     <p style="text-align:center">Date Ordered : ${new Intl.DateTimeFormat('en', { month:'short', day:'numeric',year: 'numeric',hour: '2-digit',minute : '2-digit', second: '2-digit' }).format(new Date(date_created))}</p>
+                     <p style="text-align:center">Method of payment : ${payment_method}</p>
+                     <h2 style="text-align:center;display:block;background:#9ed7e5;padding-top:10px;border-radius:5px"> Php ${parseFloat(totalamount).toFixed(2)}</h2>`)
+                   }
+                 }
+              })
+            })
+        </script>
     </body>
 </html>

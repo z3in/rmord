@@ -64,7 +64,7 @@
                           <td>${item.lname}, ${item.fname} ${item.mname}</td>
                           <td>${item.contact}</td>
                           <td>${item.email}</td>
-                          <td><a href="/rmord/app/upload/${item.photo_path}" target="_blank">VIEW</a></td>
+                          <td><a href="/rmord/app/upload/${item.photo_path}" target="_blank">VIEW CLIENT PHOTO</a><br><a href="/rmord/app/upload/${item.front_id_path}" target="_blank">VIEW ID PHOTO</a><br><a href="/rmord/app/upload/${item.back_id_path}" target="_blank">VIEW BACK OF ID PHOTO</a></td>
                           <td>${item.date_created}</td>
                           <td>${!parseInt(item.validated) ? "pending" : "active" }</td>
                           <td>${!parseInt(item.validated) ? `<button class="btn btn-sm btn-success" id="${item.ID}" onclick="approvePerson(this.id,'${item.email}')" ><i class="fas fa-check"></i> approve </button> <button class="btn btn-sm btn-danger"><i class="fas fa-times"></i> disapprove </button>` : ''}</td>

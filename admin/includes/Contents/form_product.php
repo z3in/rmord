@@ -1,10 +1,6 @@
 
     <form method='POST' action='functions/addproduct.php' enctype="multipart/form-data">
         <div class="form-group">
-          <label for="exampleInputEmail1">Series</label>
-          <input type="text" class="form-control" name='Series' placeholder="Series">
-        </div>
-        <div class="form-group">
           <label for="exampleInputEmail1">Product Name</label>
           <input type="text" class="form-control" name='ProductName' placeholder="ProductName">
         </div>

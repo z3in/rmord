@@ -4,8 +4,8 @@
                     <div  class="col-md-6">
                         <div class="header-top-content">
                             <ul class="nav nav-pills navbar-left">
-                                <li><a href="#"><i class="pe-7s-call"></i><span>0999-999-9999</span></a></li>
-                                <li><a href="#"><i class="pe-7s-mail"></i><span> resto@gmail.com</span></a></li>
+                                <li><a href="#"><i class="pe-7s-call"></i><span>09975242698</span></a></li>
+                                <li><a href="#"><i class="pe-7s-mail"></i><span> davidsgrillrestosy2021@gmail.com</span></a></li>
                             </ul>
                         </div>
                     </div>

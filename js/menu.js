@@ -26,66 +26,68 @@ $(document).ready(()=>{
         let container = document.querySelector('#menu_container')
         let menutabs = document.querySelector("#menu_tabs")
         const menu = new Menu()
-        data.list.map(item =>{
-            menu.createRow(container,item)
-        })
+        if(data.hasOwnProperty("list")){
+            data.list.map(item =>{
+                menu.createRow(container,item)
+            })
 
-        const category = data.list.map(item => item.CategoryName)
-            .filter((value, index, self) => self.indexOf(value) === index)
+            const category = data.list.map(item => item.CategoryName)
+                .filter((value, index, self) => self.indexOf(value) === index)
 
-        const count = data.list.length
-        const bundle = data.list
-                        .map(({ CategoryName }) => CategoryName)
-                        .reduce((names, name) => {
-                        const count = names[name] || 0;
-                        names[name] = count + 1;
-                        return names;
-                        }, {});
-        menu.createMenuTabs(menutabs,{category,count,bundle})
-        var selectedCategory;
-        var $grid = $('#menu_container').isotope({
-            itemSelector: '.col-md-3',
-            masonry: {
-                columnWidth: '.col-md-3',
-            },
-            getSortData: {
-                selectedCategory: function( itemElem ) {
-                    return $( itemElem ).hasClass( selectedCategory ) ? 0 : 1;
+            const count = data.list.length
+            const bundle = data.list
+                            .map(({ CategoryName }) => CategoryName)
+                            .reduce((names, name) => {
+                            const count = names[name] || 0;
+                            names[name] = count + 1;
+                            return names;
+                            }, {});
+            menu.createMenuTabs(menutabs,{category,count,bundle})
+            var selectedCategory;
+            var $grid = $('#menu_container').isotope({
+                itemSelector: '.col-md-3',
+                masonry: {
+                    columnWidth: '.col-md-3',
+                },
+                getSortData: {
+                    selectedCategory: function( itemElem ) {
+                        return $( itemElem ).hasClass( selectedCategory ) ? 0 : 1;
+                    }
                 }
-            }
-        });
+            });
 
-        var $items = $('#menu_container').find('.featured-items');
+            var $items = $('#menu_container').find('.featured-items');
 
-        
-        $('#menu_tabs').on( 'click', '.button', function() {
-            selectedCategory = $( this ).attr('data-category');
-            if ( selectedCategory == 'all' ) {
-                $grid.isotope({
-                    sortBy: 'original-order'
-                });
-                $items.css({
+            
+            $('#menu_tabs').on( 'click', '.button', function() {
+                selectedCategory = $( this ).attr('data-category');
+                if ( selectedCategory == 'all' ) {
+                    $grid.isotope({
+                        sortBy: 'original-order'
+                    });
+                    $items.css({
+                        opacity: 1
+                    });
+                    return;
+                }
+                var selectedClass = '.' + selectedCategory;
+                $items.filter( selectedClass ).css({
                     opacity: 1
                 });
-                return;
-            }
-            var selectedClass = '.' + selectedCategory;
-            $items.filter( selectedClass ).css({
-                opacity: 1
-            });
-            $items.not( selectedClass ).css({
-                opacity: 0
-            });
-            $grid.isotope('updateSortData');
-            $grid.isotope({ sortBy: 'selectedCategory' });
-        });
-
-        $('#menu_tabs').each( function( i, buttonGroup ) {
-                var $buttonGroup = $( buttonGroup );
-                $buttonGroup.on( 'click', 'li', function() {
-                    $buttonGroup.find('.active').removeClass('active');
-                    $( this ).addClass('active');
+                $items.not( selectedClass ).css({
+                    opacity: 0
                 });
-        });
+                $grid.isotope('updateSortData');
+                $grid.isotope({ sortBy: 'selectedCategory' });
+            });
+
+            $('#menu_tabs').each( function( i, buttonGroup ) {
+                    var $buttonGroup = $( buttonGroup );
+                    $buttonGroup.on( 'click', 'li', function() {
+                        $buttonGroup.find('.active').removeClass('active');
+                        $( this ).addClass('active');
+                    });
+            });
+        }
     })
 })

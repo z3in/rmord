@@ -14,12 +14,23 @@ include'includes/connect.php';
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/stylereserve.css">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
             <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
         <![endif]-->
+        <style>
+            #menu_add,#menu_select{
+                list-style:none;
+
+            }
+            #menu_add li,#menu_select li{
+                border: 1px solid #dee9ff;
+                padding:1em;
+                margin-bottom:0.25em;
+            }
+        </style>
     </head>
     <body>
 
@@ -124,7 +135,7 @@ include'includes/connect.php';
                     <p>Sunday is for Jesus</p>
 
                     <hr>
-                     <h4 class="headingphone"> Call Us : 0999-999-9999</h4>
+                     <h4 class="headingphone"> Call Us : 09975242698</h4>
                 </div>
                         </div>
                     </div>
@@ -188,18 +199,32 @@ include'includes/connect.php';
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <p>Type of Reservation</p>
-                                        <select name= "selectreservation" id="#"  class="form-control" required>
-                                        <option value="Table Reservation">Table Reservation</option>
-                                        <!-- <option value="Table and Food Reservation">Table and Food Reservation</option> -->
+                                        <select name= "selectreservation" id="select_reservation"  class="form-control" required>
+                                        <option value="1">Table Reservation</option>
+                                        <option value="2">Table and Food Reservation</option>
                                     </select>
 
                                     </div>
                                 </div>
                             </div>
+                            <div id="menu_reserve" class="row" style="border:3px dashed rgb(0, 45, 141);margin-bottom:1em;display:none;">
+                                <div class="col-md-6">
+                                        <p><strong> Available Menu </strong></p>
+                                        <ul id="menu_add">
+                                            
+                                        </ul>
+                                </div>
+                                <div class="col-md-6">
+                                        <p><strong> Menu selected for reservation </strong></p>
+                                        <ul id="menu_select">
+                                            
+                                        </ul>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="input-group">
-                                        <textarea  autocomplete="off" name="" id="" class="form-control" cols="30" rows="5" placeholder="Please state your other concerns regarding to your reservation.."></textarea>
+                                        <textarea  autocomplete="off" name="" id="text_instruction" class="form-control" cols="30" rows="5" placeholder="Please state your other concerns regarding to your reservation.."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -237,14 +262,14 @@ include'includes/connect.php';
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel nulla sapien. Class aptent tacitiaptent taciti sociosqu ad lit himenaeos. Suspendisse massa urna, luctus ut vestibulum necs et, vulputate quis urna. Donec at commodo erat.</p>
                             <div class="contact-info">
                                 <p><b>Main Office:</b> 396 Brgy. Santol</p>
-                                <p><b>Phone:</b> 1.555.555.5555</p>
-                                <p><b>Email:</b> resto@gmail.com</p>
+                                <p><b>Phone:</b> 09975242698</p>
+                                <p><b>Email:</b> davidsgrillrestosy2021@gmail.com</p>
                             </div>
                             <div class="social-media">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="https://web.facebook.com/DavidsGrillbyBe4/menu/"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/davids_grill"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/davidsgrill_2021/"><i class="fa fa-instagram"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -312,6 +337,7 @@ include'includes/connect.php';
 
         <!-- JQUERY -->
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/isotope.pkgd.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>
@@ -319,24 +345,143 @@ include'includes/connect.php';
         <script src="js/custom.js"></script>
 
         <script>
+
+            class Inventory{
+                items = Array()
+                
+                addItems(item = {}){
+                    this.items.push(item);
+                }
+
+                reducequantity(id){
+                    var current = this.items.find(x => x.id == id)
+                    
+                    if(current.quantity == 1){
+                        return this.removeitem(current.id)
+                    }
+                    this.items.find(x => x.id === current.id ).quantity--;
+                    console.log(this.items)
+                }
+
+                addquantity(id){
+                    var current = this.items.find(x => x.id == id)
+                    current.quantity += 1
+                    console.log(this.items)
+                }
+
+                removeitem(id){
+                    this.items = this.items.filter(function(ele){
+                        return ele.id != id
+                    })
+                }
+
+            }
+
+            var inventory = new Inventory()
+            function generateUUID() { // Public Domain/MIT
+                var d = new Date().getTime();//Timestamp
+                var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+                return 'xxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random() * 16;//random number between 0 and 16
+                    if(d > 0){//Use timestamp until depleted
+                        r = (d + r)%16 | 0;
+                        d = Math.floor(d/16);
+                    } else {//Use microseconds since page-load if supported
+                        r = (d2 + r)%16 | 0;
+                        d2 = Math.floor(d2/16);
+                    }
+                    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                });
+            }
+            $(document).ready(function(){
+                if(!getCookie('fullname') || !getCookie('username')){
+                    return window.location.href="loginpage.php"
+                }
+                
+            })
+            
+            $("#select_reservation").change(function(){
+                if($(this).val() == 1){
+                    $("#menu_reserve").hide()
+                    console.log("hello")
+                }
+                if($(this).val() == 2){
+                    $("#menu_reserve").show()
+                }
+            })
+
+            function addQuantity(id){
+                var curr_val = $(`#quantity_val_${id}`).text()
+                $(`#quantity_val_${id}`).text(parseInt(curr_val) + 1)
+                inventory.addquantity(id)
+            }
+
+            function reduceQuantity(id){
+                var curr_val = $(`#quantity_val_${id}`).text()
+                $(`#quantity_val_${id}`).text( function () {
+                    if(parseInt(curr_val) === 1) {
+                        $(`#menu_select_${id}`).remove()
+                        $(`#menu_add_${id}`).show()
+                    }
+                    inventory.reducequantity(id)
+                    return parseInt(curr_val) - 1
+                })
+            }
+
+            function addMenu(id,photo,product){
+                inventory.addItems({id:id,quantity:1});
+                $("#menu_select").append(`<li id="menu_select_${id}" style="display:flex;justify-content:space-between;align-item:center"><div><img src="${photo}" style="width:40%; height:auto" /> <p style="max-width:100px;font-weight:bold;margin-top: 2em;overflow-wrap: break-word;"> asdasdasdasdasd  ${product}</p></div><div><input type="button" value ="+" onclick="addQuantity(${id})" style="padding:0.25em 1em;"/> <h2 style="text-align:center" id="quantity_val_${id}">1</h2><input type="button" value ="-" onclick="reduceQuantity(${id})" style="padding:0.25em 1em;"/></div> </li>`)
+                $(`#menu_add_${id}`).hide()
+            }
+
+            fetch('app/client/menu.php')
+            .then(data => data.json())
+            .then(data =>{
+                if(data.hasOwnProperty("list")){
+                    data.list.map(item =>{
+                        $("#menu_add").append(`<li id="menu_add_${item.ID}" style="display:flex;justify-content:space-between;align-item:center"><div><img src="${item.photo}" style="width:40%; height:auto" /> <strong style="max-width:50px;wrap:break-word;">${item.ProductName}</strong></div><div><input type="button" value =">>" onclick="addMenu(${item.ID},'${item.photo}','${item.ProductName}')" style="padding:0.25em 1em;" /></div> </li>`)
+                    })
+                }
+            })
+
 			var form = document.querySelector("form[name='reservation']");
 			form.addEventListener("submit",function (event) {
             event.preventDefault();
-			var data = new FormData(form);
-			
-			fetch('app/client/reservation.php',{method:"POST",body:data})
-			.then(data => data.json())
-			.then(data => {
-				if(data.response){
-					alert('Reservation Submitted')
-					window.location.href ="index.php"
-				}
-				if(!data.response){
-					if(data.hasOwnProperty("message")){
-						alert(data.message);
-					}
-				}
-			})
+                if(!confirm("Are you sure you want to submit reservation ?")){
+                    return
+                }
+                if(getCookie('validated') === "0"){
+                    return alert("You cannot make this reservation yet! Please wait for your account to be validated.")
+                }
+           
+			var forms_data = new FormData(form);
+            
+			forms_data.append("res_date", $("#rdate").val())
+			forms_data.append("res_time", $("#rtime").val())
+			forms_data.append("text_instruction", $("#text_instruction").val())
+			forms_data.append("ref", `RES-${generateUUID()}`)
+			forms_data.append("user_id", getCookie("user_id"))
+            let request_type = $("#select_reservation").val() == 1 ? "single_res" : "food_res" 
+            request_type === "food_res" ? forms_data.append("foods", JSON.stringify(inventory.items)) : null
+                fetch(`app/client/reservation.php?request=${request_type}`,{method:"POST",body:forms_data})
+                .then(data => data.json())
+                .then(data => {
+                    if(data.response){
+                        if(data.hasOwnProperty("list")){
+                            alert(data.list);
+                            window.location.href = "reservation.php"
+                        }else{
+                            if(data.hasOwnProperty("message")){
+                                alert(data.message)
+                            }
+                        }
+                    }
+                    if(!data.response){
+                        if(data.hasOwnProperty("message")){
+                            alert(data.message);
+                        }
+                    }
+                })
 			
 			}, false);
 

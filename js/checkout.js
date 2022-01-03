@@ -1,5 +1,5 @@
 
-var map,marker,quantity;
+var map,marker,quantity,geocoder;
 const getList = () =>{
     fetch(`app/client/cart.php?request=list&user_id=${getCookie('user_id')}`)
         .then(data => data.json())
@@ -10,7 +10,7 @@ const getList = () =>{
             
             const menu = new Cart()
             if(!data.hasOwnProperty("list")) {
-                return window.location.href = "menu.php"
+                return window.location.href = "addcart.php"
             }
             quantity = data.list.length
             data.list.map(item =>{
@@ -48,7 +48,9 @@ async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         else {
           document.querySelector("#delivery_details").innerHTML = " Driving distance is " + directionsData.distance.text + "(" + directionsData.duration.text + ")"
           document.querySelector("#delivery_fee").innerHTML = "N/A" // replace with fetch for delivery prices
+          
           return directionsData.distance.text;
+          
         }
       })
       .catch((e) => window.alert("Directions request failed due to " + status));
@@ -57,9 +59,10 @@ async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 
  
 function initMap() {
-    
+    geocoder = new google.maps.Geocoder();
     navigator.geolocation.getCurrentPosition(function(position) {
         let coords = { lat: position.coords.latitude, lng: position.coords.longitude }
+        
         map = new google.maps.Map(document.getElementById("map"), {
             center: coords,
             zoom: 12,
@@ -81,6 +84,21 @@ function initMap() {
     })
 }
 
+function codeAddress() {
+    var address = document.getElementById('search_address').value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+
 function geocodeLatLng(geocoder, map, infowindow,latLng) {
     
     const input = latLng
@@ -98,7 +116,6 @@ function geocodeLatLng(geocoder, map, infowindow,latLng) {
         // map.setZoom(11);
         // infowindow.setContent(response.results[0].formatted_address);
         // infowindow.open(map, marker);
-        console.log(response)
         document.querySelector("#address_complete").innerHTML = response.results[0].formatted_address;
     } else {
         window.alert("No results found");
@@ -125,6 +142,9 @@ const onChangeHandler = async function () {
         if(data.hasOwnProperty("list")){
             let closest = data.list.reverse().find(e => e.KM <= km)
             document.querySelector("#delivery_fee").innerHTML = `Php ` + parseFloat(closest.PRICE).toFixed(2);
+            var total_order = document.querySelector('#total_order_price')
+            var price = parseInt(total_order.innerText) + parseInt(closest.PRICE);
+            total_order.innerHTML = parseFloat(price).toFixed(2)
         }
        
     })
@@ -171,8 +191,9 @@ $(document).ready(()=>{
                     chargePayment(src)
                     .then(data =>{
                         data = {
+                            ref : `TN_-${generateUUID()}`,
                             payment_ref : data.data.id,
-                            status : data.data.attributes.status,
+                            status : "pending",
                             coord_lat : marker.position.lat(),
                             coord_long : marker.position.lng(),
                             total_amount : parseFloat($("#total_order_price").text()),
@@ -267,7 +288,8 @@ $(document).ready(()=>{
         if($('input[name="payment_type"]:checked').val() === "cash"){
             data = {
                 payment_ref : generateUUID(),
-                status : "cash on delivery",
+                ref : `TN_-${generateUUID()}`,
+                status : "pending",
                 coord_lat : marker.position.lat(),
                 coord_long : marker.position.lng(),
                 total_amount : parseFloat($("#total_order_price").text()),

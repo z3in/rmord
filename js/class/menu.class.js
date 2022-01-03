@@ -2,7 +2,7 @@ class Menu {
     tab_count = 0;
 
     createRow(container,data = {}){
-               container.innerHTML +=       `<div class="col-md-3 col-sm-6 col-xs-12 ${data.CategoryName.replace(/\s+/g, '-').toLowerCase()} featured-items isotope-item">
+               container.innerHTML +=       `<div  id="item-menu-${data.ID}" class="col-md-3 col-sm-6 col-xs-12 ${data.CategoryName.replace(/\s+/g, '-').toLowerCase()} featured-items isotope-item">
                                                 <div class="product-item">
                                                     <img src="${data.photo}" class="img-responsive" width="255" height="322" alt="">
                                                     <div class="sell-meta">

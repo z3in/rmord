@@ -60,7 +60,7 @@
               clearInterval(refresh);
               refresh = setTimeout(function() {
                  location.href = location.href;
-              }, seconds * 1000);
+              }, seconds * 5000);
           };
 
       $(document).on('keypress click', function() { intvrefresh() });

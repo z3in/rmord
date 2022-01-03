@@ -14,11 +14,13 @@
         <link rel="stylesheet" href="css/stylecart.css">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/7262583124.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
         <style>
             .shopping-cart{
-                margin:0;
-                padding:2.5em;
+                margin: 0 auto;
+                padding: 2.5em;
+                width: 65%;
             }
         </style>
       </head>
@@ -103,9 +105,8 @@
                           <tr>
                               <th scope="col">Date</th>
                               <th scope="col">Order Number </th>
-                              <th scope="col">Quantity</th>
-                              <th scope="col">Status</th>
                               <th scope="col">Total Amount</th>
+                              <th></th>
                           </tr>
                       </thead>
                       <tbody id="cart_container">
@@ -133,14 +134,14 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel nulla sapien. Class aptent tacitiaptent taciti sociosqu ad lit himenaeos. Suspendisse massa urna, luctus ut vestibulum necs et, vulputate quis urna. Donec at commodo erat.</p>
                             <div class="contact-info">
                                 <p><b>Main Office:</b> 396 Brgy. Santol</p>
-                                <p><b>Phone:</b> 1.555.555.5555</p>
-                                <p><b>Email:</b> resto@gmail.com</p>
+                                <p><b>Phone:</b> 09975242698</p>
+                                <p><b>Email:</b> davidsgrillrestosy2021@gmail.com</p>
                             </div>
                             <div class="social-media">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="https://web.facebook.com/DavidsGrillbyBe4/menu/"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/davids_grill"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/davidsgrill_2021/"><i class="fa fa-instagram"></i></a></li>
                                 </ul>
                             </div>
                         </div>

@@ -1,86 +1,119 @@
 <!-- Default box -->
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Reservation</h3>
-
-    <div class="card-tools">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary"> New
-      </button>
-    </div>
+    <h3 class="card-title">List of Reservation</h3>
   </div>
   <div class="card-body">
+    <p><label for="res_filter">Filter Reservation</label><select id="res_filter">
+      <option> select status to filter</option>
+      <option value="reserved">reserved</option>
+      <option value="dining">dining</option>
+      <option  value="completed">completed</option>
+    </select></p>
     <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Series</th>
-                    <th>Name</th>
-                    <th>Contact No</th>
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Reservation Date</th>
+                    <th>Reservation Time</th>
+                    <th>Reservation Number</th>
+                    <th>Reservation Name</th>
+                    <th>Contact Number</th>
+                    <th>Table Number</th>
                     <th>Status</th>
-                    <th>Button</th>
+                    <th>change status to</th>
                   </tr>
                   </thead>
-                  <tbody>
-                    <?php
-                    $datatable = "SELECT * FROM reservation";
-                    $result = $db->prepare($datatable);
-                    $result->execute();
-                    for($i=0; $row = $result->fetch(); $i++){
-                    ?>
-                                <tr>
-                                  <td><?php echo $row['Series'];?></td>
-                                  <td><?php echo $row['Name'];?></td>
-                                  <td><?php echo $row['ContactNo'];?></td>
-                                  <td><?php echo $row['Date'];?></td>
-                                  <td><?php echo $row['Time'];?></td>
-                                  <td><?php echo $row['Status'];?></td>
+                  <tbody id="table_verification">
+                                <!-- <tr>
+
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
                                   <td>
-                                    <a class="btn btn-success id" href='edit_reservation.php?id=<?php echo $row['ID'];?>'>Edit</a>
-                                    <a href="functions/delreservation.php?id=<?php echo $row['ID'];?>" class="btn btn-danger">Delete</a>
+                                    <a class="btn btn-success id" href='#'>Verify</a>
+                                    <a href="#" class="btn btn-danger">Denied</a>
                                   </td>
-                                </tr>
+                                </tr> -->
+                  </tbody>
 
-                    <?php
-                    }
-                    ?>
-                  </tfoot>
                 </table>
-                </div>
-  <!-- /.card-body -->
-  <div class="card-footer">
-    Footer
   </div>
-  <script>
-      $('#id').click(function() {
-      var id = $(this).data('id');
+  <div class="card-footer">
+  </div>
+  <script type="text/javascript">
 
-      $('.id2S').val(id);
-      } );
+    document.querySelector("#res_filter").addEventListener('change',function(){
+        fetchList(this.value)
+    })
+    const status_change = (id,stat) =>{
+      if(!confirm("Are you sure you want to change status of this reservation ?")){
+        return
+      }
+        fetch(`includes/app/transactions.php?request=update_reservation&id=${id}&stats=${stat}`)
+      .then(data => data.json())
+      .then(data => {
+        if(data.response == 1){
+          alert(data.message);
+          fetchList()
+        }
+        })
+      }
+    
+    const fetchList = (filter = null) =>{
+      fetch('includes/app/transactions.php?request=view_all_reservation')
+    .then(data => data.json())
+    .then(data => {
+      if(data.response == 1){
+          const container = document.querySelector("#table_verification");
+          container.innerHTML = "";
+          var requestcontent = data.list.map(item =>{
+              return `<tr>
+                          <td>${item.reservation_date}</td>
+                          <td>${item.reservation_time}</td>
+                          <td>${item.reservation_ref}</td>
+                          <td>${item.reservation_name}</td>
+                          <td>${item.contact}</td>
+                          <td>${item.table_number}</td>
+                          <td>${item.status}</td>
+                          <td>${item.status === "reserved" ? `<button class="btn btn-info" onclick="status_change(${item.ID},'dining')">Guest Arrived</button> &nbsp;<button class="btn btn-danger" onclick="status_change(${item.ID},'cancelled')">Cancel Reservation</button>` : 
+                            item.status === "dining" ? `<button class="btn btn-success"  onclick="status_change(${item.ID},'completed')">Complete Reservation</button> &nbsp;<button class="btn btn-danger"  onclick="status_change(${item.ID},'cancelled')">Cancel</button>` :""}</td></td>
+                         </tr>`
+          })
+          if(filter) {
+            requestcontent = data.list.filter(i => i.status === filter).map(item =>{
+                  return `<tr>
+                          <td>${item.reservation_date}</td>
+                          <td>${item.reservation_time}</td>
+                          <td>${item.reservation_ref}</td>
+                          <td>${item.reservation_name}</td>
+                          <td>${item.contact}</td>
+                          <td>${item.table_number}</td>
+                          <td>${item.status}</td>
+                          <td>${item.status === "reserved" ? `<button class="btn btn-info" onclick="status_change(${item.ID},'dining')">Guest Arrived</button> &nbsp;<button class="btn btn-danger" onclick="status_change(${item.ID},'cancelled')">Cancel Reservation</button>` : 
+                            item.status === "dining" ? `<button class="btn btn-success"  onclick="status_change(${item.ID},'completed')">Complete Reservation</button> &nbsp;<button class="btn btn-danger"  onclick="status_change(${item.ID},'cancelled')">Cancel</button>` :""}</td></td>
+                         </tr>`
+            })
+          }
+          requestcontent.forEach(el=>{
+              container.innerHTML += el
+          })
+
+          if(requestcontent.length < 1){
+            container.innerHTML +=`<tr>
+              <td colspan="7" style="text-align:center">No Orders Found</td>`
+          }
+      }
+    })
+    }
+
+
+    fetchList()
+
    </script>
-  <!-- /.card-footer-->
 
-  <!--Para sa form na nagpopup after na iclick ang new button sa adding ng category-->
-<div class="modal fade" id="modal-primary" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-          <div class="modal-content bg-primary">
-            <div class="modal-header">
-              <h4 class="modal-title">Add New Category</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <?php include'includes/contents/form_reservation.php';?>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-outline-light">Save changes</button>
-            </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
+
 </div>
-    </div>
+

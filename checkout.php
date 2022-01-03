@@ -101,20 +101,8 @@
         </header>
             
         <!--Search Section to -->  
-    <section class="search-section">
-        <div class="container">
-            <div class="row subscribe-from">
-                <div class="col-md-12">
-                    <form class="form-inline col-md-12 wow fadeInDown animated">
-                        <div class="form-group">
-                            <input type="email" class="form-control subscribe" id="email" placeholder="Search...">
-                            <button class="suscribe-btn" ><i class="pe-7s-search"></i></button>
-                        </div>
-                    </form><!-- end /. form -->
-                </div>
-            </div><!-- end of/. row -->
-        </div><!-- end of /.container -->
-    </section><!-- end of /.news letter section -->
+    
+         <?php include('./search_option.php') ?>
 
 
         <!--Cart Section-->
@@ -126,7 +114,7 @@
                 Order Summary
                 </div>
                 <div style="border-bottom:1px solid teal;"><div style="margin:10px auto;width:50%;display:flex;flex-direction:row;justify-content:space-between;align-items:center"><h2>Address</h2><span id="address_complete" style="width:45%"></span></div></div>
-                
+                <div style="margin:10px auto;width:50%;display:flex;flex-direction:row;align-items:center"><input id="search_address" type="text" class="form-control" autocomplete="off" placeholder="Search Address"/><button onclick="codeAddress()" style="padding:5px 20px;">Search</button></div>
                 <!-- <div><iframe width="100%;" height="300" id="ifrMaps" src=""></iframe></div>  -->
                 <div id="map"></div>
 
@@ -185,14 +173,14 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel nulla sapien. Class aptent tacitiaptent taciti sociosqu ad lit himenaeos. Suspendisse massa urna, luctus ut vestibulum necs et, vulputate quis urna. Donec at commodo erat.</p>
                             <div class="contact-info">
                                 <p><b>Main Office:</b> 396 Brgy. Santol</p>
-                                <p><b>Phone:</b> 1.555.555.5555</p>
-                                <p><b>Email:</b> resto@gmail.com</p>
+                                <p><b>Phone:</b> 09975242698</p>
+                                <p><b>Email:</b> davidsgrillrestosy2021@gmail.com</p>
                             </div>
                             <div class="social-media">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="https://web.facebook.com/DavidsGrillbyBe4/menu/"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://twitter.com/davids_grill"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/davidsgrill_2021/"><i class="fa fa-instagram"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -264,6 +252,7 @@
 
         <!-- JQUERY -->
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/isotope.pkgd.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>

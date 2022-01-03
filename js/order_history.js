@@ -12,21 +12,16 @@ const getList = () =>{
             data.list.map(item =>{
                     container.innerHTML += `<tr>
                                     <td scope="row">
-                                        <span>${item.date_created}</span>
+                                        <span>${new Intl.DateTimeFormat('en', { month:'short', day:'numeric',year: 'numeric', hour: '2-digit',minute : '2-digit', second: '2-digit' }).format(new Date(item.date_created))}</span>
                                     </td>
 
                                     <td scope="row">
                                     <span>${item.payment_ref.replace("pay_","")}</span>
                                     </td>
                                     <td scope="row">
-                                        <span>${item.quantity}</span>
-                                    </td>
-                                    <td scope="row">
-                                        <span>${item.status}</span>
-                                    </td>
-                                    <td scope="row">
                                         <span>&#8369 ${parseFloat(item.totalamount).toFixed(2)}</span>
                                     </td>
+                                    <td><a href="vieworders.php?id=${item.ID}">View Order</a></td>
                                 </tr>`;
                 
             })            
