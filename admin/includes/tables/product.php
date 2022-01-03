@@ -3,7 +3,7 @@
   <div class="card-header">
     <h3 class="card-title">Product</h3>
     <div class="card-tools">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary"> New</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">New</button>
     </div>
   </div>
   <div class="card-body">
@@ -22,7 +22,7 @@
                   </thead>
                   <tbody>
                     <?php
-                    $datatable = "SELECT `product`.ID,`product`.series, `product`.ProductName, `category`.CategoryName, `subcategory`.SubCategoryName, `product`.ProductPrice, `product`.SRP, `product`.photo FROM `product` LEFT JOIN `category` ON `category`.ID = `product`.CategoryID LEFT JOIN `subcategory` ON `subcategory`.`ID` = `product`.`SubCategoryID`";
+                    $datatable = "SELECT `product`.ID, `product`.ProductName, `category`.CategoryName, `subcategory`.SubCategoryName, `product`.ProductPrice, `product`.SRP, `product`.photo FROM `product` LEFT JOIN `category` ON `category`.ID = `product`.CategoryID LEFT JOIN `subcategory` ON `subcategory`.`ID` = `product`.`SubCategoryID`";
                     $result = $db->prepare($datatable);
                     $result->execute();
                     for($i=0; $row = $result->fetch(); $i++){
@@ -32,7 +32,6 @@
                                   <!-- <td></td> -->
                                   <td><?php echo $row['ProductName'];?></td>
                                   <td><?php echo $row['CategoryName'];?></td>
-                                 
                                   <td><?php echo $row['ProductPrice'];?></td>
                                   <td><?php echo $row['SRP'];?></td>
                                   <td><img src ="<?php echo '../' . $row['photo'];?>" height="50px" width="50px"/></td>
@@ -56,11 +55,11 @@
     Footer
   </div>
   <script>
-      $('#id').click(function() {
-      var id = $(this).data('id');
+      // $('#id').click(function() {
+      // var id = $(this).data('id');
 
-      $('.id2S').val(id);
-      } );
+      // $('.id2S').val(id);
+      // } );
    </script>
   <!-- /.card-footer-->
 </div>

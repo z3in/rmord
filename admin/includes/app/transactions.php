@@ -22,7 +22,18 @@ switch($req){
                 return print_r(json_encode(array("response" => 1, "message" => "Status has been changed!", "timestamp" => $time)));
         }
         return print_r(json_encode(array("response" => 0, "message" => "something went wrong. unable place order!", "timestamp" => $time)));
-
+    
+    case 'update_reservation' : 
+        $sql = "UPDATE reservation SET `status` =  :stats WHERE ID = :id";
+        $result = $db->prepare($sql);
+        $data['id'] = $_GET['id'];
+        $data['stats'] = $_GET['stats'];
+        $result->execute($data);
+        if($result){
+                return print_r(json_encode(array("response" => 1, "message" => "Status has been changed!", "timestamp" => $time)));
+        }
+        return print_r(json_encode(array("response" => 0, "message" => "something went wrong. unable place order!", "timestamp" => $time)));
+    
     case 'view_order': 
         $result = viewAllOrders($db);
         $response = Array();
@@ -53,6 +64,23 @@ switch($req){
                 }
         }
         return print_r(json_encode(array("response" => 0, "message" => "something went wrong. unable place order!", "timestamp" => $time)));
+    case 'view_all_reservation':
+        $result = viewReservations($db);
+        $response = Array();
+        if($result->rowCount() > 0){
+            while($row = $result->fetch(PDO::FETCH_ASSOC)){
+                array_push($response,$row);
+            }
+            return print_r(json_encode(array("response" => 1, "message" => "Showing Result", "list"=> $response, "timestamp" => $time)));
+        }
+        return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
+}
+
+function viewReservations($db){
+    $sql = "SELECT ID,reservation_ref,reservation_name,reservation_type,contact,guest_count,table_number,reservation_date,reservation_time,`status`,instruction,`user_id` FROM reservation";
+    $result = $db->prepare($sql);
+    $result->execute();
+    return $result;
 }
 
 function selectAvailableTables($db){

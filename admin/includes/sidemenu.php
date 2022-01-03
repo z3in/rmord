@@ -1,6 +1,24 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .hidden{
+      display:none;
+    }
+    </style>
 <!-- Sidebar Menu -->
+<script>
+   fetch(`includes/app/user.php?request=find_user&id=<?php echo $_SESSION['username']?>`)
+   .then(data => data.json())
+   .then(data => {
+     if(data.hasOwnProperty("list")){
+        var priv_indi = data.list.privilege.split(",")
+        priv_indi.forEach(element => {
+            $(`.nav-${element}`).show()
+        });
+     }
+   })
+</script>
+  
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
@@ -13,7 +31,62 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <!--Transaction-->
+          <li class="nav-item nav-transaction" style="display:none">
+            <a href="#" class="nav-link">
+              <i class="fa fa-handshake nav-icon" aria-hidden="true"></i>
+              <p>
+                Transactions
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <!-- <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cashiering</p>
+                </a>
+              </li> -->
+              <li class="nav-item">
+                <a href="reservation.php" class="nav-link">
+                  <i class="fa fa-ticket nav-icon" aria-hidden="true"></i>
+                  <p>Reservation</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="orderlist.php?stat=pending" class="nav-link">
+                  <i class="fa fa-cutlery nav-icon" aria-hidden="true"></i>
+                  <p>New Orders</p>
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a href="orderlist.php?stat=cancelled" class="nav-link">
+                  <i class="fa fa-ban nav-icon" aria-hidden="true"></i>
+                  <p>Cancelled Orders</p>
+                </a>
+              </li>
+              <!--Delivery Module -->
+                <li class="nav-item">
+                  <a href="orderlist.php?stat=delivery" class="nav-link">
+                    <i class="far fa fa-motorcycle nav-icon" aria-hidden="true"> </i>
+                    <p>Orders For Delivery</p>
+                  </a>
+                </li>
+              <!--Delivery Module -->
+              <li class="nav-item">
+                  <a href="orderlist.php?stat=completed" class="nav-link">
+                    <i class="far fa fa-check nav-icon" aria-hidden="true"> </i>
+                    <p>Completed Order</p>
+                  </a>
+                </li>
+                
+                </li>
+              </ul>
+          </li>
+
+          <li class="nav-item nav-settings" style="display:none">
             <a href="#" class="nav-link">
               <i class="fa fa-cog fa-fw nav-icon"></i>
               <p>
@@ -59,7 +132,7 @@
 
         
           <!--Notification module-->
-        <li class="nav-item">
+        <li class="nav-item" >
             <a href="#" class="nav-link">
               <i class="fa fa-bell nav-icon" aria-hidden="true"></i>
               <p> Notification
@@ -69,7 +142,7 @@
 
         
           <!--Identity Verification-->
-        <li class="nav-item">
+        <li class="nav-item nav-identification" style="display:none">
             <a href="idverf.php" class="nav-link">
               <i i class="fa fa-id-card nav-icon" aria-hidden="true"></i>
               <p> Identity Verification
@@ -78,61 +151,10 @@
             </li>
           </li>
 
-        <!--Transaction-->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fa fa-handshake nav-icon" aria-hidden="true"></i>
-              <p>
-                Transactions
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Cashiering</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="orderlist.php?stat=pending" class="nav-link">
-                  <i class="fa fa-cutlery nav-icon" aria-hidden="true"></i>
-                  <p>Order</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fa fa-ticket nav-icon" aria-hidden="true"></i>
-                  <p>Reservation</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="orderlist.php?stat=cancelled" class="nav-link">
-                  <i class="fa fa-ban nav-icon" aria-hidden="true"></i>
-                  <p>Cancelation</p>
-                </a>
-              </li>
-              <!--Delivery Module -->
-                <li class="nav-item">
-                  <a href="orderlist.php?stat=delivery" class="nav-link">
-                    <i class="far fa fa-motorcycle nav-icon" aria-hidden="true"> </i>
-                    <p>Delivery</p>
-                  </a>
-                </li>
-              <!--Delivery Module -->
-              <li class="nav-item">
-                  <a href="orderlist.php?stat=completed" class="nav-link">
-                    <i class="far fa fa-check nav-icon" aria-hidden="true"> </i>
-                    <p>Completed Order</p>
-                  </a>
-                </li>
-                </li>
-              </ul>
-          </li>
+        
         
           <!--Reports-->
-          <li class="nav-item">
+          <li class="nav-item nav-reports" style="display:none">
             <a href="#" class="nav-link">
               <i class="fa fa-book nav-icon" aria-hidden="true"></i>
               <p>
@@ -181,7 +203,7 @@
         
           <!--Maintennace-->
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link nav-maintenance" style="display:none">
               <i class="fa fa-cogs nav-icon" aria-hidden="true"></i>
               <p>
                Maintenance
@@ -211,7 +233,7 @@
                     </ul>
                 </li>
 
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="gallery.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gallery Maintennace</p>
@@ -222,7 +244,7 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Address Reference</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="delivery.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -239,7 +261,7 @@
         </li>
         
           <!--Utilities-->
-        <li class="nav-item">
+        <li class="nav-item nav-utility" style="display:none">
             <a href="#" class="nav-link">
               <i class="nav-icon fas "></i>
               <p>
@@ -249,7 +271,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="user_account.php" class="nav-link">
                   <i class="far fa fa-users nav-icon" aria-hidden="true"></i>
                   <p>User Account Maintenance</p>
                 </a>

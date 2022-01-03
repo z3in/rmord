@@ -51,6 +51,25 @@ body {
     overflow: visible;
     font-weight: 400px;
 }
+.ui-autocomplete-row
+{
+padding:8px;
+background-color: #f4f4f4;
+border-bottom:1px solid #ccc;
+font-weight:bold;
+}
+.ui-autocomplete-row:hover
+{
+background-color: #ddd;
+}
+.ui-autocomplete-row.ui-menu-item a:hover{
+    background:none;
+}
+.ui-autocomplete-row.ui-menu-item .ui-state-active{
+    background:none;
+    border:none;
+    color:#000;
+}
 
 .hidden {
     display: none;

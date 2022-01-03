@@ -15,6 +15,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
             <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
@@ -72,21 +73,7 @@
             </nav>
         </header>
                  
-<!--Search button-->
-        <section class="search-section">
-            <div class="container">
-                <div class="row subscribe-from">
-                    <div class="col-md-12">
-                        <form class="form-inline col-md-12 wow fadeInDown animated">
-                            <div class="form-group">
-                                <input type="email" class="form-control subscribe" id="email" placeholder="Search...">
-                                <button class="suscribe-btn" ><i class="pe-7s-search"></i></button>
-                            </div>
-                        </form><!-- end /. form -->
-                    </div>
-                </div><!-- end of/. row -->
-            </div><!-- end of /.container -->
-        </section><!-- end of /.news letter section -->
+        <?php include('./search_option.php') ?>
 
         <!--Nagiislide-->
         <section class="slider-section">
@@ -169,32 +156,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s" >
+                <div class="row" style="margin-top:4em;">
+                    <div class="col-md-2 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s" >
                         <div class="service-item">
                             <h3></h3>
                             <p></p>
                            </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s" >
-                        <div class="service-item">
+                    <div class="col-md-4 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s" >
+                        <div class="service-item" style="text-align:center;margin-top:6em">
                             <i><img src="menu/Gallery/G18.png"/></i>
                            </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s" >
+                    <div class="col-md-4 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s" >
                         <div class="service-item">
                             <h3>Our History</h3>
-                            <p>History of Davids Grill</p>
+                            <p>David’s Grill was newly stablished restaurant; it started it’ operation in November 2019. It is located at Brgy. Sambat, Balayan, Batangasand and it was owned by Pastor Rener Bathan. David’s comes from the name of the son of Pastor. The reason why it is developed is because first, to gather all the Christian Churches. Second, to let the customer sees all the verse and third, to let people realized that they don’t need to go too far places like Tagaytay and book a reservation in an expensive hotel to taste all the delicious foods. The restaurant open at 9:00am until 8:00 pm from Monday to Saturday. When it is Wednesday their closing time is 4:30 pm. The restaurant is close every Sunday. Restaurants have 9 staffs, consisting of 3 chefs, 1 cashier, 1 supervisor, 1 dishwasher and 3 servers; sometimes works as a receptionist and also delivery man.</p>
                            </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s" >
+                    <div class="col-md-2 col-sm-6 wow fadeInRight animated" data-wow-delay="0.1s" >
                         <div class="service-item">
                             <h3></h3>
                             <p></p>
                            </div>
                     </div>
             </div>
-        </section>
+    </section>
 
 <!--Customer feedback and Suggestions-->
         <section class="review-section">
@@ -379,8 +366,8 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel nulla sapien. Class aptent tacitiaptent taciti sociosqu ad lit himenaeos. Suspendisse massa urna, luctus ut vestibulum necs et, vulputate quis urna. Donec at commodo erat.</p>
                             <div class="contact-info">
                                 <p><b>Main Office:</b> 396 Brgy. Santol</p>
-                                <p><b>Phone:</b> 1.555.555.5555</p>
-                                <p><b>Email:</b> resto@gmail.com</p>
+                                <p><b>Phone:</b> 09975242698</p>
+                                <p><b>Email:</b> davidsgrillrestosy2021@gmail.com</p>
                             </div>
                             <div class="social-media">
                                 <ul>
@@ -455,6 +442,7 @@
 
         <!-- JQUERY -->
         <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/isotope.pkgd.min.js"></script>
         <script src="js/owl.carousel.min.js"></script>

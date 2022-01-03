@@ -1,7 +1,6 @@
 <?php
 require_once('../includes/auth.php');
 include('../includes/connect.php');
-$Series = $_POST['Series'];
 $ProductName = $_POST['ProductName'];
 $CategoryID = $_POST['CategoryID'];
 $SubCategoryID = $_POST['SubCategoryID'];
@@ -15,8 +14,8 @@ if(move_uploaded_file($_FILES['Photo']['tmp_name'], '../../'.$filepath)){
 };
 
 // query
-$sql = "INSERT INTO `product`(`Series`,`ProductName`, `CategoryID`, `SubCategoryID`, `ProductPrice`, `SRP`, `photo` ) VALUES (:Series, :ProductName, :CategoryID, :SubCategoryID, :ProductPrice, :SRP, :photo)";
+$sql = "INSERT INTO `product`(`ProductName`, `CategoryID`, `SubCategoryID`, `ProductPrice`, `SRP`, `photo` ) VALUES (:ProductName, :CategoryID, :SubCategoryID, :ProductPrice, :SRP, :photo)";
 $q = $db->prepare($sql);
-$q->execute(array(':Series' => $Series, ':ProductName' => $ProductName, ':CategoryID' => $CategoryID, ':SubCategoryID' => $SubCategoryID, ':ProductPrice' => $ProductPrice, ':SRP' => $SRP, ':photo' => $filepath));
+$q->execute(array(':ProductName' => $ProductName, ':CategoryID' => $CategoryID, ':SubCategoryID' => $SubCategoryID, ':ProductPrice' => $ProductPrice, ':SRP' => $SRP, ':photo' => $filepath));
 header("location:../product.php");
 ?>

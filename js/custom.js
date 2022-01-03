@@ -60,8 +60,22 @@ const getCartContent = () =>{
 ==============================*/
 //(function($){
 $(window).load(function(){
-
-  
+  if($('#search_data').length){
+    $('#search_data').autocomplete({
+      source: "app/client/menu.php",
+      minLength: 1,
+      select: function(event, ui)
+      {
+        $('#search_data').val(ui.item.value);
+      }
+    }).data('ui-autocomplete')._renderItem = function(ul, item){
+      console.log(item)
+      return $("<li class='ui-autocomplete-row'></li>")
+        .data("item.autocomplete", item.hasOwnProperty("list") ? item.list : item.message)
+        .append(item.label)
+        .appendTo(ul);
+    };
+ }
 
   fetch(`app/client/auth.secure.php?request=check_validated&username=${getCookie('username')}`)
     .then(data=>data.json())

@@ -24,10 +24,10 @@ switch($req){
         $data = json_decode(file_get_contents('php://input'), true);
         $result = placeOrder($db,$data);
         if($result){
-            $res = updateCart($db,$result,$data['user_id'],$data['payment_ref']);
+            $res = updateCart($db,$result,$data['user_id'],$data['ref']);
             if($res){
                 return print_r(json_encode(array("response" => 1, "message" => "Order Placed! Ref # : " . $res, "timestamp" => $time)));
-                }
+            }
         }
         return print_r(json_encode(array("response" => 0, "message" => "something went wrong. unable place order!", "timestamp" => $time)));
 }
@@ -50,7 +50,7 @@ function viewOrders($db){
 
 
 function placeOrder($db,$data){
-    $sql = "INSERT INTO order_transactions(totalamount,`status`,quantity,coord_lat,coord_long,payment_ref,`user_id`,payment_method)VALUES(:total,:stat,:quantity,:lat,:long,:payment,:user,:pay_type)";
+    $sql = "INSERT INTO order_transactions(totalamount,`status`,quantity,coord_lat,coord_long,payment_ref,ref,`user_id`,payment_method)VALUES(:total,:stat,:quantity,:lat,:long,:payment,:ref,:user,:pay_type)";
     $result = $db->prepare($sql);
     $params = [
         "total" => $data['total_amount'],
@@ -59,6 +59,7 @@ function placeOrder($db,$data){
         "lat" => $data['coord_lat'],
         "long" => $data['coord_long'],
         "payment" => $data['payment_ref'],
+        "ref" => $data['ref'],
         "user" => $data['user_id'],
         "pay_type" => $data['payment_type']
     ];
@@ -77,8 +78,8 @@ function updateCart($db,$trans,$user,$pay){
         "stat" => "purchased"
     ];
     if($result->execute($params)){
-        $ref = str_replace("pay_","",$pay);
-        return $ref;
+        // $ref = str_replace("pay_","",$pay);
+        return $pay;
     }
     return false;
 }

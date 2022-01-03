@@ -23,7 +23,7 @@
            }
            else
            {
-                $query = "SELECT * FROM `employees` WHERE `Email` = :username AND `Password` = :password AND `status` = 0";
+                $query = "SELECT * FROM `employees` WHERE `Email` = :username AND `Password` = :password";
                 $statement = $connect->prepare($query);
                 $statement->execute(
                      array(
@@ -34,12 +34,6 @@
                 $count = $statement->rowCount();
                 if($count > 0)
                 {
-                  $query = "SELECT * FROM `employees` WHERE `Email` = :username AND `Password` = :password AND `status` = 0";
-                  $statement = $connect->prepare($query);
-                  $statement->execute( array(
-                          'username'     =>     $_POST["username"],
-                          'password'     =>     $_POST["password"]
-                     ));
                     $row = $statement->fetch();
                      $_SESSION["username"] = $row['ID'];
                      function_alert("Access Granted!");

@@ -1,7 +1,7 @@
 <!-- Default box -->
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">List of New Orders</h3>
+    <h3 class="card-title">List of <?php echo $_GET['stat'] === "cancelled" ? "Cancelled Orders" : ($_GET['stat'] === "pending" ? "New Order" : ($_GET['stat'] === "completed" ? "Completed Order" : "Orders For Delivery")) ?></h3>
   </div>
   <div class="card-body">
     <table id="example1" class="table table-bordered table-striped">
@@ -39,6 +39,9 @@
   <script type="text/javascript">
 
     const status_change = (id,stat) =>{
+      if(!confirm("Are you sure you want to change status of this order ?")){
+        return
+      }
       fetch(`includes/app/transactions.php?request=update_order&id=${id}&stats=${stat}`)
     .then(data => data.json())
     .then(data => {
@@ -60,12 +63,12 @@
           const requestcontent = data.list.filter(item => item.status === filter).map(item =>{
               return `<tr>
                           <td>${item.date_created}</td>
-                          <td>${item.payment_ref.replace("pay_","")}</td>
+                          <td>${item.ref}</td>
                           <td>${item.quantity}</td>
                           <td>${item.totalamount}</td>
                           <td>${item.status}</td>
                           <td>${item.payment_method}</td>
-                          <td>${item.status === "pending" ? `<button class="btn btn-info" onclick="status_change(${item.ID},'delivery')">for delivery</button> &nbsp;<button class="btn btn-danger" onclick="status_change(${item.ID},'cancelled')">cancel</button>` : item.status === "delivery" ? `<button class="btn btn-success"  onclick="status_change(${item.ID},'completed')">complete order</button> &nbsp;<button class="btn btn-danger"  onclick="status_change(${item.ID},'cancelled')">cancel</button>` : null}</td>
+                          <td>${item.status === "pending" ? `<button class="btn btn-info" onclick="status_change(${item.ID},'delivery')">for delivery</button> &nbsp;<button class="btn btn-danger" onclick="status_change(${item.ID},'cancelled')">cancel</button>` : item.status === "delivery" ? `<button class="btn btn-success"  onclick="status_change(${item.ID},'completed')">complete order</button> &nbsp;<button class="btn btn-danger"  onclick="status_change(${item.ID},'cancelled')">cancel</button>` : ""}</td>
                       </tr>`
           })
 

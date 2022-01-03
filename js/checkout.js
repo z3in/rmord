@@ -1,5 +1,5 @@
 
-var map,marker,quantity;
+var map,marker,quantity,geocoder;
 const getList = () =>{
     fetch(`app/client/cart.php?request=list&user_id=${getCookie('user_id')}`)
         .then(data => data.json())
@@ -10,7 +10,7 @@ const getList = () =>{
             
             const menu = new Cart()
             if(!data.hasOwnProperty("list")) {
-                return window.location.href = "menu.php"
+                return window.location.href = "addcart.php"
             }
             quantity = data.list.length
             data.list.map(item =>{
@@ -59,9 +59,10 @@ async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 
  
 function initMap() {
-    
+    geocoder = new google.maps.Geocoder();
     navigator.geolocation.getCurrentPosition(function(position) {
         let coords = { lat: position.coords.latitude, lng: position.coords.longitude }
+        
         map = new google.maps.Map(document.getElementById("map"), {
             center: coords,
             zoom: 12,
@@ -82,6 +83,21 @@ function initMap() {
         
     })
 }
+
+function codeAddress() {
+    var address = document.getElementById('search_address').value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
 
 function geocodeLatLng(geocoder, map, infowindow,latLng) {
     
@@ -175,6 +191,7 @@ $(document).ready(()=>{
                     chargePayment(src)
                     .then(data =>{
                         data = {
+                            ref : `TN_-${generateUUID()}`,
                             payment_ref : data.data.id,
                             status : "pending",
                             coord_lat : marker.position.lat(),
@@ -271,6 +288,7 @@ $(document).ready(()=>{
         if($('input[name="payment_type"]:checked').val() === "cash"){
             data = {
                 payment_ref : generateUUID(),
+                ref : `TN_-${generateUUID()}`,
                 status : "pending",
                 coord_lat : marker.position.lat(),
                 coord_long : marker.position.lng(),
