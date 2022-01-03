@@ -313,8 +313,8 @@ $(document).ready(()=>{
                     amount : 15000,
                     currency : "PHP",
                     redirect : {
-                        success : "http://localhost/rmord/checkout.php?payment=success",
-                        failed : "http://localhost/rmord/checkout.php?payment=failed"
+                        success : "http://localhost:81/rmord/checkout.php?payment=success",
+                        failed : "http://localhost:81/rmord/checkout.php?payment=failed"
                     }
                 }
                 

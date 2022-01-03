@@ -200,10 +200,10 @@ include'includes/connect.php';
                 </table>
   </div>
   <div id="css-only-modals"><input class="css-only-modal-check" id="modal1" type="checkbox" />
-			<div class="css-only-modal">
+			<div class="css-only-modal"  style="height:600px;">
 			<label class="css-only-modal-btn btn btn-danger btn-lg" for="modal1" style="padding:5px 10px;float:right">X</label>
 			<h2>Fill up details to add new Employee</h2>
-        <form style="text-align:left;margin-top:2em">
+        <form style="text-align:left;margin-top:2em;height:450px;overflow-y:auto">
             <div class="mb-3">
                 <label for="input_name" class="form-label">Full Name</label>
                 <input type="text" class="form-control" id="input_name" autocomplete="off">
