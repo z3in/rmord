@@ -29,7 +29,7 @@
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">SRP</label>
-          <input type="text" class="form-control" id="input_srp" name='SRP' placeholder="SRP" disabled=true style="background:#c2c2c2">
+          <input type="text" class="form-control" id="input_srp" name='SRP' placeholder="SRP" style="background:#c2c2c2">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Photo</label>

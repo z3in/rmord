@@ -40,14 +40,14 @@
   <script type="text/javascript">
 
     const approvePerson = (id,email) =>{
-      $('#preloader').show()
+      // $('#preloader').show()
         fetch(`includes/app/identity_verification.php?request=approve&id=${id}&email=${email}`)
         .then(data => data.json())
         .then(data => {
             if(data.response == 1){
               alert('user has been approved')
               fetchList()
-              $('#preloader').hide()
+              // $('#preloader').hide()
             }
         })
     }
@@ -56,8 +56,9 @@
       fetch('includes/app/identity_verification.php?request=list&status=0')
     .then(data => data.json())
     .then(data => {
+      const container = document.querySelector("#table_verification");
       if(data.response == 1){
-          const container = document.querySelector("#table_verification");
+          
           container.innerHTML = "";
           const requestcontent = data.result.map(item =>{
               return `<tr>
@@ -71,10 +72,17 @@
                       </tr>`
           })
 
+          if(requestcontent.length < 1){
+              return container.innerHTML = `<tr><td colspan='7' style="text-align:center">No Result Found</td></tr>`
+          }
+
           requestcontent.forEach(el=>{
               container.innerHTML += el
           })
+          return
+          
       }
+      return container.innerHTML = `<tr><td colspan='7' style="text-align:center">No Result Found</td></tr>`
     })
     }
 

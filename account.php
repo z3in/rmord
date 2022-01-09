@@ -134,6 +134,24 @@
                 <p><label class="col-sm-5">Contact Number :  </label><span id="displaycontact"></span></p>
                 <p><label class="col-sm-5">Email : </label><span id="displayemail"></span></p>
                 <p><label class="col-sm-5">Date Joined : </label><span id="displayjoined"></span></p>
+
+                <h3 style="margin-top:3em">Reservations</h3>
+                <p>
+                    <table class="table">
+                      <thead>
+                          <tr>
+                              <th scope="col">Reservation Date</th>
+                              <th scope="col">Reservation Number </th>
+                              <th scope="col">Status</th>
+                              <th scope="col">Action</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody id="res_container">
+
+                      </tbody>
+                  </table>
+                </p>
             </div>
          </div>
         </section>
@@ -177,6 +195,34 @@
                         $("#displayemail").text(data.list.email)
                         $("#displayjoined").text(data.list.date_created)
                     }
+                })
+
+                fetch(`app/client/reservation.php?request=get_account_res&user_id=${getCookie('user_id')}`)
+                .then(data => data.json())
+                .then(data => {
+                    var container =  document.querySelector("#res_container");
+                    if(data.response){
+                        container.innerHTML = "";
+                        const requestcontent = data.list.map(item =>{
+                            return `<tr>
+                                        <td>${new Intl.DateTimeFormat('en', { month:'short', day:'numeric',year: 'numeric' }).format(new Date(item.reservation_date))}</td>
+                                        <td>${item.reservation_ref}</td>
+                                        <td>${item.status.toUpperCase()}</td>
+                                        <td><a href="#">View</a></td>
+                                    </tr>`
+                        })
+
+                        if(requestcontent.length < 1){
+                            return container.innerHTML = `<tr><td colspan='7' style="text-align:center">No Result Found</td></tr>`
+                        }
+
+                        requestcontent.forEach(el=>{
+                            container.innerHTML += el
+                        })
+                        return
+                        
+                    }
+                    return container.innerHTML = `<tr><td colspan='7' style="text-align:center">No Result Found</td></tr>`
                 })
             })
         </script>

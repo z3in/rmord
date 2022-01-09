@@ -41,12 +41,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <!-- <li class="nav-item">
-                <a href="" class="nav-link">
+              <li class="nav-item">
+                <a href="cashiering.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Cashiering</p>
                 </a>
-              </li> -->
+              </li>
               <li class="nav-item">
                 <a href="reservation.php" class="nav-link">
                   <i class="fa fa-ticket nav-icon" aria-hidden="true"></i>
@@ -164,25 +164,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="client.php" class="nav-link">
+                <a href="reports/customer_information.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Customer Information</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Best Seller Reports</p>
                 </a>
-              </li>
+              </li> -->
 
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="sales_report.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gross Sales Reports</p>
                 </a>
               </li>
-              <!--Delivery Module--->
+              <!-- Delivery Module-
                 <li class="nav-item">
                   <a href="" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -197,7 +197,7 @@
                       </li>
                     </ul>
                 </li>
-                </li>
+                </li> -->
               </ul>
           </li>
         
