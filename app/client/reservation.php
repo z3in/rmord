@@ -46,6 +46,22 @@ if(isset($_GET['request'])){
             }
             return print_r(json_encode(array("response" => 1, "message" => "showing result", "list" => "Referrence number for your reservation : "  . $_POST['ref'], "timestamp" => $time)));
         }
+
+        case 'get_account_res':
+        $sql = "SELECT * FROM reservation WHERE `user_id` = ?";
+        $query = $db->prepare($sql);
+        $query->bindParam(1,$_GET['user_id']);
+        $query->execute();
+        $count = $query->rowCount();
+        $response = Array();
+        if($count > 0){
+            while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                array_push($response,$row);
+            }
+            
+            return print_r(json_encode(array("response" => 1, "message" => "Showing Result", "list"=> $response, "timestamp" => $time)));
+        }
+        return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
     }
 }
 
