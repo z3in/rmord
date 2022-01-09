@@ -169,20 +169,20 @@
                   <p>Customer Information</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Best Seller Reports</p>
                 </a>
-              </li>
+              </li> -->
 
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="sales_report.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gross Sales Reports</p>
                 </a>
               </li>
-              <!--Delivery Module--->
+              <!-- Delivery Module-
                 <li class="nav-item">
                   <a href="" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -197,7 +197,7 @@
                       </li>
                     </ul>
                 </li>
-                </li>
+                </li> -->
               </ul>
           </li>
         

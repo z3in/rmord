@@ -17,6 +17,17 @@ switch($req){
             return print_r(json_encode(array("response" => 1, "message" => "Showing Result", "list"=> $response, "timestamp" => $time)));
         }
         return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
+    
+    case 'account_report' : 
+        $response = Array();
+        $result = selectFilteredUser($db,$_GET);
+        if($result->rowCount() > 0){
+            while($row = $result->fetch(PDO::FETCH_ASSOC)){
+                array_push($response,$row);
+            }
+            return print_r(json_encode(array("response" => 1, "message" => "Showing Result", "list"=> $response, "timestamp" => $time)));
+        }
+        return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
 }
 
 
@@ -24,5 +35,13 @@ function selectAllUser($db){
     $sql = "SELECT * FROM registration";
         $result = $db->prepare($sql);
     $result->execute();
+    return $result;
+}
+
+function selectFilteredUser($db,$data){
+    $sql = "SELECT * FROM registration WHERE date_created >= :date_start AND date_created <= :date_end AND `validated` = :validated";
+    unset($data['request']);
+    $result = $db->prepare($sql);
+    $result->execute($data);
     return $result;
 }
