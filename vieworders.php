@@ -167,12 +167,26 @@
                   var fil_data = data.list.filter(x => x.ID === myParam );
                    if(fil_data.length > 0){
                      const { ID, totalamount, status , payment_ref,payment_method,date_created } = fil_data[0]
-
+                     
                      $("#order_summary").html(`<h2 style="text-align:center"> Order Number : ${ payment_ref.replace("pay_","")} </h2><p style="font-size:62px;text-align:center">${ status === "delivery" ? '<i class="fas fa-truck"></i>' : status === "pending" ? '<i class="fas fa-utensils"></i>' : '<i class="fas fa-flag-checkered"></i>' }</p>
                      <p style="text-align:center;font-size:32px;"><span>${status === "delivery" ? 'For Delivery' : status === "pending" ? 'Processing Order' : 'Order Completed'}</span></p>
                      <p style="text-align:center">Date Ordered : ${new Intl.DateTimeFormat('en', { month:'short', day:'numeric',year: 'numeric',hour: '2-digit',minute : '2-digit', second: '2-digit' }).format(new Date(date_created))}</p>
                      <p style="text-align:center">Method of payment : ${payment_method}</p>
+                     <h4 style="width:300px;margin:0 auto">Order<hr><h4>
+                     <div id="order_item_list"></div>
                      <h2 style="text-align:center;display:block;background:#9ed7e5;padding-top:10px;border-radius:5px"> Php ${parseFloat(totalamount).toFixed(2)}</h2>`)
+
+                     fetch(`app/client/cart.php?request=list&user_id=${getCookie('user_id')}&status=purchased`)
+                     .then(data => data.json())
+                     .then(data => {
+                         let filter = data.list.filter(x => x.ID = myParam);
+                         if(filter.length > 0){
+                                $("#order_item_list").html("")
+                              filter.map((item) =>{
+                                    $("#order_item_list").append(`<p style="display:flex;justify-content:space-between;width:300px;margin:0 auto"><span>${item.ProductName} (Php ${item.SRP}) x ${item.quantity} </span><span>Php ${parseFloat((item.SRP) * (item.quantity)).toFixed(2)}</span> </p>`)
+                              })
+                         }
+                     })
                    }
                  }
               })

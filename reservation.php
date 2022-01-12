@@ -228,7 +228,11 @@ include'includes/connect.php';
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p style="margin-top:1em;text-align:center;color:#bc1414;text-transform:uppercase;font-size:18px;">reservations are non-refundable</p>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="input-group">
@@ -394,11 +398,123 @@ include'includes/connect.php';
                 });
             }
             $(document).ready(function(){
-                if(!getCookie('fullname') || !getCookie('username')){
-                    return window.location.href="loginpage.php"
-                }
-                
+                    if(!getCookie("username")){
+                        return window.location.href = "loginpage.php"
+                    }
+                        
+                    let searchParams = new URLSearchParams(window.location.search)
+                    if(searchParams.has('payment')){
+                        if(searchParams.get('payment') === "success"){
+                            var source = getCookie("source")
+                            if(source){
+                                checkSource(source)
+                            }
+                        }
+                        if(searchParams.get('payment') === "failed"){
+                            return alert('Payment has not been authorized! Please Try again or use a different payment')
+                        }
+                        }
             })
+                    
+                    function checkSource(src){
+                            getSource(src).then((data)=>{
+                                if(data.data.attributes.status === "pending"){
+                                    checkSource(src)
+                                }
+                                if(data.data.attributes.status === "chargeable"){
+                                    chargePayment(src)
+                                    .then(data =>{
+                                        saveReservation()
+                                        // data = {
+                                        //     ref : `TN_-${generateUUID()}`,
+                                        //     payment_ref : data.data.id,
+                                        //     status : "pending",
+                                        //     coord_lat : marker.position.lat(),
+                                        //     coord_long : marker.position.lng(),
+                                        //     total_amount : parseFloat($("#total_order_price").text()),
+                                        //     payment_type : $('input[name="payment_type"]:checked').val(),
+                                        //     quantity : quantity,
+                                        //     user_id : getCookie('user_id')
+                                        // }
+                                        // var option = createRequestOption("POST",data)
+                                        // requestURL(`app/client/transactions.php?request=place_order`,option)
+                                        // .then(data => {
+                                        //     if(data.response){
+                                        //         alert (data.message)
+                                        //         return window.location.href="addcart.php"
+                                        //     }
+                                        // })
+                                    })
+                                }
+                            })
+                    }
+
+                    async function chargePayment(id){
+                        let headers = createHeaders("sk_test_nY9ijCLWys58NrMk5KgP5TkF");
+                        raw = {
+                            data : {
+                                attributes : {
+                                    amount : 15000,
+                                    source : {
+                                        id : id,
+                                        type : "source"
+                                    },
+                                    currency : "PHP"
+                                }
+                            }
+                        }
+                        let data = createRequestOption("POST",raw,headers);
+                        const pm = await requestURL("https://api.paymongo.com/v1/payments",data);
+                        return await pm;
+                    }
+                    async function getSource(id){
+                        
+                        let headers = createHeaders("sk_test_nY9ijCLWys58NrMk5KgP5TkF");
+                        let data = createRequestOption("GET",null,headers);
+                        const pm = await requestURL("https://api.paymongo.com/v1/sources/" + id,data);
+                        return await pm;
+                    }
+
+                    /*helpers*/
+                    async function requestURL(url,requestOptions){
+                        const action = await fetch(url,requestOptions)
+                        .then(response=> response.json())
+                        .then(data => data);
+                        return action;
+                    }
+
+                    function createHeaders(key){
+                        var myHeaders = new Headers();
+                        myHeaders.append("Authorization", `Basic ${btoa(key)}`);
+                        myHeaders.append("Content-Type", "application/json");
+                        return myHeaders;
+                    }
+
+                    function createRequestOption(method,data = null,header = null){
+                        var requestOptions = {
+                            method: method
+                        }
+                        if(data !== null)
+                        requestOptions = {
+                            method: method,
+                            redirect: "follow",
+                            body : JSON.stringify(data)
+                        };
+
+                        requestOptions['headers'] = header !== null ? header : null;
+                        
+                        let requestOpt = removeEmpty(requestOptions);
+
+                        return requestOpt;
+                    }
+
+                    function removeEmpty(obj) {
+                        return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null));
+                    }
+
+                    let key = "sk_test_nY9ijCLWys58NrMk5KgP5TkF"
+                    let headers = createHeaders(key);
+                
             
             $("#select_reservation").change(function(){
                 if($(this).val() == 1){
@@ -445,15 +561,39 @@ include'includes/connect.php';
             })
 
 			var form = document.querySelector("form[name='reservation']");
-			form.addEventListener("submit",function (event) {
+			form.addEventListener("submit",async function (event) {
             event.preventDefault();
-                if(!confirm("Are you sure you want to submit reservation ?")){
+                if(!confirm(`Are you sure you want to submit reservation (We Will Charge you ${$("#select_reservation").val() == 1 ? `Php 50 as reservation fee` : `Half the price of your order` })?`)){
                     return
                 }
                 if(getCookie('validated') === "0"){
                     return alert("You cannot make this reservation yet! Please wait for your account to be validated.")
                 }
-           
+
+                let raw =  {
+                    "data": {
+                        "attributes" : {
+                            type: "gcash",
+                            amount : 15000,
+                            currency : "PHP",
+                            redirect : {
+                                success : "http://localhost:81/oroars/reservation.php?payment=success",
+                                failed : "http://localhost:81/oroars/reservation.php?payment=failed"
+                            }
+                        }
+                        
+                    }
+                };
+            
+                let data = createRequestOption("POST",raw,headers);
+                const pm = await requestURL("https://api.paymongo.com/v1/sources",data);
+                //window.open(pm.data.attributes.redirect.checkout_url,'sample-inline-frame');  display authentication link for user to enter password
+                // document.querySelector('#three-ds-container').setAttribute("style","display:block"); 
+                document.cookie = `source=${new URL(pm.data.attributes.redirect.checkout_url).searchParams.get('id')}; expires=Fri, 31 Dec 9999 23:59:59 GMT`
+                window.location.href = pm.data.attributes.redirect.checkout_url;
+            })
+            
+            function saveReservation(){
 			var forms_data = new FormData(form);
             
 			forms_data.append("res_date", $("#rdate").val())
@@ -483,7 +623,7 @@ include'includes/connect.php';
                     }
                 })
 			
-			}, false);
+			};
 
 		
 			const isNumericInput = (event) => {

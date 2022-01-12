@@ -158,7 +158,7 @@ include'includes/connect.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Customer Report</h1>
+            <h1>Sales Report</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -174,7 +174,7 @@ include'includes/connect.php';
         <!-- Default box -->
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">List of customers</h3>
+    <h3 class="card-title">List of Transactions</h3>
   </div>
   <div class="row">
           <div class="px-4 py-2">
@@ -196,6 +196,9 @@ include'includes/connect.php';
                   <tr>
                     <th>Date Created</th>
                     <th>Reference Number </th>
+                    <th>Product Name </th>
+                    <th>Quantity </th>
+                    <th>SRP </th>
                     <th>Payment Method</th>
                     <th>Total Amount</th>
                   </tr>
@@ -238,6 +241,9 @@ include'includes/connect.php';
               return `<tr>
                           <td>${item.date_created}</td>
                           <td>${item.ref_number}</td>
+                          <td>${item.ProductName}</td>
+                          <td>${item.quantity}</td>
+                          <td>${item.SRP}</td>
                           <td>${item.payment_method}</td>
                           <td>${parseFloat(item.total_amount).toFixed(2)}</td>
                          
@@ -251,7 +257,7 @@ include'includes/connect.php';
           requestcontent.forEach(el=>{
               container.innerHTML += el
           })
-
+          return
           
         }
       }

@@ -76,15 +76,25 @@ switch($req){
         return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
 
         case 'sales_report':
-        $sql = "(SELECT a.transaction_ref as ref_number, a.total_amount,a.date_created as date_created,a.payment_method FROM cashier_order a  WHERE date_created >= ? and date_created <= ?) 
+        $sql = "(SELECT c.ID,a.transaction_ref as ref_number, a.total_amount,a.date_created as date_created,a.payment_method,
+                    c.prod_id as product_id,c.quantity,e.ProductName,e.SRP FROM cashier_order_list c 
+                    LEFT JOIN  cashier_order a ON c.transaction_ref = a.transaction_ref 
+                    LEFT JOIN product e ON c.prod_id = e.ID 
+                    WHERE date_created >= ? and date_created <= ?) 
                 UNION
-                (SELECT b.ref as ref_number,b.totalamount as total_amount,b.date_created as date_created,b.payment_method FROM order_transactions b  WHERE date_created >= ? and date_created <= ?)";
+                (SELECT d.ID,b.ref as ref_number,b.totalamount as total_amount,b.date_created as date_created,b.payment_method,
+                    d.product_id as product_id,d.quantity,f.ProductName,f.SRP
+                     FROM cart d
+                    LEFT JOIN order_transactions b On d.transaction_id = b.ID
+                    LEFT JOIN product f on d.product_id = f.ID
+                    WHERE date_created >= ? and date_created <= ?)";
         $result = $db->prepare($sql);
         $result->bindParam(1,$_GET['date_start']);
         $result->bindParam(2,$_GET['date_end']);
         $result->bindParam(3,$_GET['date_start']);
         $result->bindParam(4,$_GET['date_end']);
         $result->execute();
+        $response = Array();
         if($result->rowCount() > 0){
             while($row = $result->fetch(PDO::FETCH_ASSOC)){
                 array_push($response,$row);

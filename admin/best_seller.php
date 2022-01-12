@@ -158,11 +158,11 @@ include'includes/connect.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Customer Report</h1>
+            <h1>Best Seller Report</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Customer Report</a></li>
+              <li class="breadcrumb-item"><a href="#">Best Seller Report</a></li>
             </ol>
           </div>
         </div>
@@ -174,7 +174,7 @@ include'includes/connect.php';
         <!-- Default box -->
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">List of customers</h3>
+    <h3 class="card-title">List of Best Sellers</h3>
   </div>
   <div class="row">
           <div class="px-4 py-2">
@@ -184,12 +184,6 @@ include'includes/connect.php';
               </div>
             <input type="date" class="form-control" id="date_start">
             <input type="date" class="form-control" id="date_end">
-            <select class="custom-select" id="filter_report">
-              <option selected value="">Select Filter</option>
-              <option value="1">Validated</option>
-              <option value="2">Not-validated</option>
-              <option value="3">Declined</option>
-            </select>
             <div class="input-group-append">
               <button class="btn btn-dark" style="text-align:center;margin-bottom:0" id="btn_generate"> generate report</button>
             </div>
@@ -200,15 +194,10 @@ include'includes/connect.php';
     <table id="example1" class="table table-bordered table-striped">
     <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Address</th>
-                    <th>Contact No</th>
-                    <th>Email</th>
-                    <!-- <th>ID Picture</th> -->
-                    <th>Status</th>
                     <th>Date Created</th>
+                    <th>Product Name </th>
+                    <th>Total Sold base on Date</th>
+                    <th>Total Price</th>
                   </tr>
                   </thead>
                   <tbody id="table_clients">
@@ -236,64 +225,23 @@ include'includes/connect.php';
      if($("#date_start").val() === "" || $("#date_end").val() === ""){
        return alert("Please select Dates");
      }
-     if($("#filter_report").val() === ""){
-       return alert("Please select filter");
-     }
-     fetch(`includes/app/clients.php?request=account_report&date_start=${$("#date_start").val()}&date_end=${$("#date_end").val()}&validated=${$("#filter_report").val()}`)
+     fetch(`includes/app/tables_inventory.php?request=best_seller_report&date_start=${$("#date_start").val()}&date_end=${$("#date_end").val()}`)
     .then(data => data.json())
     .then(data => {
+        const container = document.querySelector("#table_clients");
       if(data.response == 1){
-          const container = document.querySelector("#table_clients");
-          container.innerHTML = "";
-          if(data.hasOwnProperty("list")){
-          const requestcontent = data.list.map(item =>{
-              return `<tr>
-                          <td>${item.ID}</td>
-                          <td>${item.lname}, ${item.fname} ${item.mname}</td>
-                          <td>${item.username}</td>
-                          <td>${item.street_add} ,${item.city_add} ${item.zip_add}</td>
-                          <td>${item.contact}</td>
-                          <td>${item.email}</td>
-                        
-                          <td>${!parseInt(item.validated) ? "waiting for validation" : "validated" }</td>
-                          <td>${item.date_created}</td>
-                           </tr>`
-          })
-
-          if(requestcontent.length < 1){
-            return container.innerHTML = `<tr><td colspan='7' style="text-align:center">No Result Found</td></tr>`
-          }
-
-          requestcontent.forEach(el=>{
-              container.innerHTML += el
-          })
-
           
-        }
-      }
-      return container.innerHTML = `<tr><td colspan='7' style="text-align:center">No Result Found</td></tr>`
-    })
-   })
-   const fetchList = () =>{
-    fetch('includes/app/clients.php?request=account_list')
-    .then(data => data.json())
-    .then(data => {
-      const container = document.querySelector("#table_clients");
-      if(data.response == 1){
-         
           container.innerHTML = "";
           if(data.hasOwnProperty("list")){
+              console.log(data)
           const requestcontent = data.list.map(item =>{
+              let total = parseFloat(item.SRP) * parseFloat(item.total_quantity);
               return `<tr>
-                          <td>${item.ID}</td>
-                          <td>${item.lname}, ${item.fname} ${item.mname}</td>
-                          <td>${item.username}</td>
-                          <td>${item.street_add} ,${item.city_add} ${item.zip_add}</td>
-                          <td>${item.contact}</td>
-                          <td>${item.email}</td>
-                        
-                          <td>${!parseInt(item.validated) ? "waiting for validation" : "validated" }</td>
                           <td>${item.date_created}</td>
+                          <td>${item.ProductName}</td>
+                          <td>${item.total_quantity}</td>
+                          <td>Php ${total.toFixed(2)}</td>
+                         
                            </tr>`
           })
 
@@ -304,14 +252,44 @@ include'includes/connect.php';
           requestcontent.forEach(el=>{
               container.innerHTML += el
           })
-          return
-          }
-      }
-      return container.innerHTML = `<tr><td colspan='7' style="text-align:center">No Result Found</td></tr>`
-    })
-  }
 
-    fetchList()
+          return
+        }
+      }
+      return container.innerHTML = `<tr><td colspan='4' style="text-align:center">No Result Found</td></tr>`
+    })
+   })
+//    const fetchList = () =>{
+//     fetch('includes/app/clients.php?request=account_list')
+//     .then(data => data.json())
+//     .then(data => {
+//       if(data.response == 1){
+//           const container = document.querySelector("#table_clients");
+//           container.innerHTML = "";
+//           if(data.hasOwnProperty("list")){
+//           const requestcontent = data.list.map(item =>{
+//               return `<tr>
+//                           <td>${item.ID}</td>
+//                           <td>${item.lname}, ${item.fname} ${item.mname}</td>
+//                           <td>${item.username}</td>
+//                           <td>${item.street_add} ,${item.city_add} ${item.zip_add}</td>
+//                           <td>${item.contact}</td>
+//                           <td>${item.email}</td>
+                        
+//                           <td>${!parseInt(item.validated) ? "waiting for validation" : "validated" }</td>
+//                           <td>${item.date_created}</td>
+//                            </tr>`
+//           })
+
+//           requestcontent.forEach(el=>{
+//               container.innerHTML += el
+//           })
+//           }
+//       }
+//     })
+//   }
+
+    // fetchList()
 </script>
 </body>
 </html>

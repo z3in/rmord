@@ -78,7 +78,7 @@
                     <div class="col-md-12">
                         <form class="form-inline col-md-12 wow fadeInDown animated">
                             <div class="form-group">
-                                <input type="email" class="form-control subscribe" id="email" placeholder="Search...">
+                                <input type="email" class="form-control subscribe" id="" placeholder="Search...">
                                 <button class="suscribe-btn" ><i class="pe-7s-search"></i></button>
                             </div>
                         </form><!-- end /. form -->
@@ -208,7 +208,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="titie-section wow fadeInDown animated ">
-                            <h1>GET IN TOUCH</h1>
+                            <h1>Feedback and Suggestion</h1>
                         </div>
                     </div>
                 </div>
@@ -233,35 +233,35 @@
                         </div>
                     </div>
                     <div class="col-md-6 wow fadeInRight animated">
-                        <form action="" method="" class="contact-form">
+                        <form action="app/client/feedback.php" method="POST" class="contact-form" name="suggestion_form" id="suggestion_form">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Your Name" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Email">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Subject">
+                                        <input type="text" class="form-control" id="subject" name="subj" placeholder="Subject" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Website URL">
+                                        <input type="phone" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="input-group">
-                                        <textarea name="" id="" class="form-control" cols="30" rows="5" placeholder="Your Message..."></textarea>
+                                        <textarea id="comment" class="form-control" name="comment" cols="30" rows="5" placeholder="Your Message..." form="suggestion_form" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -300,5 +300,24 @@
         <script src="js/owl.carousel.min.js"></script>
         <script src="js/wow.min.js"></script>
         <script src="js/custom.js"></script>
+        <script>
+            var form  = $("#suggestion_form")[0]
+            $("#suggestion_form").submit(function(event){
+                event.preventDefault()
+                var data = new FormData(form)
+                fetch('app/client/feedback.php',{method:"POST",body:data})
+                .then(data => data.json())
+                .then(data =>{
+                    if(data.response){
+                        $("#subject").val("")
+                        $("#fullname").val("")
+                        $("#email").val("")
+                        $("#phone").val("")
+                        $("#comment").val("")
+                    }
+                    alert(data.message)
+                })
+            })
+        </script>
     </body>
 </html>

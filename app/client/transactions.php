@@ -70,7 +70,7 @@ function placeOrder($db,$data){
 }
 
 function updateCart($db,$trans,$user,$pay){
-    $sql = "UPDATE cart SET `status` = :stat,transaction_id = :trans WHERE `user_id` = :user";
+    $sql = "UPDATE cart SET `status` = :stat,transaction_id = :trans WHERE `user_id` = :user AND `status` = 'pending'";
     $result = $db->prepare($sql);
     $params = [
         "user" => $user,

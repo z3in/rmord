@@ -15,7 +15,6 @@ const getList = () =>{
             quantity = data.list.length
             data.list.map(item =>{
                 menu.createCheckout(container,item);
-                
             })
             let price_list = data.list.map(item => parseFloat(item.SRP * item.quantity)).reduce((prev, next) => prev + next);
             total_price.innerHTML = price_list.toFixed(2)
@@ -143,7 +142,7 @@ const onChangeHandler = async function () {
             let closest = data.list.reverse().find(e => e.KM <= km)
             document.querySelector("#delivery_fee").innerHTML = `Php ` + parseFloat(closest.PRICE).toFixed(2);
             var total_order = document.querySelector('#total_order_price')
-            var price = parseInt(total_order.innerText) + parseInt(closest.PRICE);
+            var price = parseFloat(total_order.innerText) + parseFloat(closest.PRICE);
             total_order.innerHTML = parseFloat(price).toFixed(2)
         }
        
@@ -280,7 +279,7 @@ $(document).ready(()=>{
         let key = "sk_test_nY9ijCLWys58NrMk5KgP5TkF"
         let headers = createHeaders(key);
 
-    document.querySelector("#btnPayment").addEventListener("click",async function(event){
+        document.querySelector("#btnPayment").addEventListener("click",async function(event){
         
         if(!confirm("Place order ?")){
 
