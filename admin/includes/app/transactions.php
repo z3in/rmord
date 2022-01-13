@@ -102,6 +102,20 @@ switch($req){
             return print_r(json_encode(array("response" => 1, "message" => "Showing Result", "list"=> $response, "timestamp" => $time)));
         }
         return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
+
+        case 'getOrderList':
+            $sql = "SELECT a.product_id,a.quantity,b.ProductName,b.SRP,b.photo FROM cart a LEFT JOIN product b ON a.product_id = b.id WHERE a.transaction_id = ?";
+            $result = $db->prepare($sql);
+            $result->bindParam(1,$_GET['id']);
+            $result->execute();
+            $response = Array();
+            if($result->rowCount() > 0){
+                while($row = $result->fetch(PDO::FETCH_ASSOC)){
+                    array_push($response,$row);
+                }
+                return print_r(json_encode(array("response" => 1, "message" => "Showing Result", "list"=> $response, "timestamp" => $time)));
+            }
+        return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
 }
 
 function viewReservations($db){
@@ -167,3 +181,4 @@ function updateCart($db,$trans,$user,$pay){
     }
     return false;
 }
+
