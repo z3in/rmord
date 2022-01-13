@@ -10,6 +10,10 @@ if(isset($_GET['request'])){
   
     switch($req){
         case 'single_res' : 
+        $validate = getCount($db,$_POST);
+        if($validate > 50){
+            return print_r(json_encode(array("response" => 0, "message" => "Sorry we are fully booked today.", "timestamp" => $time)));
+        }
         $sql = "SELECT * from tableinventory where status = 1 and seats >= :seats AND ID NOT IN (SELECT ID FROM  reservation WHERE reservation_date = :res_date and status = 'reserved') LIMIT 1";
         $query = $db->prepare($sql);
         $data = [
@@ -27,6 +31,10 @@ if(isset($_GET['request'])){
         return print_r(json_encode(array("response" => 1, "message" => "No available reservation on the time and date you have chosen.", "timestamp" => $time)));
         case 'food_res':
         $json = json_decode($_POST['foods']);
+        $validate = getCount($db,$_POST);
+        if($validate > 50){
+            return print_r(json_encode(array("response" => 0, "message" => "Sorry we are fully booked today.", "timestamp" => $time)));
+        }
         $sql = "SELECT * from tableinventory where status = 1 and seats >= :seats AND ID NOT IN (SELECT ID FROM  reservation WHERE reservation_date = :res_date and status = 'reserved') LIMIT 1";
         $query = $db->prepare($sql);
         $data = [
@@ -65,6 +73,14 @@ if(isset($_GET['request'])){
     }
 }
 
+function getCount($db,$data){
+    $sql = "SELECT * FROM reservation WHERE reservation_date = :res_date";
+    $query = $db->prepare($sql);
+    $query->bindParam(":res_date",$data['res_date']);
+    $query->execute();
+    $count = $query->rowCount();
+    return $count;
+}
 function insertComponents($db,$id,$json){
     $sql = "INSERT INTO reservation_food(reservation_id,product_id,quantity)VALUES(:res_id,:res_product,:res_quantity)";
     $query = $db->prepare($sql);

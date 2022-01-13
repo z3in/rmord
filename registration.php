@@ -460,6 +460,9 @@
 			form.addEventListener("submit", function(event) {
 			var data = new FormData(form);
 			
+			data.set('regcity',$("#city option:selected").text())
+			data.set('province',$("#province option:selected").text())
+			data.set('barangay',$("#barangay option:selected").text())
 			fetch('app/client/registration.php',{method:"POST",body:data})
 			.then(data => data.json())
 			.then(data => {

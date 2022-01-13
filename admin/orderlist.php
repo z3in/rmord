@@ -7,6 +7,7 @@ include'includes/connect.php';
 <head>
   <title>OROARS | Dashboard</title>
   <?php include'includes/head.php';?>
+  
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->

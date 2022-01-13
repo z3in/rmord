@@ -72,13 +72,12 @@ switch($req){
         return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
 
         case 'update_user':
-            $sql = "UPDATE user_role SET `Name`,`Email`,`Password`,`Address`,`ContactNo`,`Position`,`status` WHERE ID = :id";
+            $sql = "UPDATE user_role SET `Name` = :fullname ,`Email` = :email,`Password` = :pass,`Address` = :addr,`ContactNo` = :contact,`Position` =:position,`status` =:stats WHERE ID = :id";
             $query = $db->prepare($sql);
             $data = [
                 "id" => $_POST['id'],
                 "fullname" => $_POST['name'],
                 "email" => $_POST['email'],
-                "pass" => $_POST['password'],
                 "pass" => $_POST['password'],
                 "addr" => $_POST['address'],
                 "contact" => $_POST['contact'],

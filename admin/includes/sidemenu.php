@@ -164,17 +164,17 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="reports/customer_information.php" class="nav-link">
+                <a href="customer_information.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Customer Information</p>
                 </a>
               </li>
-              <!-- <li class="nav-item">
-                <a href="" class="nav-link">
+              <li class="nav-item">
+                <a href="best_seller.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Best Seller Reports</p>
                 </a>
-              </li> -->
+              </li>
 
               <li class="nav-item">
                 <a href="sales_report.php" class="nav-link">
@@ -277,7 +277,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="feedback.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Feedback & Suggestion</p>
                 </a>

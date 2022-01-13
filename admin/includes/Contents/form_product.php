@@ -25,7 +25,11 @@
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Product Price</label>
-          <input type="text" class="form-control" id="" onkeyup="document.querySelector('#input_srp').value = parseFloat(parseInt(this.value) * 1.2).toFixed(2)" name='ProductPrice' placeholder="ProductPrice">
+          <input type="text"  onkeyup="document.querySelector('#input_srp').value = parseFloat(parseFloat(this.value) + (parseFloat(this.value) * (parseFloat(document.querySelector('#vatpercent').value)/100))).toFixed(2)" class="form-control" id="ProductPrice" name='ProductPrice' placeholder="ProductPrice">
+        </div> 
+        <div class="form-group">
+          <label for="exampleInputPassword1">VAT(in percentage)</label>
+          <input type="text" class="form-control" id="vatpercent" onkeyup="document.querySelector('#input_srp').value = parseFloat(parseFloat(document.querySelector('#ProductPrice').value) + (parseFloat(document.querySelector('#ProductPrice').value) * (parseFloat(this.value)/100))).toFixed(2)" placeholder="VAT">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">SRP</label>

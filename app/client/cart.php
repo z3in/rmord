@@ -73,7 +73,7 @@ function getProduct($db){
         $result = $db->prepare($sql);
         $data = [
             "user" => $_GET['user_id'],
-            "stat" => "pending",
+            "stat" => isset($_GET['status']) ? $_GET['status'] : "pending",
             "prod" => $_GET['product_id']
         ];
     $result->execute($data);
@@ -140,7 +140,7 @@ function listCart($db){
 
         $data = [
             "user" => $_GET['user_id'],
-            "stat" => "pending"
+            "stat" => isset($_GET['status']) ? $_GET['status'] : "pending",
         ];
         
         $response = Array();
