@@ -17,6 +17,14 @@
         });
      }
    })
+   fetch(`includes/app/feedback.php?request=notification`)
+   .then(data => data.json())
+   .then(data =>{
+     if(data.hasOwnProperty("list")){
+        return $("#notif_badge").text(data.list.length)
+     }
+     return $("#notif_badge").text("0")
+   })
 </script>
   
       <nav class="mt-2">
