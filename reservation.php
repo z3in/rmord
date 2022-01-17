@@ -610,7 +610,7 @@ include'includes/connect.php';
                 forms_data.append("payment_method", "gcash")
                 forms_data.append("card_details", "N/A")
                 forms_data.append("ref", ref)
-                forms_data.append("total_amount", parseFloat(inventory.getTotal() / 2).toFixed(2))
+                forms_data.append("total_amount",inventory.getTotal())
                 forms_data.append("user_id", getCookie("user_id"))
                 let searchParams = new URLSearchParams(window.location.search)
                 let request_type = $("#select_reservation").val() == 1 ? "single_res" : "food_res" 
