@@ -107,4 +107,53 @@ switch($req){
                         return print_r(json_encode(array("response" => 1, "message" => "New User Saved!", "timestamp" => $time)));
                 }
                 return print_r(json_encode(array("response" => 0, "message" => "something went wrong. unable place order!", "timestamp" => $time)));
+    case 'insert_backup':
+            $backup_file = $db_database . "_" . date("Y-m-d-H-i-s") . '.gz';
+            $path_backup = "app/backup/" . $backup_file;
+            $command = "mysqldump --opt -h " . $db_host . " -u " . $db_user . " -p ". $db_pass  . " " . $db_database . " | gzip > " . $path_backup;
+            if(function_exists('shell_exec')) {
+                exec("C:\\\\xampp\mysql\binmysqldump.exe --opt -h " .$db_host." -u " .  $db_user . " -p ".$db_pass." ".$db_database ." > ".$path_backup, $output, $return);
+            }
+            if($return !== 0){
+                $sql = "INSERT INTO backup(`backup_name`,`path`,`type`,`user_id`)VALUES(:backup_name,:ref_path,:file_type,:userid)";
+                $stmt = $db->prepare($sql);
+                $data = [
+                    "file_type" => "backup",
+                    "backup_name" => $backup_file,
+                    "ref_path" => $path_backup,
+                    "userid" => $_GET['userid']
+                ];
+                if($stmt->execute($data)){
+                    return print_r(json_encode(array("response" => 1, "message" => "Backup Saved!", "timestamp" => $time)));;
+                }
+            }
+            if(system($command)){
+                $sql = "INSERT INTO backup(`backup_name`,`path`,`type`,`user_id`)VALUES(:backup_name,:ref_path,:file_type,:userid)";
+                $stmt = $db->prepare($sql);
+                $data = [
+                    "file_type" => "backup",
+                    "backup_name" => $backup_file,
+                    "ref_path" => $path_backup,
+                    "userid" => $_GET['userid']
+                ];
+                $stmt->execute($data);
+                if($stmt->execute($data)){
+                    return print_r(json_encode(array("response" => 1, "message" => "Backup Saved!", "timestamp" => $time)));;
+                }
+            }
+
+    case 'get_backup':
+            $sql = "SELECT * from backup";
+            
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $response = Array();
+            if($stmt->rowCount() > 0){
+                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    array_push($response,$row);
+                }
+                return print_r(json_encode(array("response" => 1, "message" => "Showing Result", "list"=> $response, "timestamp" => $time)));
+            }
+            return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
+
 }

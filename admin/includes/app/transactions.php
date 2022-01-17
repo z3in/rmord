@@ -116,6 +116,7 @@ switch($req){
                 return print_r(json_encode(array("response" => 1, "message" => "Showing Result", "list"=> $response, "timestamp" => $time)));
             }
         return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
+        
 }
 
 function viewReservations($db){

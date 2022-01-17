@@ -49,7 +49,7 @@ if(isset($_GET['request'])){
                 $err = Array();
                 foreach($json as $singular)
                     {
-                        array_push($err,insertComponents($db,$id,$singular));
+                        array_push($err,insertComponents($db,$_POST['ref'],$singular));
                     }
             }
             return print_r(json_encode(array("response" => 1, "message" => "showing result", "list" => "Referrence number for your reservation : "  . $_POST['ref'], "timestamp" => $time)));
@@ -70,6 +70,16 @@ if(isset($_GET['request'])){
             return print_r(json_encode(array("response" => 1, "message" => "Showing Result", "list"=> $response, "timestamp" => $time)));
         }
         return print_r(json_encode(array("response" => 1, "message" => "No Result Found.", "timestamp" => $time)));
+
+        case 'update_res':
+            $sql = "UPDATE reservation SET `status` = :stats WHERE reservation_ref = :ref";
+            $query = $db->prepare($sql);
+            $query->bindParam(":stats",$_GET['status']);
+            $query->bindParam(":ref",$_GET['ref']);
+            if($query->execute()){
+                return print_r(json_encode(array("response" => 1, "message" => "showing result", "list" => "Referrence number for your reservation : "  . $_GET['ref'], "timestamp" => $time)));
+            }
+            return print_r(json_encode(array("response" => 0, "message" => "showing result", "list" => "error on updating: "  . $_POST['ref'], "timestamp" => $time)));
     }
 }
 
@@ -96,8 +106,8 @@ function insertComponents($db,$id,$json){
 }
 
 function create_reservation($db,$row,$post){
-        $sql = "INSERT INTO reservation(`reservation_ref`,`reservation_name`,`reservation_type`,`contact`,`guest_count`,`table_number`,`reservation_date`,`reservation_time`,`status`,`instruction`,`user_id`)
-                VALUES(:ref,:res_name,:res_type,:contact,:guest,:table_number,:res_date,:res_time,:stats,:ins,:user)";
+        $sql = "INSERT INTO reservation(`reservation_ref`,`reservation_name`,`reservation_type`,`contact`,`guest_count`,`table_number`,`reservation_date`,`reservation_time`,`status`,`instruction`,`user_id`,`total_amount`,`payment_method`,`card_details`)
+                VALUES(:ref,:res_name,:res_type,:contact,:guest,:table_number,:res_date,:res_time,:stats,:ins,:user,:total_amount,:payment_method,:card_details)";
         $query = $db->prepare($sql);
         $data = [
             "table_number" => $row['table_number'],
@@ -105,12 +115,15 @@ function create_reservation($db,$row,$post){
             "res_name" => $post['name'],
             "res_date" => $post['res_date'],
             "res_time" => $post['res_time'],
-            "stats" => "reserved",
+            "stats" => $post['status'],
             "contact" => $post['cnum'],
             "guest" => $post['selectnumberofpeople'],
             "ref" => $post['ref'],
             "ins" => isset($post['text_instruction']) ? $post['text_instruction'] : null,
-            "user" => $post['user_id']
+            "user" => $post['user_id'],
+            "total_amount" => $post['total_amount'],
+            "payment_method" => $post['payment_method'],
+            "card_details" => $post['card_details']
         ];
         if($query->execute($data)){
             return $db->lastInsertId();

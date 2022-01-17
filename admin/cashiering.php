@@ -185,6 +185,8 @@ include'includes/connect.php';
                   <tr>
                     <th>Date/Time</th>
                     <th>Order Number</th>
+                    <th>Order Type</th>
+                    <th>Ordered Menu</th>
                     <th>Status</th>
                     <th>Table Number</th>
                     <th>Action</th>
@@ -210,21 +212,19 @@ include'includes/connect.php';
   </div>
   <!-- /.content-wrapper -->
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+        
       </div>
       <div class="modal-body">
-        ...
+        <div class="list-group" id="body_order_container">
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnClose">Close</button>
       </div>
     </div>
   </div>
@@ -232,8 +232,39 @@ include'includes/connect.php';
  <?php include'includes/footer.php'?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
  <script type="text/javascript">
+    const viewModal = (title) =>{
+        $("#exampleModalCenter").show();
+        $("#exampleModalLongTitle").text('Order Number : ' + title)
+        fetch(`includes/app/cashier.php?request=get_order&trans=${title}`)
+        .then(data => data.json())
+        .then(data =>{
+          const container = document.querySelector("#body_order_container");
+          container.innerHTML = "";
+          if(data.response == 1){
+            const requestcontent = data.list.map(item =>{
 
-    async function printBill(id,ref,date,amount){
+              return `<a class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">${item.ProductName}</h5>
+                        <small>item total price: Php ${parseFloat(item.SRP * item.quantity).toFixed(2)}</small>
+                    </div>
+                    <div class="d-flex w-100 justify-content-between">
+                    <img src="../${item.photo}" style="width:50px;height:auto">
+                    <p class="mb-1">Quantity : ${item.quantity}<br> Price : Php ${item.SRP}</p>
+                    </div>
+                    <a>`
+            })
+
+            requestcontent.forEach(el=>{
+                container.innerHTML += el
+            })
+          }
+        })
+      }
+    document.querySelector("#btnClose").addEventListener('click',()=>{
+      $("#exampleModalCenter").hide();
+    })
+    async function printBill(id,ref,date,amount,type){
 
       if(!confirm("Are you sure you want to print bill for customer ?")){
         return
@@ -255,15 +286,15 @@ include'includes/connect.php';
       })
       
       
-      doc.text(`Total Amount (VAT INCLUDED): ${parseFloat(amount).toFixed(2)}`, 70, vposition + 50);
+      doc.text(`Total Amount (VAT INCLUDED): ${ ref.substring(0,3) === "RES" ? type  === "food_reservation" ? parseFloat(amount/2).toFixed(2) : parseFloat(amount).toFixed(2) : parseFloat(amount).toFixed(2)}`, 70, vposition + 50);
 
       data = {
         stats : "BILL-OUT",
         payment: null,
         card_details: null,
-        id: id
+        trans: ref
       }
-      await fetch(`includes/app/cashier.php?request=update_status&trans=${ref}`,{method:"POST",body:JSON.stringify(data)})
+      await fetch(`includes/app/cashier.php?request=update_status`,{method:"POST",body:JSON.stringify(data)})
       .then(data => data.json())
       .then(data => items = data.list) 
 
@@ -290,6 +321,23 @@ include'includes/connect.php';
 
       getList();
     }
+
+    function buttonAction(item){
+      if(item.status.toUpperCase() === "CANCELLED" || item.status.toUpperCase() == "PAID"){
+        return `<a href="cashier_payment.php?id=${item.ID}&ref=${item.transaction_ref}&total=${item.total_amount}" class="btn btn-outline-secondary">Accept Payment</a>`
+      }
+      if(item.status.toUpperCase() === "RESERVED"){
+        if(item.reservation_type === "food_reservation"){
+          return `<button class="btn btn-outline-secondary" onclick="printBill('${item.ID}','${item.transaction_ref}','${item.date_created}','${item.total_amount}','${item.reservation_type}')">Bill-Out (print bill)</button>
+                  <button class="btn btn-outline-danger ml-2" onclick="changeStatus('${item.transaction_ref}','CANCELLED')">Cancel</button>`
+        }
+        if(item.reservation_type !== "food_reservation"){
+          return `<a href="create_order.php" class="btn btn-outline-secondary"> Create Order </a>`
+        }
+      }
+      return `<button class="btn btn-outline-secondary" onclick="printBill('${item.ID}','${item.transaction_ref}','${item.date_created}','${item.total_amount}','${item.reservation_type}')">Bill-Out (print bill)</button>
+                  <button class="btn btn-outline-danger ml-2" onclick="changeStatus('${item.transaction_ref}','CANCELLED',')">Cancel</button>`
+    }
     function getList(){
       fetch('includes/app/cashier.php?request=get_all_list')
       .then(data => data.json())
@@ -302,11 +350,11 @@ include'includes/connect.php';
                             return `<tr>
                                         <td>${item.date_created}</td>
                                         <td>${item.transaction_ref}</td>
-                                        <td>${item.status}</td>
+                                        <td>${item.transaction_ref.substring(0,3) === "RES" ? "ONLINE RESERVATION" : "WALK-IN"}</td>
+                                        <td><button class="btn btn-outline-success" onclick="viewModal('${item.transaction_ref}')">view</button></td>
+                                        <td>${item.status.toUpperCase()}</td>
                                         <td>${item.table_number}</td>
-                                        <td>${(item.status == "CANCELLED" || item.status == "PAID") ? `` : item.status === "BILL-OUT" ? `<a href="cashier_payment.php?id=${item.ID}&ref=${item.transaction_ref}&total=${item.total_amount}" class="btn btn-outline-secondary">Accept Payment</a>` : `<button class="btn btn-outline-secondary"
-                                           onclick="printBill('${item.ID}','${item.transaction_ref}','${item.date_created}','${item.total_amount}')">Bill-Out (print bill)</button>
-                                           <button class="btn btn-outline-danger ml-2" onclick="changeStatus('${item.transaction_ref}','CANCELLED')">Cancel</button>` }</td>
+                                        <td>${buttonAction(item)}</td>
                                     </tr>`
                         })
 
