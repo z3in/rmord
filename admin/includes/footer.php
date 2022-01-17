@@ -60,13 +60,13 @@
               clearInterval(refresh);
               refresh = setTimeout(function() {
                  location.href = location.href;
-              }, seconds * 10000);
+              }, seconds * 1000);
           };
 
       $(document).on('keypress click', function() { intvrefresh() });
       intvrefresh();
 
-  }(15)); // define here seconds
+  }(60)); // define here seconds
 
 
 </script>

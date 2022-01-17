@@ -331,7 +331,7 @@ include'includes/connect.php';
       }
       if(item.status.toUpperCase() === "RESERVED"){
         if(item.reservation_type === "food_reservation"){
-          return `<button class="btn btn-outline-secondary" onclick="changeStatus('${item.transaction_ref},'DINING')">Dining</button>
+          return `<button class="btn btn-outline-secondary" onclick="changeStatus('${item.transaction_ref}','DINING')">Dining</button>
                   <button class="btn btn-outline-danger ml-2" onclick="changeStatus('${item.transaction_ref}','CANCELLED')">Cancel</button>`
         }
         if(item.reservation_type !== "food_reservation"){

@@ -323,8 +323,8 @@ $(document).ready(()=>{
                     amount : 15000,
                     currency : "PHP",
                     redirect : {
-                        success : `http://localhost:81/oroars/checkout.php?payment=success&payment_method=gcash&lat=${marker.position.lat()}&lng=${marker.position.lng()}`,
-                        failed : "http://localhost:81/oroars/checkout.php?payment=failed"
+                        success : `http://3.145.117.18/checkout.php?payment=success&payment_method=gcash&lat=${marker.position.lat()}&lng=${marker.position.lng()}`,
+                        failed : "http://3.145.117.18/checkout.php?payment=failed"
                     }
                 }
                 
