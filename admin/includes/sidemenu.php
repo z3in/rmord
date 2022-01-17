@@ -133,9 +133,10 @@
         
           <!--Notification module-->
         <li class="nav-item" >
-            <a href="#" class="nav-link">
+            <a href="notification.php" class="nav-link">
               <i class="fa fa-bell nav-icon" aria-hidden="true"></i>
-              <p> Notification
+              <p> Notification 
+              <span class="badge badge-dark" id="notif_badge">0</span>
               </p>
             </a>
         </li>
