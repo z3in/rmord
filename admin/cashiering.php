@@ -285,11 +285,11 @@ include'includes/connect.php';
         doc.text(`Php ${parseFloat(item.SRP * item.quantity).toFixed(2)}`, 140 , vposition);
       })
       
-      
+      ref.substring(0,3) === "RES" ? type  === "food_reservation" ? doc.text(`Partial Payment During Online Reservation: # ${parseFloat(amount/2).toFixed(2)}`) : doc.text(`Online Reservation fee: Php 50 (PAID)`):``
       doc.text(`Total Amount (VAT INCLUDED): ${ ref.substring(0,3) === "RES" ? type  === "food_reservation" ? parseFloat(amount/2).toFixed(2) : parseFloat(amount).toFixed(2) : parseFloat(amount).toFixed(2)}`, 70, vposition + 50);
 
       data = {
-        stats : "BILL-OUT",
+        stat : "BILL-OUT",
         payment: null,
         card_details: null,
         trans: ref
@@ -324,11 +324,14 @@ include'includes/connect.php';
 
     function buttonAction(item){
       if(item.status.toUpperCase() === "CANCELLED" || item.status.toUpperCase() == "PAID"){
+          return ``;
+      }
+      if(item.status.toUpperCase() === "BILL-OUT"){
         return `<a href="cashier_payment.php?id=${item.ID}&ref=${item.transaction_ref}&total=${item.total_amount}" class="btn btn-outline-secondary">Accept Payment</a>`
       }
       if(item.status.toUpperCase() === "RESERVED"){
         if(item.reservation_type === "food_reservation"){
-          return `<button class="btn btn-outline-secondary" onclick="printBill('${item.ID}','${item.transaction_ref}','${item.date_created}','${item.total_amount}','${item.reservation_type}')">Bill-Out (print bill)</button>
+          return `<button class="btn btn-outline-secondary" onclick="changeStatus('${item.transaction_ref},'DINING')">Serve Guest (print bill)</button>
                   <button class="btn btn-outline-danger ml-2" onclick="changeStatus('${item.transaction_ref}','CANCELLED')">Cancel</button>`
         }
         if(item.reservation_type !== "food_reservation"){

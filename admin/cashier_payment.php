@@ -361,7 +361,7 @@ include'includes/connect.php';
 
         card.amount = searchParams.get('total') < 10000 ? 10000 : parseFloat(searchParams.get('total')).toFixed(2);
     
-        const pKey = "sk_test_TZwovKaLAX3enGqj5VLm1M9m";
+        const pKey = "sk_test_nY9ijCLWys58NrMk5KgP5TkF";
         
         const paymentID = await createPaymentIntent(pKey);
         const client_id = paymentID.data.attributes.client_key;
@@ -426,7 +426,7 @@ include'includes/connect.php';
 
     async function getSource(id){
       
-      let headers = createHeaders("sk_test_TZwovKaLAX3enGqj5VLm1M9m");
+      let headers = createHeaders("sk_test_nY9ijCLWys58NrMk5KgP5TkF");
       let data = createRequestOption("GET",null,headers);
       const pm = await requestURL("https://api.paymongo.com/v1/sources/" + id,data);
       return await pm;
