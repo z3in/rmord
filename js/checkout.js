@@ -182,6 +182,17 @@ $(document).ready(()=>{
     })
     
        function checkSource(src){
+            let searchParams = new URLSearchParams(window.location.search)
+            let payment_method = '',lat=0,lng=0;
+            if(searchParams.has('payment_method')){
+                payment_method = searchParams.get("payment_method")
+            }
+            if(searchParams.has('lat')){
+                lat = searchParams.get("lat")
+            }
+            if(searchParams.has('lng')){
+                lng = searchParams.get("lng")
+            }
             getSource(src).then((data)=>{
                 if(data.data.attributes.status === "pending"){
                     checkSource(src)
@@ -193,10 +204,10 @@ $(document).ready(()=>{
                             ref : `TN_-${generateUUID()}`,
                             payment_ref : data.data.id,
                             status : "pending",
-                            coord_lat : marker.position.lat(),
-                            coord_long : marker.position.lng(),
+                            coord_lat : lat,
+                            coord_long : lng,
                             total_amount : parseFloat($("#total_order_price").text()),
-                            payment_type : $('input[name="payment_type"]:checked').val(),
+                            payment_type : payment_method,
                             quantity : quantity,
                             user_id : getCookie('user_id')
                         }
@@ -312,8 +323,8 @@ $(document).ready(()=>{
                     amount : 15000,
                     currency : "PHP",
                     redirect : {
-                        success : "http://localhost:81/rmord/checkout.php?payment=success",
-                        failed : "http://localhost:81/rmord/checkout.php?payment=failed"
+                        success : `http://localhost:81/oroars/checkout.php?payment=success&payment_method=gcash&lat=${marker.position.lat()}&lng=${marker.position.lng()}`,
+                        failed : "http://localhost:81/oroars/checkout.php?payment=failed"
                     }
                 }
                 

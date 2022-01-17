@@ -17,6 +17,14 @@
         });
      }
    })
+   fetch(`includes/app/feedback.php?request=notification`)
+   .then(data => data.json())
+   .then(data =>{
+     if(data.hasOwnProperty("list")){
+        return $("#notif_badge").text(data.list.length)
+     }
+     return $("#notif_badge").text("0")
+   })
 </script>
   
       <nav class="mt-2">
@@ -133,9 +141,10 @@
         
           <!--Notification module-->
         <li class="nav-item" >
-            <a href="#" class="nav-link">
+            <a href="notification.php" class="nav-link">
               <i class="fa fa-bell nav-icon" aria-hidden="true"></i>
-              <p> Notification
+              <p> Notification 
+              <span class="badge badge-dark" id="notif_badge">0</span>
               </p>
             </a>
         </li>

@@ -41,6 +41,8 @@ function selectAllUser($db){
 function selectFilteredUser($db,$data){
     $sql = "SELECT * FROM registration WHERE date_created >= :date_start AND date_created <= :date_end AND `validated` = :validated";
     unset($data['request']);
+    $data['date_start'] = date_format(date_create($data['date_start'] . ' 12:00:00'),'Y-m-d H:i:s');
+    $data['date_end'] = date_format(date_create($data['date_end'] .' 23:59:59'),'Y-m-d H:i:s');
     $result = $db->prepare($sql);
     $result->execute($data);
     return $result;

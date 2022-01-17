@@ -65,8 +65,10 @@ if(isset($_GET['request'])){
     case 'best_seller_report':
       $sql ="SELECT a.ID,a.product_id,a.transaction_id,a.status,a.quantity,SUM(a.quantity) as total_quantity, b.ProductName,b.SRP,c.date_created FROM cart a LEFT JOIN product b ON a.product_id = b.ID LEFT JOIN order_transactions c ON a.transaction_id = c.ID WHERE a.status = 'purchased' AND date_created >= ? AND date_created <= ? GROUP BY a.product_id ORDER by total_quantity DESC";
       $query = $db->prepare($sql);
-      $query->bindParam(1,$_GET['date_start']);
-      $query->bindParam(2,$_GET['date_end']);
+      $start = date_format(date_create($_GET['date_start'] . ' 12:00:00'),'Y-m-d H:i:s');
+      $end = date_format(date_create($_GET['date_end'] .' 23:59:59'),'Y-m-d H:i:s');
+      $query->bindParam(1,$start);
+      $query->bindParam(2,$end);
       $query->execute();
       $response = Array();
         if($query->rowCount() > 0){

@@ -89,10 +89,12 @@ switch($req){
                     LEFT JOIN product f on d.product_id = f.ID
                     WHERE date_created >= ? and date_created <= ?)";
         $result = $db->prepare($sql);
-        $result->bindParam(1,$_GET['date_start']);
-        $result->bindParam(2,$_GET['date_end']);
-        $result->bindParam(3,$_GET['date_start']);
-        $result->bindParam(4,$_GET['date_end']);
+        $start = date_format(date_create($_GET['date_start'] . ' 12:00:00'),'Y-m-d H:i:s');
+        $end = date_format(date_create($_GET['date_end'] .' 23:59:59'),'Y-m-d H:i:s');
+        $result->bindParam(1,$start);
+        $result->bindParam(2,$end);
+        $result->bindParam(3,$start);
+        $result->bindParam(4,$end);
         $result->execute();
         $response = Array();
         if($result->rowCount() > 0){
