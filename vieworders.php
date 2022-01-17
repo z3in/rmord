@@ -179,7 +179,7 @@
                      fetch(`app/client/cart.php?request=list&user_id=${getCookie('user_id')}&status=purchased`)
                      .then(data => data.json())
                      .then(data => {
-                         let filter = data.list.filter(x => x.ID = myParam);
+                         let filter = data.list.filter(x => x.transaction_id == myParam);
                          if(filter.length > 0){
                                 $("#order_item_list").html("")
                               filter.map((item) =>{

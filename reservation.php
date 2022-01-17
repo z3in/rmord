@@ -172,7 +172,7 @@ include'includes/connect.php';
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <p>How many people</p>
-                                     <select name= "selectnumberofpeople" id="#"  class="form-control" required>
+                                     <select name= "selectnumberofpeople" id="selectnumberofpeople"  class="form-control" required>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -219,7 +219,11 @@ include'includes/connect.php';
                                         <ul id="menu_select">
                                             
                                         </ul>
+                                        <div class="row d-flex ">
+                                            <h4><span>Total Price <small style="color:#bc1414">(*VAT INCLUDED*)</small>:</span><span style="font-weight:bolder" id="price_fix">0.00</span></h4>
+                                        </div>
                                 </div>
+                                
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -283,24 +287,24 @@ include'includes/connect.php';
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                        <input type="text" class="form-control" id="" placeholder="Your Name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Your Email">
+                                        <input type="text" class="form-control" id="" placeholder="Your Email">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Subject">
+                                        <input type="text" class="form-control" id="" placeholder="Subject">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Website URL">
+                                        <input type="text" class="form-control" id="" placeholder="Website URL">
                                     </div>
                                 </div>
                             </div>
@@ -379,9 +383,14 @@ include'includes/connect.php';
                     })
                 }
 
+                getTotal(){
+                return this.items.reduce((curr,a) => curr + a.price * a.quantity,0)
+                }
+
             }
 
             var inventory = new Inventory()
+            var $total_price = 0.00;
             function generateUUID() { // Public Domain/MIT
                 var d = new Date().getTime();//Timestamp
                 var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
@@ -526,10 +535,20 @@ include'includes/connect.php';
                 }
             })
 
+            function updateTotal(){
+                $("#price_fix").text(`Php ${parseFloat(inventory.getTotal()).toFixed(2)}`)
+            }
+
             function addQuantity(id){
                 var curr_val = $(`#quantity_val_${id}`).text()
                 $(`#quantity_val_${id}`).text(parseInt(curr_val) + 1)
+                
                 inventory.addquantity(id)
+                $(`#price_point_${id}`).text(function(){
+                    let data = inventory.items.filter(item => item.id == id)
+                    return 'unit total : Php ' + data[0].quantity * data[0].price
+                })
+                updateTotal()
             }
 
             function reduceQuantity(id){
@@ -540,14 +559,23 @@ include'includes/connect.php';
                         $(`#menu_add_${id}`).show()
                     }
                     inventory.reducequantity(id)
+                    $(`#price_point_${id}`).text(function(){
+                    let data = inventory.items.filter(item => item.id == id)
+                    return 'unit total : Php ' + data[0].quantity * data[0].price
+                    })
+                    updateTotal()
                     return parseInt(curr_val) - 1
+                    
                 })
+
+                
             }
 
-            function addMenu(id,photo,product){
-                inventory.addItems({id:id,quantity:1});
-                $("#menu_select").append(`<li id="menu_select_${id}" style="display:flex;justify-content:space-between;align-item:center"><div><img src="${photo}" style="width:40%; height:auto" /> <p style="max-width:100px;font-weight:bold;margin-top: 2em;overflow-wrap: break-word;"> asdasdasdasdasd  ${product}</p></div><div><input type="button" value ="+" onclick="addQuantity(${id})" style="padding:0.25em 1em;"/> <h2 style="text-align:center" id="quantity_val_${id}">1</h2><input type="button" value ="-" onclick="reduceQuantity(${id})" style="padding:0.25em 1em;"/></div> </li>`)
+            function addMenu(id,photo,product,price){
+                inventory.addItems({id:id,quantity:1,price:price});
+                $("#menu_select").append(`<li id="menu_select_${id}" style="display:flex;justify-content:space-between;align-item:center"><div><img src="${photo}" style="width:40%; height:auto" /> <p style="max-width:150px;font-weight:bold;margin-top: 2em;overflow-wrap: break-word;"> ${product} <br> Price : Php ${price} <br> <span id="price_point_${id}">unit total : Php ${price}</span></p></div><div><input type="button" value ="+" onclick="addQuantity(${id})" style="padding:0.25em 1em;"/> <h2 style="text-align:center" id="quantity_val_${id}">1</h2><input type="button" value ="-" onclick="reduceQuantity(${id})" style="padding:0.25em 1em;"/></div> </li>`)
                 $(`#menu_add_${id}`).hide()
+                updateTotal()
             }
 
             fetch('app/client/menu.php')
@@ -555,7 +583,7 @@ include'includes/connect.php';
             .then(data =>{
                 if(data.hasOwnProperty("list")){
                     data.list.map(item =>{
-                        $("#menu_add").append(`<li id="menu_add_${item.ID}" style="display:flex;justify-content:space-between;align-item:center"><div><img src="${item.photo}" style="width:40%; height:auto" /> <strong style="max-width:50px;wrap:break-word;">${item.ProductName}</strong></div><div><input type="button" value =">>" onclick="addMenu(${item.ID},'${item.photo}','${item.ProductName}')" style="padding:0.25em 1em;" /></div> </li>`)
+                        $("#menu_add").append(`<li id="menu_add_${item.ID}" style="display:flex;justify-content:space-between;align-item:center"><div><img src="${item.photo}" style="width:40%; height:auto" /> <strong style="max-width:50px;wrap:break-word;">${item.ProductName} <br> Price : Php ${item.SRP}</strong></div><div><input type="button" value =">>" onclick="addMenu(${item.ID},'${item.photo}','${item.ProductName}','${item.SRP}')" style="padding:0.25em 1em;" /></div> </li>`)
                     })
                 }
             })
@@ -570,59 +598,69 @@ include'includes/connect.php';
                     return alert("You cannot make this reservation yet! Please wait for your account to be validated.")
                 }
 
-                let raw =  {
-                    "data": {
-                        "attributes" : {
-                            type: "gcash",
-                            amount : 15000,
-                            currency : "PHP",
-                            redirect : {
-                                success : "http://localhost:81/oroars/reservation.php?payment=success",
-                                failed : "http://localhost:81/oroars/reservation.php?payment=failed"
-                            }
-                        }
-                        
-                    }
-                };
+                var forms_data = new FormData(form);
             
-                let data = createRequestOption("POST",raw,headers);
-                const pm = await requestURL("https://api.paymongo.com/v1/sources",data);
-                //window.open(pm.data.attributes.redirect.checkout_url,'sample-inline-frame');  display authentication link for user to enter password
-                // document.querySelector('#three-ds-container').setAttribute("style","display:block"); 
-                document.cookie = `source=${new URL(pm.data.attributes.redirect.checkout_url).searchParams.get('id')}; expires=Fri, 31 Dec 9999 23:59:59 GMT`
-                window.location.href = pm.data.attributes.redirect.checkout_url;
+                let ref = `RES-${generateUUID()}`;
+                forms_data.append("res_date", $("#rdate").val())
+                forms_data.append("name", $("#name").val())
+                forms_data.append("cnum", $("#cnum").val())
+                forms_data.append("selectnumberofpeople", $("#selectnumberofpeople").val())
+                forms_data.append("res_time", $("#rtime").val())
+                forms_data.append("text_instruction", $("#text_instruction").val())
+                forms_data.append("payment_method", "gcash")
+                forms_data.append("card_details", "N/A")
+                forms_data.append("ref", ref)
+                forms_data.append("total_amount", parseFloat(inventory.getTotal() / 2).toFixed(2))
+                forms_data.append("user_id", getCookie("user_id"))
+                let searchParams = new URLSearchParams(window.location.search)
+                let request_type = $("#select_reservation").val() == 1 ? "single_res" : "food_res" 
+                request_type === "food_res" ? forms_data.append("foods", JSON.stringify(inventory.items)) : null
+                forms_data.append("status", "PENDING")
+                    fetch(`app/client/reservation.php?request=${request_type}`,{method:"POST",body:forms_data})
+                    .then(data => data.json())
+                    .then(async (data) => {
+                        if(data.response){
+                            let raw =  {
+                                "data": {
+                                    "attributes" : {
+                                        type: "gcash",
+                                        amount : 15000,
+                                        currency : "PHP",
+                                        redirect : {
+                                            success : `http://localhost:81/oroars/reservation.php?payment=success&type=${request_type}&ref=${ref}`,
+                                            failed : `http://localhost:81/oroars/reservation.php?payment=failed`
+                                        }
+                                    }
+                                    
+                                }
+                            };
+                        
+                            let data = createRequestOption("POST",raw,headers);
+                            const pm = await requestURL("https://api.paymongo.com/v1/sources",data);
+                            //window.open(pm.data.attributes.redirect.checkout_url,'sample-inline-frame');  display authentication link for user to enter password
+                            // document.querySelector('#three-ds-container').setAttribute("style","display:block"); 
+                            document.cookie = `source=${new URL(pm.data.attributes.redirect.checkout_url).searchParams.get('id')}; expires=Fri, 31 Dec 9999 23:59:59 GMT`
+                            window.location.href = pm.data.attributes.redirect.checkout_url;
+                        }
+                })
+                
             })
             
             function saveReservation(){
-			var forms_data = new FormData(form);
-            
-			forms_data.append("res_date", $("#rdate").val())
-			forms_data.append("res_time", $("#rtime").val())
-			forms_data.append("text_instruction", $("#text_instruction").val())
-			forms_data.append("ref", `RES-${generateUUID()}`)
-			forms_data.append("user_id", getCookie("user_id"))
-            let request_type = $("#select_reservation").val() == 1 ? "single_res" : "food_res" 
-            request_type === "food_res" ? forms_data.append("foods", JSON.stringify(inventory.items)) : null
-                fetch(`app/client/reservation.php?request=${request_type}`,{method:"POST",body:forms_data})
+                let searchParams = new URLSearchParams(window.location.search)
+                let ref =''
+                if(searchParams.has('ref')){
+                    ref = searchParams.get('ref')
+                }
+
+                fetch(`app/client/reservation.php?request=update_res&ref=${ref}&status=RESERVED`)
                 .then(data => data.json())
-                .then(data => {
-                    if(data.response){
-                        if(data.hasOwnProperty("list")){
-                            alert(data.list);
-                            window.location.href = "reservation.php"
-                        }else{
-                            if(data.hasOwnProperty("message")){
-                                alert(data.message)
-                            }
-                        }
-                    }
-                    if(!data.response){
-                        if(data.hasOwnProperty("message")){
-                            alert(data.message);
-                        }
+                .then(data =>{
+                    if(data.hasOwnProperty("list")){
+                        alert(data.list);
+                        window.location.href="reservation.php"
                     }
                 })
-			
 			};
 
 		
