@@ -158,11 +158,11 @@ include'includes/connect.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>FeedBack & Suggestions</h1>
+            <h1>Voucher</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">FeedBack & Suggestions</a></li>
+              <li class="breadcrumb-item"><a href="#">Voucher Maintenance</a></li>
             </ol>
           </div>
         </div>
@@ -172,21 +172,22 @@ include'includes/connect.php';
     <!-- Main content -->
     <section class="content">
         <!-- Default box -->
-<div class="card">
+        <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Suggestions & Feedback from Client/Users</h3>
+    <h3 class="card-title">List of Vouchers</h3>
   </div>
-    
+    <div class="px-4 py-2">
+      <label class="btn btn-primary" style="text-align:center;margin-bottom:0" for="modal1" id="btnAddNew"><i class="fa fa-plus"></i> Add New Voucher</label>
+    </div>
   <div class="card-body">
     <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Date Submitted</th>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Contact Number</th>
-                    <th>Subject</th>
-                    <th>Comment</th>
+                    <th>ID</th>
+                    <th>Discount</th>
+                    <th>Description</th>
+                    <th>Percentage Discount</th>
+                    <th>Discount Limit</th>
                   </tr>
                   </thead>
                   <tbody id="table_list">
@@ -195,13 +196,39 @@ include'includes/connect.php';
 
                 </table>
   </div>
+  <div id="css-only-modals"><input class="css-only-modal-check" id="modal1" type="checkbox" />
+			<div class="css-only-modal">
+			<label class="css-only-modal-btn btn btn-danger btn-lg" id="btnEscape" for="modal1" style="padding:5px 10px;float:right">X</label>
+			<h2>Fill up details to add new Voucher</h2>
+        <form style="text-align:left;margin-top:2em;overflow-y:auto">
+            <div class="mb-3">
+                <label for="input_discount" class="form-label">Discount Code</label>
+                <input type="text" class="form-control" id="input_discount" autocomplete="off">
+            </div>
+            <div class="mb-3">
+                <label for="input_description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="input_description">
+            </div>
+            <div class="mb-3">
+                <label for="input_percentage" class="form-label">Discount in percentage(without the % sign)</label>
+                <input type="text" class="form-control" id="input_percentage">
+            </div>
 
+            <div class="mb-3">
+                <label for="input_limit" class="form-label">Discount Limit(in Php)</label>
+                <input type="text" class="form-control" id="input_limit">
+            </div>
+        
+            <button type="submit" id="btnNewSubmit" class="btn btn-primary">Submit</button>
+            </form>
+			</div>
+			<div id="screen-shade"> </div>
+			</div>
   <div class="card-footer">
   </div>
   <script type="text/javascript">
-
-  const fetchList = () =>{
-      fetch('includes/app/feedback.php?request=getlist')
+    const fetchList = () =>{
+      fetch('includes/app/voucher.php?request=list')
     .then(data => data.json())
     .then(data => {
       if(data.response == 1){
@@ -210,13 +237,13 @@ include'includes/connect.php';
           if(data.hasOwnProperty("list")){
           const requestcontent = data.list.map(item =>{
               return `<tr>
-                          <td>${new Intl.DateTimeFormat('en', { dateStyle:"medium", timeStyle: 'short' }).format(new Date(item.date_created))}</td>
-                          <td>${item.fullname}</td>
-                          <td>${item.email}</td>
-                          <td>${item.phone}</td>
-                          <td>${item.subject}</td>
-                          <td>${item.comment}</td>
-                         </tr>`
+                          <td>${item.ID}</td>
+                          <td>${item.code}</td>
+                          <td>${item.description}</td>
+                          <td>${item.percentage}%</td>
+                          <td>Php ${parseFloat(item.amount_limit).toFixed(2)}</td>
+                          <td><button class="btn btn-secondary" onclick="editRow(${item.ID},'${item.code}','${item.description}','${item.percentage}','${item.amount_limit}')"> EDIT</button></td>
+                      </tr>`
           })
 
           requestcontent.forEach(el=>{
@@ -224,18 +251,79 @@ include'includes/connect.php';
           })
           }
           if(!data.hasOwnProperty("list")){
-            container.innerHTML = `<tr><td colspan="6" style="text-align:center">No result found</td></tr>`
+            container.innerHTML = `<tr><td colspan="5" style="text-align:center">No result found</td></tr>`
           }
       }
     })
     }
 
+    const selector = (name) =>{
+      return document.querySelector(name)
+    }
+
+    var $table_id = 0;
+    const editRow = (id,name,desc,percent,limit) =>{
+      var checkbox = document.querySelector("#modal1");
+      checkbox.checked = !checkbox.checked
+      selector("#input_discount").value = name
+      selector("#input_description").value = desc
+      selector("#input_percentage").value = percent
+      selector("#input_limit").value = limit
+      $table_id = id;
+    }
+
+  const saveTable = (formData) =>{
+      fetch('includes/app/voucher.php?request=save_voucher', {method: "POST",body:formData})
+        .then(data => data.json())
+        .then(data => {
+          if(data.response == 1){
+            if(data.hasOwnProperty("message")){
+              clearFields()
+              fetchList()
+              return alert(data.message)
+            }
+          }
+        })
+    }
+
+  const updateTable = (formData) => {
+    formData.append("id",$table_id)
+    fetch('includes/app/voucher.php?request=update_voucher', {method: "POST",body:formData})
+        .then(data => data.json())
+        .then(data => {
+          if(data.response == 1){
+            if(data.hasOwnProperty("message")){
+              clearFields()
+              fetchList()
+              $table_id = 0;
+              return alert(data.message)
+            }
+          }
+    })
+  }
+   
+
+    const clearFields = () =>{
+      selector("#input_discount").value = ""
+      selector("#input_description").value = ""
+      selector("#input_percentage").value = ""
+      selector("#input_limit").value = ""
+    }
 
     fetchList()
 
-    
-    
-
+    document.querySelector("#btnEscape").addEventListener("click",() => $table_id = 0)
+    document.querySelector("#btnNewSubmit").addEventListener("click",(event)=>{
+    event.preventDefault()
+      
+      var formData = new FormData()
+      formData.append("code",selector("#input_discount").value)
+      formData.append("descrip",selector("#input_description").value)
+      formData.append("percent",selector("#input_percentage").value)
+      formData.append("amt_limit",selector("#input_limit").value)
+      !$table_id ? saveTable(formData) : updateTable(formData);
+      
+    })
    </script>
 
 

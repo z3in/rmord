@@ -127,7 +127,12 @@
                 </div>
                 <div style="border-top:1px solid teal;margin-top:1em"><h2 style="margin:10px auto;width:50%">Product</h2></div>
                 <ul id="cart_container"></ul>
-                
+                <div><h2 style="margin:10px auto;width:50%">Discount</h2></div>
+                <ul id="discount_container">
+                    <li class="item"><h3>No Discount</h3></li>
+                </ul>
+                <div style="margin:10px auto;width:50%;display:flex;flex-direction:row;align-items:center;"><input id="discount_code" type="text" class="form-control" autocomplete="off" placeholder="input discount code here"/><button onclick="discountSearch()" style="padding:5px 20px;">Search</button></div>
+                <div style="border-bottom:1px solid teal;"></div>
                 <div style="display:flex;justify-content:center;flex-direction:column;align-items:center"> 
                     <div style="width:100%;background-color:#b5ebed;text-align:center;">
                         <h2>Order Price : &#8369 <span id="total_order_price">0.00</span></h2>

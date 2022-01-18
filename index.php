@@ -16,6 +16,23 @@ include 'includes/connect.php'
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+    <style>
+        ul#discount_container{
+            list-style:none;
+            margin-top:3em;
+        }
+        .abcol{
+            flex-basis: 31%;
+            background-color: #fff3f3;
+            border-radius: 10px;
+            padding: 20px 12px;
+            box-sizing: border-box;
+            width:50%;
+            margin:10px auto;
+            text-align: center;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        }
+    </style>
 
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -143,6 +160,22 @@ include 'includes/connect.php'
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section class="featured-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="titie-section wow fadeInDown animated ">
+                            <h1>Available Discounts</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <ul class="row" id="discount_container">
+
+                </ul>
             </div>
         </section>
 
@@ -432,5 +465,23 @@ include 'includes/connect.php'
         <script type="text/javascript" src="js/owl.carousel.min.js"></script>
         <script type="text/javascript" src="js/wow.min.js"></script>
         <script type="text/javascript" src="js/custom.js"></script>
+        <script>
+            $(document).ready(function(){
+                fetch('app/client/voucher.php?request=list')
+                .then(data => data.json())
+                .then(data => {
+                    $.each(data.list, function(i,val){
+                        $("#discount_container").append(`<li>
+                            <div class="abcol">
+                                    <div style="font-size:28px;">Discount code : ${val.code}</div>
+                                    <h4>Discount Rate : ${val.percentage}%</h4>
+                                    <small class="card-text">max discount amount : ${val.amount_limit}</small>
+                            </div>
+                            </li>`)
+                        })
+                            
+                    })
+                })
+        </script>
     </body>
 </html>

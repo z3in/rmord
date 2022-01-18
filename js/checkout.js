@@ -1,5 +1,5 @@
 
-var map,marker,quantity,geocoder;
+var map,marker,quantity,geocoder,gross_price;
 const getList = () =>{
     fetch(`app/client/cart.php?request=list&user_id=${getCookie('user_id')}`)
         .then(data => data.json())
@@ -18,7 +18,7 @@ const getList = () =>{
             })
             let price_list = data.list.map(item => parseFloat(item.SRP * item.quantity)).reduce((prev, next) => prev + next);
             total_price.innerHTML = price_list.toFixed(2)
-            
+            gross_price = price_list.toFixed(2)
         })
 }
 function distanceTwoPoints(p3, p4){
@@ -80,6 +80,29 @@ function initMap() {
          });
     
         
+    })
+}
+
+function discountSearch(){
+    if($("#discount_code").val() === ""){
+        return alert("Please Enter Discount Code")
+    }
+    fetch(`app/client/voucher.php?request=search&code=${$("#discount_code").val()}`)
+    .then(data => data.json())
+    .then(data =>{
+        let sub_price = gross_price * (data.list.percentage/100);
+    
+        $("#discount_container").html(`<li class="item">
+                                            <div class="description">
+                                                <h3>CODE :${data.list.code.toUpperCase()}</h3>
+                                            </div>
+                                            <div>
+                                                LESS ${data.list.percentage} %
+                                            </div>
+                                            <div class="price"><h3> - ₱ ${sub_price} </h3></div>
+                                         </li>`)
+
+        $("#total_order_price").text(gross_price - sub_price)
     })
 }
 

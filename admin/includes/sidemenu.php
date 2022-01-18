@@ -227,21 +227,17 @@
                 </a>
               </li>
               <li class="nav-item">
-                  <a href="" class="nav-link">
+                  <a href="category.php" class="nav-link">
                     <i class="far fa-circle nav-icon" aria-hidden="true"> </i>
                     <p>Category</p>
-                    <i class="right fas fa-angle-left"></i>
                   </a>
-                  <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="" class="nav-link">
-                    <i class="far fa-circle nav-icon" aria-hidden="true"></i>
-                    <p>Subcategory</p>
-                    </a>
-                      </li>
-                    </ul>
-                </li>
-
+              </li>
+              <li class="nav-item">
+                  <a href="voucher.php" class="nav-link">
+                    <i class="far fa-circle nav-icon" aria-hidden="true"> </i>
+                    <p>Voucher</p>
+                  </a>
+              </li>
               <!-- <li class="nav-item">
                 <a href="gallery.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -272,8 +268,9 @@
           <!--Utilities-->
         <li class="nav-item nav-utility" style="display:none">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas "></i>
+              <i class="fas fa-wrench nav-icon"></i>
               <p>
+                
                 Utilities
                 <i class="right fas fa-angle-left"></i>
               </p>
@@ -281,7 +278,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="user_account.php" class="nav-link">
-                  <i class="far fa fa-users nav-icon" aria-hidden="true"></i>
+                  <i class="far fa-circle nav-icon"></i>
                   <p>User Account Maintenance</p>
                 </a>
               </li>
@@ -300,7 +297,7 @@
               </li>
               <li class="nav-item">
                 <a href="" class="nav-link">
-                  <i  class=" far fa fa-archive nav-icon" aria-hidden="true"></i>
+                  <i class="far fa-circle nav-icon"></i>
                   <p>Archieve</p>
                 </a>
               </li>
